@@ -1,7 +1,7 @@
 package com.example.wuxio.animatedrawable;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * @author wuxio
