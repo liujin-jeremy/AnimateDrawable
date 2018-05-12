@@ -17,20 +17,8 @@ public class AnimateDrawable extends Drawable implements Animatable {
 
     protected Paint mPaint;
 
-    protected int mWidth;
-    protected int mHeight;
-
 
     public AnimateDrawable() {
-
-        this(100, 100);
-    }
-
-
-    public AnimateDrawable(int width, int height) {
-
-        mWidth = width;
-        mHeight = height;
 
         initPaint();
     }
@@ -51,20 +39,6 @@ public class AnimateDrawable extends Drawable implements Animatable {
 
     protected void calculate() {
 
-    }
-
-
-    @Override
-    public int getIntrinsicWidth() {
-
-        return mWidth;
-    }
-
-
-    @Override
-    public int getIntrinsicHeight() {
-
-        return mHeight;
     }
 
 
