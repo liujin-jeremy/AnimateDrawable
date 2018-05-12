@@ -73,6 +73,7 @@ public class BiliBiliLoadingDrawable extends AnimateDrawable {
     public void setStrokeWidth(int strokeWidth) {
 
         mStrokeWidth = strokeWidth;
+        mPaint.setStrokeWidth(mStrokeWidth);
     }
 
 

@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
 
         final BiliBiliLoadingDrawable biliLoadingDrawable = new BiliBiliLoadingDrawable(300);
+        biliLoadingDrawable.setStrokeWidth(10);
         mAnimate = findViewById(R.id.animate);
         mAnimate.setImageDrawable(biliLoadingDrawable);
 
