@@ -13,12 +13,12 @@ import android.support.annotation.Nullable;
  * @author wuxio 2018-05-12:11:03
  */
 @SuppressWarnings("WeakerAccess")
-public class AnimateDrawable extends Drawable implements Animatable {
+public abstract class BaseAnimateDrawable extends Drawable implements Animatable {
 
     protected Paint mPaint;
 
 
-    public AnimateDrawable() {
+    public BaseAnimateDrawable() {
 
         initPaint();
     }
@@ -31,15 +31,19 @@ public class AnimateDrawable extends Drawable implements Animatable {
     }
 
 
+    /**
+     * when {@link #draw(Canvas)} finish, call {@link #calculate()} to continue
+     */
     @Override
     public void draw(@NonNull Canvas canvas) {
 
     }
 
 
-    protected void calculate() {
-
-    }
+    /**
+     * when calculate finish call {@link #invalidateSelf()}, to make {@link #draw(Canvas)} call
+     */
+    protected abstract void calculate();
 
 
     @Override
@@ -60,24 +64,5 @@ public class AnimateDrawable extends Drawable implements Animatable {
     public int getOpacity() {
 
         return PixelFormat.TRANSPARENT;
-    }
-
-
-    @Override
-    public void start() {
-
-    }
-
-
-    @Override
-    public void stop() {
-
-    }
-
-
-    @Override
-    public boolean isRunning() {
-
-        return false;
     }
 }

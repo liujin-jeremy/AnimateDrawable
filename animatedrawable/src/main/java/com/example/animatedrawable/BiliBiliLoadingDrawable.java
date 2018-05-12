@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.PixelFormat;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -15,7 +16,7 @@ import com.example.engine.TimeEngine;
  * @author wuxio 2018-05-12:11:03
  */
 @SuppressWarnings("WeakerAccess")
-public class BiliBiliLoadingDrawable extends AnimateDrawable {
+public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
 
     private static final String TAG = "BiliBiliLoadingDrawable";
 
@@ -100,6 +101,12 @@ public class BiliBiliLoadingDrawable extends AnimateDrawable {
         mPaint.setStrokeWidth(mStrokeWidth);
         mPaint.setStyle(Paint.Style.STROKE);
 
+    }
+
+
+    public void setColor(@ColorInt int color) {
+
+        mPaint.setColor(color);
     }
 
 
@@ -337,7 +344,7 @@ public class BiliBiliLoadingDrawable extends AnimateDrawable {
         }
 
         if (!mTimeEngine.isRunning()) {
-            mTimeEngine.setDuration(mDuration).setRepeat(3).start();
+            mTimeEngine.setDuration(mDuration).setRepeat(mRepeat).start();
             calculate();
         }
     }
