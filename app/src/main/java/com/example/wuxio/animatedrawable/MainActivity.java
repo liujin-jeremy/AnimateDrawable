@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.animatedrawable.BiliBiliLoadingDrawable;
+import com.example.animatedrawable.CircleLoadingDrawable;
 
 /**
  * @author wuxio
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     protected ImageView mAnimate;
+    protected ImageView mImageView;
 
 
     @Override
@@ -27,9 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
 
+        /* bili bili */
+
         final BiliBiliLoadingDrawable biliLoadingDrawable = new BiliBiliLoadingDrawable(300);
         biliLoadingDrawable.setStrokeWidth(10);
-        biliLoadingDrawable.setRepeat(3);
+        biliLoadingDrawable.setRepeat(3000);
         biliLoadingDrawable.setColor(getResources().getColor(R.color.colorAccent));
         mAnimate = findViewById(R.id.animate);
         mAnimate.setImageDrawable(biliLoadingDrawable);
@@ -38,7 +42,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                biliLoadingDrawable.start();
+                if (biliLoadingDrawable.isRunning()) {
+                    biliLoadingDrawable.stop();
+                } else {
+                    biliLoadingDrawable.start();
+                }
+            }
+        });
+
+        /* circle */
+
+        mImageView = (ImageView) findViewById(R.id.imageView);
+        final CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable(300);
+        mImageView.setImageDrawable(circleLoadingDrawable);
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (circleLoadingDrawable.isRunning()) {
+
+                    circleLoadingDrawable.stop();
+                } else {
+
+                    circleLoadingDrawable.start();
+                }
             }
         });
     }

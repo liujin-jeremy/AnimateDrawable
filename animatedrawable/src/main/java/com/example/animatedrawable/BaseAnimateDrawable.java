@@ -20,11 +20,11 @@ public abstract class BaseAnimateDrawable extends Drawable implements Animatable
 
     public BaseAnimateDrawable() {
 
-        initPaint();
+        init();
     }
 
 
-    protected void initPaint() {
+    protected void init() {
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
@@ -35,9 +35,7 @@ public abstract class BaseAnimateDrawable extends Drawable implements Animatable
      * when {@link #draw(Canvas)} finish, call {@link #calculate()} to continue
      */
     @Override
-    public void draw(@NonNull Canvas canvas) {
-
-    }
+    public abstract void draw(@NonNull Canvas canvas);
 
 
     /**

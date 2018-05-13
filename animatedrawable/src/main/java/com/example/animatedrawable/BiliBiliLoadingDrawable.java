@@ -36,7 +36,7 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
         mSize = size;
 
         initSize();
-        initPaint();
+        init();
         initPath();
     }
 
@@ -95,7 +95,7 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
 
 
     @Override
-    protected void initPaint() {
+    protected void init() {
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(mStrokeWidth);
@@ -360,6 +360,9 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
     @Override
     public boolean isRunning() {
 
+        if (mTimeEngine == null) {
+            mTimeEngine = new TimeEngine();
+        }
         return mTimeEngine.isRunning();
     }
 }
