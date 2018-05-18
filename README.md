@@ -27,3 +27,26 @@ biliLoadingDrawable.start();
 ```
 
 ![](img/pic01.gif)
+
+### CircleLoadingDrawable
+
+创建
+
+```
+CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable(300);
+mImageView.setImageDrawable(circleLoadingDrawable);
+```
+
+开始
+
+```
+circleLoadingDrawable.start();
+```
+
+结束
+
+```
+circleLoadingDrawable.stop();
+```
+
+![](img/pic02.gif)
