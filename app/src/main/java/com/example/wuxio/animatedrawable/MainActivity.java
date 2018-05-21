@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         final BiliBiliLoadingDrawable biliLoadingDrawable = new BiliBiliLoadingDrawable(300);
         biliLoadingDrawable.setStrokeWidth(10);
+        biliLoadingDrawable.setDuration(3500);
         biliLoadingDrawable.setRepeat(3000);
         biliLoadingDrawable.setColor(getResources().getColor(R.color.colorAccent));
         mAnimate = findViewById(R.id.animate);
