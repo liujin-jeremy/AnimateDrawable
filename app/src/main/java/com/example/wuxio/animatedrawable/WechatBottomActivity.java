@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.animatedrawable.AlphaSelectedDrawable;
+import com.example.drawable.progress.AlphaProgressDrawable;
+import com.example.banner.pager.OnPagerScrollObserver;
+import com.example.banner.pager.PagerScrollObserver;
 import com.example.constraintlayout.Constraint;
 import com.example.constraintlayout.ConstraintLayout;
 import com.example.constraintlayout.adapter.BaseConstraintAdapter;
@@ -29,8 +31,9 @@ public class WechatBottomActivity extends AppCompatActivity {
 
     private static final String TAG = "WechatBottomActivity";
 
-    protected ViewPager        mPager;
-    protected ConstraintLayout mBottomNavigation;
+    protected ViewPager               mPager;
+    protected ConstraintLayout        mBottomNavigation;
+    private   BottomNavigationAdapter mNavigationAdapter;
 
 
     public static void start(Context context) {
@@ -54,9 +57,11 @@ public class WechatBottomActivity extends AppCompatActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(adapter);
+        PagerScrollObserver.from(mPager).setOnScrollObserver(new ChatPagerScrollObserver());
 
         mBottomNavigation = findViewById(R.id.bottomNavigation);
-        mBottomNavigation.setAdapter(new BottomNavigationAdapter(adapter.getTitles()));
+        mNavigationAdapter = new BottomNavigationAdapter(adapter.getTitles());
+        mBottomNavigation.setAdapter(mNavigationAdapter);
     }
 
     //============================ constraintLayout adapter ============================
@@ -64,7 +69,7 @@ public class WechatBottomActivity extends AppCompatActivity {
     private class BottomNavigationAdapter extends BaseConstraintAdapter {
 
         private String[] titles;
-        private Drawable[] mDrawables = new Drawable[4];
+        private AlphaProgressDrawable[] mDrawables = new AlphaProgressDrawable[4];
 
 
         public BottomNavigationAdapter(String[] titles) {
@@ -113,7 +118,7 @@ public class WechatBottomActivity extends AppCompatActivity {
 
             int cellWidth = constraint.getWeightWidth(4, 1);
 
-            final int iconHeight = 120;
+            final int iconHeight = 88;
 
             if (position % 2 == 0) {
 
@@ -133,7 +138,7 @@ public class WechatBottomActivity extends AppCompatActivity {
 
                 //text
 
-                final int textSize = 20;
+                final int textSize = 12;
 
                 int index = position / 2;
 
@@ -171,7 +176,7 @@ public class WechatBottomActivity extends AppCompatActivity {
         }
 
 
-        private Drawable getIconDrawable(int index) {
+        private AlphaProgressDrawable getIconDrawable(int index) {
 
             if (index == 0) {
 
@@ -179,7 +184,7 @@ public class WechatBottomActivity extends AppCompatActivity {
                 Bitmap bitmapSelected = BitmapFactory.decodeResource(getResources(), R.drawable
                         .home_selected);
 
-                return new AlphaSelectedDrawable(
+                return new AlphaProgressDrawable(
                         bitmapNormal,
                         bitmapSelected);
 
@@ -195,7 +200,7 @@ public class WechatBottomActivity extends AppCompatActivity {
                         R.drawable.category_selected
                 );
 
-                return new AlphaSelectedDrawable(
+                return new AlphaProgressDrawable(
                         bitmapNormal,
                         bitmapSelected
                 );
@@ -212,7 +217,7 @@ public class WechatBottomActivity extends AppCompatActivity {
                         R.drawable.find_selected
                 );
 
-                return new AlphaSelectedDrawable(
+                return new AlphaProgressDrawable(
                         bitmapNormal,
                         bitmapSelected
                 );
@@ -229,7 +234,7 @@ public class WechatBottomActivity extends AppCompatActivity {
                         R.drawable.mine_selected
                 );
 
-                return new AlphaSelectedDrawable(
+                return new AlphaProgressDrawable(
                         bitmapNormal,
                         bitmapSelected
                 );
@@ -237,7 +242,12 @@ public class WechatBottomActivity extends AppCompatActivity {
             } else {
                 return null;
             }
+        }
 
+
+        public void setProgress(int index, float progress) {
+
+            mDrawables[index].setProgress(progress);
         }
     }
 
@@ -285,4 +295,32 @@ public class WechatBottomActivity extends AppCompatActivity {
             return mFragments.length;
         }
     }
+
+    //============================ pager Scroll ============================
+
+    private class ChatPagerScrollObserver implements OnPagerScrollObserver {
+
+
+        @Override
+        public void onCurrent(int currentPosition, float offset) {
+
+            //String format = String.format(Locale.CHINA, "%.4f", offset);
+            //Log.i(TAG, "onCurrent:" + currentPosition + " " + format);
+
+            float progress = Math.abs(offset);
+            mNavigationAdapter.setProgress(currentPosition, 1 - progress);
+        }
+
+
+        @Override
+        public void onNext(int nextPosition, float offset) {
+
+            float progress = Math.abs(offset);
+            mNavigationAdapter.setProgress(nextPosition, 1 - progress);
+
+            //String format = String.format(Locale.CHINA, "%.4f", offset);
+            //Log.i(TAG, "onNext:" + nextPosition + " " + format);
+        }
+    }
+
 }

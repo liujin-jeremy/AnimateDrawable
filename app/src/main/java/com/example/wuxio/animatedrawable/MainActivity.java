@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.animatedrawable.AlphaSelectedDrawable;
-import com.example.animatedrawable.BiliBiliLoadingDrawable;
-import com.example.animatedrawable.CircleLoadingDrawable;
+import com.example.drawable.progress.AlphaProgressDrawable;
+import com.example.drawable.anim.BiliBiliLoadingDrawable;
+import com.example.drawable.anim.CircleLoadingDrawable;
 
 /**
  * @author wuxio
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         Drawable drawableSelected = getResources().getDrawable(R.drawable.home_selected);
         Bitmap bitmapSelected = ((BitmapDrawable) drawableSelected).getBitmap();
 
-        AlphaSelectedDrawable selectedDrawable = new AlphaSelectedDrawable(bitmapNormal, bitmapSelected);
+        AlphaProgressDrawable selectedDrawable = new AlphaProgressDrawable(bitmapNormal, bitmapSelected);
     }
 
 

@@ -1,7 +1,9 @@
-package com.example.animatedrawable;
+package com.example.drawable.anim;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Animatable;
+
+import com.example.drawable.BaseDrawable;
 
 /**
  * @author wuxio 2018-05-12:11:03

@@ -1,4 +1,4 @@
-package com.example.animatedrawable;
+package com.example.drawable;
 
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
