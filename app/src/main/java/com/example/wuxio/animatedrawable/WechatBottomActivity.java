@@ -17,12 +17,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.drawable.progress.AlphaProgressDrawable;
 import com.example.banner.pager.OnPagerScrollObserver;
 import com.example.banner.pager.PagerScrollObserver;
 import com.example.constraintlayout.Constraint;
 import com.example.constraintlayout.ConstraintLayout;
 import com.example.constraintlayout.adapter.BaseConstraintAdapter;
+import com.example.drawable.progress.AlphaProgressDrawable;
+import com.example.drawable.progress.widget.ProgressColorTextView;
 
 /**
  * @author wuxio
@@ -54,7 +55,7 @@ public class WechatBottomActivity extends AppCompatActivity {
 
     private void initView() {
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = findViewById(R.id.pager);
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(adapter);
         PagerScrollObserver.from(mPager).setOnScrollObserver(new ChatPagerScrollObserver());
@@ -62,6 +63,8 @@ public class WechatBottomActivity extends AppCompatActivity {
         mBottomNavigation = findViewById(R.id.bottomNavigation);
         mNavigationAdapter = new BottomNavigationAdapter(adapter.getTitles());
         mBottomNavigation.setAdapter(mNavigationAdapter);
+
+        mBottomNavigation.post(() -> mNavigationAdapter.setProgress(0, 1));
     }
 
     //============================ constraintLayout adapter ============================
@@ -70,6 +73,7 @@ public class WechatBottomActivity extends AppCompatActivity {
 
         private String[] titles;
         private AlphaProgressDrawable[] mDrawables = new AlphaProgressDrawable[4];
+        private ProgressColorTextView[] mTextViews = new ProgressColorTextView[4];
 
 
         public BottomNavigationAdapter(String[] titles) {
@@ -91,7 +95,10 @@ public class WechatBottomActivity extends AppCompatActivity {
 
                 //title
 
-                return getTitleTextView();
+                ProgressColorTextView view = getTitleTextView();
+                int index = position / 2;
+                mTextViews[index] = view;
+                return view;
             }
         }
 
@@ -161,9 +168,15 @@ public class WechatBottomActivity extends AppCompatActivity {
         }
 
 
-        private TextView getTitleTextView() {
+        private ProgressColorTextView getTitleTextView() {
 
-            TextView textView = new TextView(WechatBottomActivity.this);
+            int colorNormal = getResources().getColor(R.color.textColorNormal);
+            int colorSelect = getResources().getColor(R.color.textColorSelected);
+
+            ProgressColorTextView textView = new ProgressColorTextView(WechatBottomActivity.this);
+
+            textView.setTextColor(colorNormal, colorSelect);
+
             textView.setGravity(Gravity.CENTER);
             return textView;
         }
@@ -248,6 +261,7 @@ public class WechatBottomActivity extends AppCompatActivity {
         public void setProgress(int index, float progress) {
 
             mDrawables[index].setProgress(progress);
+            mTextViews[index].setProgress(progress);
         }
     }
 
