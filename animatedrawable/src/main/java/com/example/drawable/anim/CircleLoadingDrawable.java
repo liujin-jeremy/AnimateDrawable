@@ -21,7 +21,6 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
     private Path        mSrcPath;
     private PathMeasure mPathMeasure;
     private Path        mDstPath;
-    private RectF       mRectF;
     private int         mSize;
 
     private TimeEngine                       mTimeEngine;
@@ -47,7 +46,7 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
         mSrcPath = new Path();
         mPathMeasure = new PathMeasure();
         mDstPath = new Path();
-        mRectF = new RectF();
+
     }
 
     //============================ size ============================
@@ -75,14 +74,16 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
         int r = size >> 1;
         float strokeWidth = mPaint.getStrokeWidth();
 
-        mRectF.set(
+        RectF rectF = new RectF();
+
+        rectF.set(
                 strokeWidth,
                 strokeWidth,
                 size - strokeWidth,
                 size - strokeWidth
         );
 
-        mSrcPath.addArc(mRectF, -90, 359.9f);
+        mSrcPath.addArc(rectF, -90, 359.9f);
         mPathMeasure.setPath(mSrcPath, true);
 
         mLength = mPathMeasure.getLength();
