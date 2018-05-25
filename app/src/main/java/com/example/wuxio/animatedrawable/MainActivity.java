@@ -1,10 +1,14 @@
 package com.example.wuxio.animatedrawable;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.animatedrawable.AlphaSelectedDrawable;
 import com.example.animatedrawable.BiliBiliLoadingDrawable;
 import com.example.animatedrawable.CircleLoadingDrawable;
 
@@ -69,5 +73,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /* progress */
+
+        Drawable drawableNormal = getResources().getDrawable(R.drawable.home_normal);
+        Bitmap bitmapNormal = ((BitmapDrawable) drawableNormal).getBitmap();
+
+        Drawable drawableSelected = getResources().getDrawable(R.drawable.home_selected);
+        Bitmap bitmapSelected = ((BitmapDrawable) drawableSelected).getBitmap();
+
+        AlphaSelectedDrawable selectedDrawable = new AlphaSelectedDrawable(bitmapNormal, bitmapSelected);
+    }
+
+
+    public void toWechatBottom(View view) {
+
+        WechatBottomActivity.start(this);
     }
 }

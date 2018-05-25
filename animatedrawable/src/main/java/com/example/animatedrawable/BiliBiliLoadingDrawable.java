@@ -180,7 +180,7 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
 
         /* 电视外廓 */
 
-        final float flag01 = 0.4f;
+        final float flag01 = 0.6f;
         if (fraction <= flag01) {
 
             mCurrentState = STATE2;
@@ -190,7 +190,7 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
             return;
         }
 
-        final float flag03 = 0.6f;
+        final float flag03 = 0.73f;
         if (fraction <= flag03) {
 
             mCurrentState = STATE4;
@@ -199,7 +199,7 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
             return;
         }
 
-        final float flag04 = 0.8f;
+        final float flag04 = 0.86f;
         if (fraction <= flag04) {
 
             mCurrentState = STATE5;
