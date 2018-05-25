@@ -26,17 +26,18 @@ public abstract class BaseDrawable extends Drawable {
     protected void init() {
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
 
     /**
-     *  draw there
+     * draw there
+     *
      * @param canvas canvas
      */
     @Override
     public abstract void draw(@NonNull Canvas canvas);
-
 
 
     @Override

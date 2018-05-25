@@ -1,5 +1,6 @@
 package com.example.drawable.anim;
 
+import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -21,9 +22,11 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
     private PathMeasure mPathMeasure;
     private Path        mDstPath;
     private RectF       mRectF;
+    private int         mSize;
 
-    private TimeEngine mTimeEngine;
-    private float      mLength;
+    private TimeEngine                       mTimeEngine;
+    private float                            mLength;
+    private AccelerateDecelerateInterpolator mInterpolator;
 
 
     public CircleLoadingDrawable(int size) {
@@ -39,7 +42,7 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(5);
 
-        mTimeEngine = new TimeEngine(new AccelerateDecelerateInterpolator());
+        mTimeEngine = new TimeEngine();
 
         mSrcPath = new Path();
         mPathMeasure = new PathMeasure();
@@ -48,8 +51,6 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
     }
 
     //============================ size ============================
-
-    private int mSize;
 
 
     @Override
@@ -95,7 +96,7 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
             float fraction = mTimeEngine.getFraction();
 
             mDstPath.reset();
-            mDstPath.lineTo(0, 0);
+            mDstPath.moveTo(mSize >> 1, 0);
 
             int repeated = mTimeEngine.getRepeated();
 
@@ -119,20 +120,57 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
         invalidateSelf();
     }
 
+    //============================ 配置 ============================
+
+
+    public void setStrokeWidth(int strokeWidth) {
+
+        mPaint.setStrokeWidth(strokeWidth);
+    }
+
+
+    public void setStrokeColor(int color) {
+
+        mPaint.setColor(color);
+    }
+
+    //============================ cartoon ============================
+
 
     @Override
     public void start() {
 
-        start(800, 4000);
+        int repeat = Integer.MAX_VALUE / 800;
+        start(1200, repeat);
+    }
+
+
+    public void start(int duration) {
+
+        int repeat = Integer.MAX_VALUE / duration;
+        start(duration, repeat);
     }
 
 
     public void start(int duration, int repeat) {
 
+        if (mInterpolator == null) {
+
+            mInterpolator = new AccelerateDecelerateInterpolator();
+        }
+
+        start(duration, repeat, mInterpolator);
+    }
+
+
+    public void start(int duration, int repeat, TimeInterpolator timeInterpolator) {
+
         if (!mTimeEngine.isRunning()) {
 
             initPath();
-            mTimeEngine.setDuration(duration).setRepeat(repeat).start();
+            mTimeEngine.setDuration(duration);
+            mTimeEngine.setInterpolator(timeInterpolator);
+            mTimeEngine.setRepeat(repeat).start();
             invalidateSelf();
         }
     }

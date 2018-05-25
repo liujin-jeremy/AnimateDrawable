@@ -193,9 +193,14 @@ public class WechatBottomActivity extends AppCompatActivity {
 
             if (index == 0) {
 
-                Bitmap bitmapNormal = BitmapFactory.decodeResource(getResources(), R.drawable.home_normal);
-                Bitmap bitmapSelected = BitmapFactory.decodeResource(getResources(), R.drawable
-                        .home_selected);
+                Bitmap bitmapNormal = BitmapFactory.decodeResource(
+                        getResources(),
+                        R.drawable.home_normal
+                );
+                Bitmap bitmapSelected = BitmapFactory.decodeResource(
+                        getResources(),
+                        R.drawable.home_selected
+                );
 
                 return new AlphaProgressDrawable(
                         bitmapNormal,

@@ -1,14 +1,10 @@
 package com.example.wuxio.animatedrawable;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.drawable.progress.AlphaProgressDrawable;
 import com.example.drawable.anim.BiliBiliLoadingDrawable;
 import com.example.drawable.anim.CircleLoadingDrawable;
 
@@ -58,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
         /* circle */
 
         mImageView = (ImageView) findViewById(R.id.imageView);
+
         final CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable(300);
+        circleLoadingDrawable.setStrokeColor(getResources().getColor(R.color.colorAccent));
+        circleLoadingDrawable.setStrokeWidth(12);
+
         mImageView.setImageDrawable(circleLoadingDrawable);
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,20 +69,11 @@ public class MainActivity extends AppCompatActivity {
                     circleLoadingDrawable.stop();
                 } else {
 
-                    circleLoadingDrawable.start();
+                    circleLoadingDrawable.start(1500);
                 }
             }
         });
 
-        /* progress */
-
-        Drawable drawableNormal = getResources().getDrawable(R.drawable.home_normal);
-        Bitmap bitmapNormal = ((BitmapDrawable) drawableNormal).getBitmap();
-
-        Drawable drawableSelected = getResources().getDrawable(R.drawable.home_selected);
-        Bitmap bitmapSelected = ((BitmapDrawable) drawableSelected).getBitmap();
-
-        AlphaProgressDrawable selectedDrawable = new AlphaProgressDrawable(bitmapNormal, bitmapSelected);
     }
 
 
