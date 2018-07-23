@@ -109,7 +109,7 @@ public class RoundRectAnimDrawable extends BaseAnimateDrawable {
       public void start () {
 
             if(mTimeEngine.isRunning()) {
-                  return;
+                  mTimeEngine.stop();
             }
             mTimeEngine.setDuration(mDuration).start();
             invalidateSelf();
@@ -196,7 +196,9 @@ public class RoundRectAnimDrawable extends BaseAnimateDrawable {
                   invalidateSelf();
             } else {
 
-                  canvas.drawPath(mSrc, mPaint);
+                  if(mMode < 2) {
+                        canvas.drawPath(mSrc, mPaint);
+                  }
             }
       }
 }
