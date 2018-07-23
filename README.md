@@ -3,7 +3,7 @@
 
 实现动画Drawable 需要继承 Drawable 并且实现 Animatable 接口
 
-### BiliBiliLoadingDrawable
+### BiliBiliLoadingDrawable(loading 动画)
 
 创建Drawable
 
@@ -28,7 +28,7 @@ biliLoadingDrawable.start();
 
 ![](img/pic01.gif)
 
-### CircleLoadingDrawable
+### CircleLoadingDrawable(loading 动画)
 
 创建
 
@@ -51,7 +51,7 @@ circleLoadingDrawable.stop();
 
 ![](img/pic02.gif)
 
-### AlphaProgressDrawable 
+### AlphaProgressDrawable(底部导航栏) 
 
 通过控制图片的 alpha 实现,两张图片之间的变换
 
@@ -106,4 +106,28 @@ textView.setTextColor(colorNormal, colorSelect);
 ```
 // 设置进度,变更颜色
 textView.setProgress(progress);
+```
+
+
+## CircleRectAnimDrawable(倒计时动画)
+
+一个圆角矩形动画,可以作为倒计时
+
+![](img/pic04.gif)
+
+
+
+```
+ // 创建
+ CircleRectAnimDrawable rectAnimDrawable = new CircleRectAnimDrawable();
+ rectAnimDrawable.setColor(Color.BLUE); --> yanse
+ rectAnimDrawable.setStrokeWidth(16); --> 线宽
+ rectAnimDrawable.setDuration(1500); --> 时长
+ rectAnimDrawable.setMode(CircleRectAnimDrawable.COUNTER_CLOCK_WISE_ADD); --> 模式(顺时针或者逆时针)
+ 
+ // 设置为背景
+ mCountDownText.setBackgroundDrawable(rectAnimDrawable);
+ 
+ // 开始
+ rectAnimDrawable.start();
 ```

@@ -18,351 +18,300 @@ import com.example.engine.TimeEngine;
 @SuppressWarnings("WeakerAccess")
 public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
 
-    private static final String TAG = "BiliBiliLoadingDrawable";
+      private static final String TAG = "BiliBiliLoadingDrawable";
 
-    private TimeEngine mTimeEngine;
-    private int        mDuration;
-    private int        mRepeat;
+      private TimeEngine mTimeEngine;
+      private int        mDuration;
+      private int        mRepeat;
 
+      public BiliBiliLoadingDrawable () {
 
-    public BiliBiliLoadingDrawable() {
+            this(100);
+      }
 
-        this(100);
-    }
+      public BiliBiliLoadingDrawable (int size) {
 
+            mSize = size;
+            initSize();
+            initPath();
+      }
 
-    public BiliBiliLoadingDrawable(int size) {
+      //============================ 尺寸 ============================
 
-        mSize = size;
+      private int mSize;
+      private int mStrokeWidth;
 
-        initSize();
-        init();
-        initPath();
-    }
+      @Override
+      public int getIntrinsicWidth () {
 
-    //============================ 尺寸 ============================
+            return mSize;
+      }
 
-    private int mSize;
-    private int mStrokeWidth;
+      @Override
+      public int getIntrinsicHeight () {
 
+            return mSize;
+      }
 
-    @Override
-    public int getIntrinsicWidth() {
+      /**
+       * 设置默认尺寸
+       */
+      private void initSize () {
 
-        return mSize;
-    }
+            mStrokeWidth = 5;
+            mDuration = 5000;
+            mRepeat = 1;
+      }
 
+      public void setStrokeWidth (int strokeWidth) {
 
-    @Override
-    public int getIntrinsicHeight() {
+            mStrokeWidth = strokeWidth;
+            mPaint.setStrokeWidth(mStrokeWidth);
+      }
 
-        return mSize;
-    }
+      public void setDuration (int defaultDuration) {
 
+            this.mDuration = defaultDuration;
+      }
 
-    /**
-     * 设置默认尺寸
-     */
-    private void initSize() {
+      public void setRepeat (int repeat) {
 
-        mStrokeWidth = 5;
-        mDuration = 5000;
-        mRepeat = 1;
-    }
+            mRepeat = repeat;
+      }
 
+      //============================ 画笔 ============================
 
-    public void setStrokeWidth(int strokeWidth) {
+      @Override
+      protected void init () {
 
-        mStrokeWidth = strokeWidth;
-        mPaint.setStrokeWidth(mStrokeWidth);
-    }
+            super.init();
 
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(mStrokeWidth);
+      }
 
-    public void setDuration(int defaultDuration) {
+      //============================ 路径动画 ============================
 
-        this.mDuration = defaultDuration;
-    }
+      protected Path        mSrcPath;
+      protected PathMeasure mPathMeasure;
+      protected Path        mDstPath;
 
+      private void initPath () {
 
-    public void setRepeat(int repeat) {
+            mSrcPath = new Path();
+            mDstPath = new Path();
+            mPathMeasure = new PathMeasure();
 
-        mRepeat = repeat;
-    }
+            int strokeWidth = mStrokeWidth;
+            int size = mSize;
+            int size20Percent = size / 5;
+            int size80Percent = size - size20Percent;
 
-    //============================ 画笔 ============================
+            /* 一个矩形 */
 
-    protected Paint mPaint;
+            mSrcPath.moveTo(size20Percent, 0);
+            mSrcPath.rLineTo(size / 2 - size20Percent, size20Percent);
+            mSrcPath.lineTo(size / 2, size20Percent);
+            mSrcPath.lineTo(strokeWidth, size20Percent);
+            mSrcPath.rLineTo(0, size80Percent - strokeWidth);
+            mSrcPath.rLineTo(size - strokeWidth * 2, 0);
+            mSrcPath.rLineTo(0, -size80Percent + strokeWidth);
+            mSrcPath.lineTo(size / 2 + 2, size20Percent);
+            mSrcPath.lineTo(size - size20Percent, 0);
 
+            mPathMeasure.setPath(mSrcPath, false);
+      }
 
-    @Override
-    protected void init() {
+      //============================ 绘制 ============================
 
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStrokeWidth(mStrokeWidth);
-        mPaint.setStyle(Paint.Style.STROKE);
+      private int mCurrentState;
+      private final int STATE2 = 2;
+      private final int STATE4 = 4;
+      private final int STATE5 = 5;
+      private final int STATE6 = 6;
+      private float mStateFraction;
 
-    }
+      @Override
+      protected void calculate () {
 
+            float fraction = mTimeEngine.getFraction();
 
-    public void setColor(@ColorInt int color) {
+            /* 电视外廓 */
 
-        mPaint.setColor(color);
-    }
+            final float flag01 = 0.6f;
+            if(fraction <= flag01) {
 
+                  mCurrentState = STATE2;
 
-    @Override
-    public void setAlpha(int alpha) {
+                  mStateFraction = (fraction) * 2.5f;
+                  invalidateSelf();
+                  return;
+            }
 
-        mPaint.setAlpha(alpha);
-    }
+            final float flag03 = 0.73f;
+            if(fraction <= flag03) {
 
+                  mCurrentState = STATE4;
+                  mStateFraction = (fraction - flag01) * 5;
+                  invalidateSelf();
+                  return;
+            }
 
-    @Override
-    public void setColorFilter(@Nullable ColorFilter colorFilter) {
+            final float flag04 = 0.86f;
+            if(fraction <= flag04) {
 
-        mPaint.setColorFilter(colorFilter);
-    }
+                  mCurrentState = STATE5;
+                  mStateFraction = (fraction - flag03) * 5;
+                  invalidateSelf();
+                  return;
+            }
 
+            final float flag05 = 1f;
+            if(fraction < flag05) {
 
-    @Override
-    public int getOpacity() {
+                  mCurrentState = STATE6;
+                  mStateFraction = (fraction - flag04) * 5;
+                  invalidateSelf();
+            } else {
 
-        return PixelFormat.TRANSPARENT;
-    }
+                  /* == 1 */
 
-    //============================ 路径动画 ============================
+                  mCurrentState = STATE6;
+                  mStateFraction = 1;
+            }
+      }
 
-    protected Path        mSrcPath;
-    protected PathMeasure mPathMeasure;
-    protected Path        mDstPath;
+      @Override
+      public void draw (@NonNull Canvas canvas) {
 
+            int size = mSize;
+            int size20Percent = size / 5;
 
-    private void initPath() {
+            if(mCurrentState == STATE2) {
 
-        mSrcPath = new Path();
-        mDstPath = new Path();
-        mPathMeasure = new PathMeasure();
+                  /* 电视轮廓 */
 
-        int strokeWidth = mStrokeWidth;
-        int size = mSize;
-        int size20Percent = size / 5;
-        int size80Percent = size - size20Percent;
+                  drawState2(canvas, size, size20Percent, mStateFraction);
+                  calculate();
+                  return;
+            }
 
-        /* 一个矩形 */
+            if(mCurrentState == STATE4) {
 
-        mSrcPath.moveTo(size20Percent, 0);
-        mSrcPath.rLineTo(size / 2 - size20Percent, size20Percent);
-        mSrcPath.lineTo(size / 2, size20Percent);
-        mSrcPath.lineTo(strokeWidth, size20Percent);
-        mSrcPath.rLineTo(0, size80Percent - strokeWidth);
-        mSrcPath.rLineTo(size - strokeWidth * 2, 0);
-        mSrcPath.rLineTo(0, -size80Percent + strokeWidth);
-        mSrcPath.lineTo(size / 2 + 2, size20Percent);
-        mSrcPath.lineTo(size - size20Percent, 0);
+                  /* 第一个点 */
 
-        mPathMeasure.setPath(mSrcPath, false);
-    }
+                  drawState2(canvas, size, size20Percent, 1);
+                  drawState4(canvas, size, mStateFraction);
+                  calculate();
+                  return;
+            }
 
-    //============================ 绘制 ============================
+            if(mCurrentState == STATE5) {
 
-    private int mCurrentState;
-    private final int STATE2 = 2;
-    private final int STATE4 = 4;
-    private final int STATE5 = 5;
-    private final int STATE6 = 6;
-    private float mStateFraction;
+                  /* 第二个点 */
 
+                  drawState2(canvas, size, size20Percent, 1);
+                  drawState4(canvas, size, 1);
+                  drawState5(canvas, size, mStateFraction);
+                  calculate();
+                  return;
+            }
 
-    @Override
-    protected void calculate() {
+            if(mCurrentState == STATE6) {
 
-        float fraction = mTimeEngine.getFraction();
+                  /* 第三个点 */
 
-        /* 电视外廓 */
+                  drawState2(canvas, size, size20Percent, 1);
+                  drawState4(canvas, size, 1);
+                  drawState5(canvas, size, 1);
+                  drawState6(canvas, size, mStateFraction);
+                  calculate();
+            }
+      }
 
-        final float flag01 = 0.6f;
-        if (fraction <= flag01) {
+      private void drawState2 (
+          @NonNull Canvas canvas, int size, int size20Percent, float stateFraction) {
 
-            mCurrentState = STATE2;
+            mPaint.setStyle(Paint.Style.STROKE);
 
-            mStateFraction = (fraction) * 2.5f;
-            invalidateSelf();
-            return;
-        }
+            final float length = mPathMeasure.getLength();
 
-        final float flag03 = 0.73f;
-        if (fraction <= flag03) {
+            /* 防止bug */
+            mDstPath.reset();
+            mDstPath.moveTo(size20Percent, 0);
 
-            mCurrentState = STATE4;
-            mStateFraction = (fraction - flag01) * 5;
-            invalidateSelf();
-            return;
-        }
+            float d = length * stateFraction;
+            mPathMeasure.getSegment(0, d, mDstPath, false);
+            canvas.drawPath(mDstPath, mPaint);
+      }
 
-        final float flag04 = 0.86f;
-        if (fraction <= flag04) {
+      private void drawState4 (@NonNull Canvas canvas, int size, float stateFraction) {
 
-            mCurrentState = STATE5;
-            mStateFraction = (fraction - flag03) * 5;
-            invalidateSelf();
-            return;
-        }
+            int rX = size / 2 - size / 4;
+            int rY = size * 60 / 100;
 
-        final float flag05 = 1f;
-        if (fraction < flag05) {
+            int radius = mStrokeWidth << 1;
 
-            mCurrentState = STATE6;
-            mStateFraction = (fraction - flag04) * 5;
-            invalidateSelf();
+            mPaint.setStyle(Paint.Style.FILL);
+            int alpha = (int) (255 * stateFraction);
+            mPaint.setAlpha(alpha);
+            canvas.drawCircle(rX, rY, radius, mPaint);
+            mPaint.setAlpha(255);
+      }
 
-        } else {
+      private void drawState5 (@NonNull Canvas canvas, int size, float stateFraction) {
 
-            /* == 1 */
+            int rX = size / 2;
+            int rY = size * 60 / 100;
 
-            mCurrentState = STATE6;
-            mStateFraction = 1;
-        }
-    }
+            int radius = mStrokeWidth << 1;
 
+            int alpha = (int) (255 * stateFraction);
+            mPaint.setAlpha(alpha);
+            canvas.drawCircle(rX, rY, radius, mPaint);
+            mPaint.setAlpha(255);
+      }
 
-    @Override
-    public void draw(@NonNull Canvas canvas) {
+      private void drawState6 (@NonNull Canvas canvas, int size, float stateFraction) {
 
-        int size = mSize;
-        int size20Percent = size / 5;
+            int rX = size / 2 + size / 4;
+            int rY = size * 60 / 100;
 
-        if (mCurrentState == STATE2) {
+            int radius = mStrokeWidth << 1;
 
-            /* 电视轮廓 */
+            int alpha = (int) (255 * stateFraction);
+            mPaint.setAlpha(alpha);
+            canvas.drawCircle(rX, rY, radius, mPaint);
+            mPaint.setAlpha(255);
+      }
 
-            drawState2(canvas, size, size20Percent, mStateFraction);
-            calculate();
-            return;
-        }
+      //============================ 开始/结束 ============================
 
-        if (mCurrentState == STATE4) {
+      @Override
+      public void start () {
 
-            /* 第一个点 */
+            if(mTimeEngine == null) {
+                  mTimeEngine = new TimeEngine();
+            }
 
-            drawState2(canvas, size, size20Percent, 1);
-            drawState4(canvas, size, mStateFraction);
-            calculate();
-            return;
-        }
+            if(!mTimeEngine.isRunning()) {
+                  mTimeEngine.setDuration(mDuration).setRepeat(mRepeat).start();
+                  calculate();
+            }
+      }
 
-        if (mCurrentState == STATE5) {
+      @Override
+      public void stop () {
 
-            /* 第二个点 */
+            mTimeEngine.stop();
+      }
 
-            drawState2(canvas, size, size20Percent, 1);
-            drawState4(canvas, size, 1);
-            drawState5(canvas, size, mStateFraction);
-            calculate();
-            return;
-        }
+      @Override
+      public boolean isRunning () {
 
-        if (mCurrentState == STATE6) {
-
-            /* 第三个点 */
-
-            drawState2(canvas, size, size20Percent, 1);
-            drawState4(canvas, size, 1);
-            drawState5(canvas, size, 1);
-            drawState6(canvas, size, mStateFraction);
-            calculate();
-        }
-    }
-
-
-    private void drawState2(@NonNull Canvas canvas, int size, int size20Percent, float stateFraction) {
-
-        mPaint.setStyle(Paint.Style.STROKE);
-
-        final float length = mPathMeasure.getLength();
-
-        /* 防止bug */
-        mDstPath.reset();
-        mDstPath.moveTo(size20Percent, 0);
-
-        float d = length * stateFraction;
-        mPathMeasure.getSegment(0, d, mDstPath, false);
-        canvas.drawPath(mDstPath, mPaint);
-    }
-
-
-    private void drawState4(@NonNull Canvas canvas, int size, float stateFraction) {
-
-        int rX = size / 2 - size / 4;
-        int rY = size * 60 / 100;
-
-        int radius = mStrokeWidth << 1;
-
-        mPaint.setStyle(Paint.Style.FILL);
-        int alpha = (int) (255 * stateFraction);
-        mPaint.setAlpha(alpha);
-        canvas.drawCircle(rX, rY, radius, mPaint);
-        mPaint.setAlpha(255);
-    }
-
-
-    private void drawState5(@NonNull Canvas canvas, int size, float stateFraction) {
-
-        int rX = size / 2;
-        int rY = size * 60 / 100;
-
-        int radius = mStrokeWidth << 1;
-
-        int alpha = (int) (255 * stateFraction);
-        mPaint.setAlpha(alpha);
-        canvas.drawCircle(rX, rY, radius, mPaint);
-        mPaint.setAlpha(255);
-
-    }
-
-
-    private void drawState6(@NonNull Canvas canvas, int size, float stateFraction) {
-
-        int rX = size / 2 + size / 4;
-        int rY = size * 60 / 100;
-
-        int radius = mStrokeWidth << 1;
-
-        int alpha = (int) (255 * stateFraction);
-        mPaint.setAlpha(alpha);
-        canvas.drawCircle(rX, rY, radius, mPaint);
-        mPaint.setAlpha(255);
-    }
-
-    //============================ 开始/结束 ============================
-
-
-    @Override
-    public void start() {
-
-        if (mTimeEngine == null) {
-            mTimeEngine = new TimeEngine();
-        }
-
-        if (!mTimeEngine.isRunning()) {
-            mTimeEngine.setDuration(mDuration).setRepeat(mRepeat).start();
-            calculate();
-        }
-    }
-
-
-    @Override
-    public void stop() {
-
-        mTimeEngine.stop();
-    }
-
-
-    @Override
-    public boolean isRunning() {
-
-        if (mTimeEngine == null) {
-            mTimeEngine = new TimeEngine();
-        }
-        return mTimeEngine.isRunning();
-    }
+            if(mTimeEngine == null) {
+                  mTimeEngine = new TimeEngine();
+            }
+            return mTimeEngine.isRunning();
+      }
 }

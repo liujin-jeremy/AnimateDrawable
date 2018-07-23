@@ -16,177 +16,162 @@ import com.example.engine.TimeEngine;
  */
 public class CircleLoadingDrawable extends BaseAnimateDrawable {
 
-    private static final String TAG = "CircleLoadingDrawable";
+      private static final String TAG = "CircleLoadingDrawable";
 
-    private Path        mSrcPath;
-    private PathMeasure mPathMeasure;
-    private Path        mDstPath;
-    private int         mSize;
+      private Path        mSrcPath;
+      private PathMeasure mPathMeasure;
+      private Path        mDstPath;
+      private int         mSize;
 
-    private TimeEngine                       mTimeEngine;
-    private float                            mLength;
-    private AccelerateDecelerateInterpolator mInterpolator;
+      private TimeEngine                       mTimeEngine;
+      private float                            mLength;
+      private AccelerateDecelerateInterpolator mInterpolator;
 
+      public CircleLoadingDrawable (int size) {
 
-    public CircleLoadingDrawable(int size) {
+            super();
+            mSize = size;
+      }
 
-        mSize = size;
-    }
+      @Override
+      protected void init () {
 
+            super.init();
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(5);
 
-    @Override
-    protected void init() {
+            mTimeEngine = new TimeEngine();
 
-        super.init();
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(5);
+            mSrcPath = new Path();
+            mPathMeasure = new PathMeasure();
+            mDstPath = new Path();
+      }
 
-        mTimeEngine = new TimeEngine();
+      //============================ size ============================
 
-        mSrcPath = new Path();
-        mPathMeasure = new PathMeasure();
-        mDstPath = new Path();
+      @Override
+      public int getIntrinsicWidth () {
 
-    }
+            return mSize;
+      }
 
-    //============================ size ============================
+      @Override
+      public int getIntrinsicHeight () {
 
+            return mSize;
+      }
 
-    @Override
-    public int getIntrinsicWidth() {
+      //============================ draw ============================
 
-        return mSize;
-    }
+      private void initPath () {
 
+            int size = mSize;
+            int r = size >> 1;
+            float strokeWidth = mPaint.getStrokeWidth();
 
-    @Override
-    public int getIntrinsicHeight() {
+            RectF rectF = new RectF();
 
-        return mSize;
-    }
-
-    //============================ draw ============================
-
-
-    private void initPath() {
-
-        int size = mSize;
-        int r = size >> 1;
-        float strokeWidth = mPaint.getStrokeWidth();
-
-        RectF rectF = new RectF();
-
-        rectF.set(
+            rectF.set(
                 strokeWidth,
                 strokeWidth,
                 size - strokeWidth,
                 size - strokeWidth
-        );
+            );
 
-        mSrcPath.addArc(rectF, -90, 359.9f);
-        mPathMeasure.setPath(mSrcPath, true);
+            mSrcPath.addArc(rectF, -90, 359.9f);
+            mPathMeasure.setPath(mSrcPath, true);
 
-        mLength = mPathMeasure.getLength();
-    }
+            mLength = mPathMeasure.getLength();
+      }
 
+      @Override
+      public void draw (@NonNull Canvas canvas) {
 
-    @Override
-    public void draw(@NonNull Canvas canvas) {
+            if(mTimeEngine.isRunning()) {
+                  float fraction = mTimeEngine.getFraction();
 
-        if (mTimeEngine.isRunning()) {
-            float fraction = mTimeEngine.getFraction();
+                  mDstPath.reset();
+                  mDstPath.moveTo(mSize >> 1, 0);
 
-            mDstPath.reset();
-            mDstPath.moveTo(mSize >> 1, 0);
+                  int repeated = mTimeEngine.getRepeated();
 
-            int repeated = mTimeEngine.getRepeated();
+                  if(repeated % 2 == 0) {
 
-            if (repeated % 2 == 0) {
+                        mPathMeasure.getSegment(0, mLength * fraction, mDstPath, true);
+                  } else {
 
-                mPathMeasure.getSegment(0, mLength * fraction, mDstPath, true);
-            } else {
+                        mPathMeasure.getSegment(mLength * fraction, mLength, mDstPath, true);
+                  }
 
-                mPathMeasure.getSegment(mLength * fraction, mLength, mDstPath, true);
+                  canvas.drawPath(mDstPath, mPaint);
+                  calculate();
+            }
+      }
+
+      @Override
+      protected void calculate () {
+
+            invalidateSelf();
+      }
+
+      //============================ 配置 ============================
+
+      public void setStrokeWidth (int strokeWidth) {
+
+            mPaint.setStrokeWidth(strokeWidth);
+      }
+
+      public void setStrokeColor (int color) {
+
+            mPaint.setColor(color);
+      }
+
+      //============================ cartoon ============================
+
+      @Override
+      public void start () {
+
+            int repeat = Integer.MAX_VALUE / 800;
+            start(1200, repeat);
+      }
+
+      public void start (int duration) {
+
+            int repeat = Integer.MAX_VALUE / duration;
+            start(duration, repeat);
+      }
+
+      public void start (int duration, int repeat) {
+
+            if(mInterpolator == null) {
+
+                  mInterpolator = new AccelerateDecelerateInterpolator();
             }
 
-            canvas.drawPath(mDstPath, mPaint);
-            calculate();
-        }
-    }
+            start(duration, repeat, mInterpolator);
+      }
 
+      public void start (int duration, int repeat, TimeInterpolator timeInterpolator) {
 
-    @Override
-    protected void calculate() {
+            if(!mTimeEngine.isRunning()) {
 
-        invalidateSelf();
-    }
+                  initPath();
+                  mTimeEngine.setDuration(duration);
+                  mTimeEngine.setInterpolator(timeInterpolator);
+                  mTimeEngine.setRepeat(repeat).start();
+                  invalidateSelf();
+            }
+      }
 
-    //============================ 配置 ============================
+      @Override
+      public void stop () {
 
+            mTimeEngine.stop();
+      }
 
-    public void setStrokeWidth(int strokeWidth) {
+      @Override
+      public boolean isRunning () {
 
-        mPaint.setStrokeWidth(strokeWidth);
-    }
-
-
-    public void setStrokeColor(int color) {
-
-        mPaint.setColor(color);
-    }
-
-    //============================ cartoon ============================
-
-
-    @Override
-    public void start() {
-
-        int repeat = Integer.MAX_VALUE / 800;
-        start(1200, repeat);
-    }
-
-
-    public void start(int duration) {
-
-        int repeat = Integer.MAX_VALUE / duration;
-        start(duration, repeat);
-    }
-
-
-    public void start(int duration, int repeat) {
-
-        if (mInterpolator == null) {
-
-            mInterpolator = new AccelerateDecelerateInterpolator();
-        }
-
-        start(duration, repeat, mInterpolator);
-    }
-
-
-    public void start(int duration, int repeat, TimeInterpolator timeInterpolator) {
-
-        if (!mTimeEngine.isRunning()) {
-
-            initPath();
-            mTimeEngine.setDuration(duration);
-            mTimeEngine.setInterpolator(timeInterpolator);
-            mTimeEngine.setRepeat(repeat).start();
-            invalidateSelf();
-        }
-    }
-
-
-    @Override
-    public void stop() {
-
-        mTimeEngine.stop();
-    }
-
-
-    @Override
-    public boolean isRunning() {
-
-        return mTimeEngine.isRunning();
-    }
+            return mTimeEngine.isRunning();
+      }
 }

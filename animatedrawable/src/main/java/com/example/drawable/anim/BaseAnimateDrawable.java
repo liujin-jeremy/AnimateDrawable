@@ -11,10 +11,8 @@ import com.example.drawable.BaseDrawable;
 @SuppressWarnings("WeakerAccess")
 public abstract class BaseAnimateDrawable extends BaseDrawable implements Animatable {
 
-
-    /**
-     * when calculate finish call {@link #invalidateSelf()}, to make {@link #draw(Canvas)} call
-     */
-    protected abstract void calculate();
-
+      /**
+       * when calculate finish call {@link #invalidateSelf()}, to make {@link #draw(Canvas)} call
+       */
+      protected abstract void calculate ();
 }
