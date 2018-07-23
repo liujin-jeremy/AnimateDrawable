@@ -17,20 +17,15 @@ import android.util.Log;
 @SuppressWarnings("WeakerAccess")
 public abstract class BaseDrawable extends Drawable {
 
-      private static final String TAG = BaseDrawable.class.getSimpleName();
-
       protected Paint mPaint;
 
       public BaseDrawable () {
 
-            Log.e(TAG, "BaseDrawable : ");
             init();
       }
 
       @CallSuper
       protected void init () {
-
-            Log.e(TAG, "init : ");
 
             mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mPaint.setStrokeJoin(Paint.Join.ROUND);

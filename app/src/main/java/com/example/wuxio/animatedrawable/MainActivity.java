@@ -3,6 +3,7 @@ package com.example.wuxio.animatedrawable;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -103,10 +104,24 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         int index = time % modes.length;
-                        rectAnimDrawable.setMode(modes[index]);
+//                        rectAnimDrawable.setMode(modes[index]);
+                        rectAnimDrawable.setMode(modes[0]);
                         rectAnimDrawable.start();
 
                         time++;
+                  }
+            });
+
+            mCountDownText.post(new Runnable() {
+
+                  private final String TAG = MainActivity.class.getSimpleName();
+
+                  @Override
+                  public void run () {
+
+                        rectAnimDrawable.setMode(RoundRectAnimDrawable.CLOCK_WISE_SUB);
+                        rectAnimDrawable.start();
+                        Log.e(TAG, "run : " + Thread.currentThread().getName());
                   }
             });
       }
