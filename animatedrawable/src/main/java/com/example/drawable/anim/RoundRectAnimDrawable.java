@@ -1,17 +1,14 @@
 package com.example.drawable.anim;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Path.Direction;
 import android.graphics.PathMeasure;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import com.example.engine.TimeEngine;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
@@ -24,9 +21,9 @@ import java.lang.annotation.Target;
  * @date: 2018-07-23
  * @time: 10:57
  */
-public class CircleRectAnimDrawable extends BaseAnimateDrawable {
+public class RoundRectAnimDrawable extends BaseAnimateDrawable {
 
-      private static final String TAG = CircleRectAnimDrawable.class.getSimpleName();
+      private static final String TAG = RoundRectAnimDrawable.class.getSimpleName();
 
       private int mWidth;
       private int mHeight;

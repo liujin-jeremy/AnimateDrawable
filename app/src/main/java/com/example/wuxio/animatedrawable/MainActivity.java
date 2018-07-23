@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.drawable.anim.BiliBiliLoadingDrawable;
 import com.example.drawable.anim.CircleLoadingDrawable;
-import com.example.drawable.anim.CircleRectAnimDrawable;
+import com.example.drawable.anim.RoundRectAnimDrawable;
 
 /**
  * @author wuxio
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             mCountDownText = (TextView) findViewById(R.id.countDownText);
-            CircleRectAnimDrawable rectAnimDrawable = new CircleRectAnimDrawable();
+            RoundRectAnimDrawable rectAnimDrawable = new RoundRectAnimDrawable();
             rectAnimDrawable.setColor(Color.BLUE);
             rectAnimDrawable.setStrokeWidth(16);
             rectAnimDrawable.setDuration(1500);
@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
             mCountDownText.setOnClickListener(new OnClickListener() {
 
                   private int[] modes = {
-                      CircleRectAnimDrawable.CLOCK_WISE_ADD,
-                      CircleRectAnimDrawable.CLOCK_WISE_SUB,
-                      CircleRectAnimDrawable.COUNTER_CLOCK_WISE_ADD,
-                      CircleRectAnimDrawable.COUNTER_CLOCK_WISE_SUB
+                      RoundRectAnimDrawable.CLOCK_WISE_ADD,
+                      RoundRectAnimDrawable.CLOCK_WISE_SUB,
+                      RoundRectAnimDrawable.COUNTER_CLOCK_WISE_ADD,
+                      RoundRectAnimDrawable.COUNTER_CLOCK_WISE_SUB
                   };
 
                   private int time = 0;
