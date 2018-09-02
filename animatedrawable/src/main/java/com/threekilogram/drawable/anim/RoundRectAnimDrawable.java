@@ -23,8 +23,6 @@ import java.lang.annotation.Target;
  */
 public class RoundRectAnimDrawable extends BaseAnimateDrawable {
 
-      private static final String TAG = RoundRectAnimDrawable.class.getSimpleName();
-
       private int mWidth;
       private int mHeight;
 
@@ -198,7 +196,5 @@ public class RoundRectAnimDrawable extends BaseAnimateDrawable {
                         COUNTER_CLOCK_WISE_ADD,
                         COUNTER_CLOCK_WISE_SUB })
       @Target(ElementType.PARAMETER)
-      public @interface Mode {
-
-      }
+      public @interface Mode { }
 }

@@ -8,6 +8,7 @@ import android.graphics.PathMeasure;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
 import com.threekilogram.engine.TimeEngine;
 
 /**
@@ -15,29 +16,27 @@ import com.threekilogram.engine.TimeEngine;
  */
 public class CircleLoadingDrawable extends BaseAnimateDrawable {
 
-      private static final String TAG = "CircleLoadingDrawable";
-
       private Path        mSrcPath;
       private PathMeasure mPathMeasure;
       private Path        mDstPath;
       private int         mSize;
+      private TimeEngine  mTimeEngine;
+      private float       mLength;
 
-      private TimeEngine                       mTimeEngine;
-      private float                            mLength;
-      private AccelerateDecelerateInterpolator mInterpolator;
+      private Interpolator mInterpolator;
 
-      public CircleLoadingDrawable (int size) {
+      public CircleLoadingDrawable ( int size ) {
 
             super();
             mSize = size;
       }
 
       @Override
-      protected void init () {
+      protected void init ( ) {
 
             super.init();
-            mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setStrokeWidth(5);
+            mPaint.setStyle( Paint.Style.STROKE );
+            mPaint.setStrokeWidth( 5 );
 
             mTimeEngine = new TimeEngine();
 
@@ -46,23 +45,19 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
             mDstPath = new Path();
       }
 
-      //============================ size ============================
-
       @Override
-      public int getIntrinsicWidth () {
+      public int getIntrinsicWidth ( ) {
 
             return mSize;
       }
 
       @Override
-      public int getIntrinsicHeight () {
+      public int getIntrinsicHeight ( ) {
 
             return mSize;
       }
 
-      //============================ draw ============================
-
-      private void initPath () {
+      private void initPath ( ) {
 
             int size = mSize;
             int r = size >> 1;
@@ -77,99 +72,95 @@ public class CircleLoadingDrawable extends BaseAnimateDrawable {
                 size - strokeWidth
             );
 
-            mSrcPath.addArc(rectF, -90, 359.9f);
-            mPathMeasure.setPath(mSrcPath, true);
+            mSrcPath.addArc( rectF, -90, 359.9f );
+            mPathMeasure.setPath( mSrcPath, true );
 
             mLength = mPathMeasure.getLength();
       }
 
       @Override
-      public void draw (@NonNull Canvas canvas) {
+      public void draw ( @NonNull Canvas canvas ) {
 
-            if(mTimeEngine.isRunning()) {
+            if( mTimeEngine.isRunning() ) {
                   float fraction = mTimeEngine.getFraction();
 
                   mDstPath.reset();
-                  mDstPath.moveTo(mSize >> 1, 0);
+                  mDstPath.moveTo( mSize >> 1, 0 );
 
                   int repeated = mTimeEngine.getRepeated();
 
-                  if(repeated % 2 == 0) {
+                  if( repeated % 2 == 0 ) {
 
-                        mPathMeasure.getSegment(0, mLength * fraction, mDstPath, true);
+                        mPathMeasure.getSegment( 0, mLength * fraction, mDstPath, true );
                   } else {
 
-                        mPathMeasure.getSegment(mLength * fraction, mLength, mDstPath, true);
+                        mPathMeasure.getSegment( mLength * fraction, mLength, mDstPath, true );
                   }
 
-                  canvas.drawPath(mDstPath, mPaint);
+                  canvas.drawPath( mDstPath, mPaint );
                   calculate();
             }
       }
 
       @Override
-      protected void calculate () {
+      protected void calculate ( ) {
 
             invalidateSelf();
       }
 
-      //============================ 配置 ============================
+      public void setStrokeWidth ( int strokeWidth ) {
 
-      public void setStrokeWidth (int strokeWidth) {
-
-            mPaint.setStrokeWidth(strokeWidth);
+            mPaint.setStrokeWidth( strokeWidth );
       }
 
-      public void setStrokeColor (int color) {
+      public void setStrokeColor ( int color ) {
 
-            mPaint.setColor(color);
+            mPaint.setColor( color );
       }
-
-      //============================ cartoon ============================
 
       @Override
-      public void start () {
+      public void start ( ) {
 
             int repeat = Integer.MAX_VALUE / 800;
-            start(1200, repeat);
+            start( 1200, repeat );
       }
 
-      public void start (int duration) {
+      public void start ( int duration ) {
 
             int repeat = Integer.MAX_VALUE / duration;
-            start(duration, repeat);
+            start( duration, repeat );
       }
 
-      public void start (int duration, int repeat) {
+      public void start ( int duration, int repeat ) {
 
-            if(mInterpolator == null) {
+            if( mInterpolator == null ) {
 
                   mInterpolator = new AccelerateDecelerateInterpolator();
             }
 
-            start(duration, repeat, mInterpolator);
+            start( duration, repeat, mInterpolator );
       }
 
-      public void start (int duration, int repeat, TimeInterpolator timeInterpolator) {
+      public void start ( int duration, int repeat, TimeInterpolator timeInterpolator ) {
 
-            if(!mTimeEngine.isRunning()) {
+            if( !mTimeEngine.isRunning() ) {
 
                   initPath();
-                  mTimeEngine.setDuration(duration);
-                  mTimeEngine.setInterpolator(timeInterpolator);
-                  mTimeEngine.setRepeat(repeat).start();
+                  mTimeEngine.setDuration( duration );
+                  mTimeEngine.setInterpolator( timeInterpolator );
+                  mTimeEngine.setRepeat( repeat ).start();
                   invalidateSelf();
             }
       }
 
       @Override
-      public void stop () {
+      public void stop ( ) {
 
             mTimeEngine.stop();
       }
 
       @Override
-      public boolean isRunning () {
+      public boolean isRunning ( ) {
 
             return mTimeEngine.isRunning();
       }
