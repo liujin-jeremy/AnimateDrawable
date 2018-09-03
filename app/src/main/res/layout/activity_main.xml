@@ -47,13 +47,12 @@
       <TextView
           android:id="@+id/rectProcess"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="40dp"
           android:layout_marginTop="8dp"
           android:layout_marginBottom="8dp"
-          android:paddingLeft="8dp"
-          android:paddingRight="8dp"
+          android:layout_marginLeft="12dp"
+          android:layout_marginRight="12dp"
           android:gravity="center"
-          android:text="rect Process"
           android:textSize="32sp"/>
 
       <SeekBar

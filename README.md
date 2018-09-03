@@ -133,7 +133,6 @@ textView.setTextColor(colorNormal, colorSelect);
 textView.setProgress(progress);
 ```
 
-
 ## CircleRectAnimDrawable(倒计时动画)
 
 一个圆角矩形动画,可以作为倒计时
@@ -156,3 +155,19 @@ textView.setProgress(progress);
  // 开始
  rectAnimDrawable.start();
 ```
+
+### RoundRectProgressDrawable(可变形圆角矩形)
+
+```
+ RoundRectProgressDrawable drawable = new RoundRectProgressDrawable();
+ drawable.setPaintColor( Color.RED );
+ mRectProcess.setBackgroundDrawable( drawable );
+```
+
+```
+// progress 0~1f
+drawable.setProgress( progress );
+```
+
+![](img/pic05.gif)
+

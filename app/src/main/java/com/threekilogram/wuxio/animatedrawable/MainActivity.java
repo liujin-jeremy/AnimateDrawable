@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
             mRectProcess = findViewById( R.id.rectProcess );
             RoundRectProgressDrawable drawable = new RoundRectProgressDrawable();
             drawable.setPaintColor( Color.RED );
-            drawable.setProgress( 1 );
             mRectProcess.setBackgroundDrawable( drawable );
             mRoundRectSeek = (SeekBar) findViewById( R.id.roundRectSeek );
             mRoundRectSeek.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
