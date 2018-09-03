@@ -52,6 +52,6 @@ public class AlphaProgressDrawable extends BaseProgressDrawable {
     @Override
     public int getIntrinsicHeight() {
 
-        return mSelectedBitmap.getHeight();
+          return mNormalBitmap.getHeight();
     }
 }

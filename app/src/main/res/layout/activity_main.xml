@@ -44,4 +44,22 @@
           android:text="倒计时"
           android:textSize="32sp"/>
 
+      <TextView
+          android:id="@+id/rectProcess"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:layout_marginBottom="8dp"
+          android:paddingLeft="8dp"
+          android:paddingRight="8dp"
+          android:gravity="center"
+          android:text="rect Process"
+          android:textSize="32sp"/>
+
+      <SeekBar
+          android:id="@+id/roundRectSeek"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="8dp"/>
+
 </LinearLayout>

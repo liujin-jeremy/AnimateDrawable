@@ -23,26 +23,22 @@ import java.lang.annotation.Target;
  */
 public class RoundRectAnimDrawable extends BaseAnimateDrawable {
 
-      private int mWidth;
-      private int mHeight;
+      public static final int CLOCK_WISE_ADD         = 0;
+      public static final int COUNTER_CLOCK_WISE_ADD = 1;
+      public static final int CLOCK_WISE_SUB         = 2;
+      public static final int COUNTER_CLOCK_WISE_SUB = 3;
 
       private float mStrokeWidth = 10;
+      private int   mDuration    = 3000;
 
+      private int         mWidth;
+      private int         mHeight;
       private Path        mSrc;
       private Path        mDst;
       private PathMeasure mPathMeasure;
       private float       mTotalLength;
-
-      private TimeEngine mTimeEngine;
-      private int mDuration = 3000;
-
-      private int mMode;
-
-      public static final int CLOCK_WISE_ADD         = 0;
-      public static final int COUNTER_CLOCK_WISE_ADD = 1;
-
-      public static final int CLOCK_WISE_SUB         = 2;
-      public static final int COUNTER_CLOCK_WISE_SUB = 3;
+      private TimeEngine  mTimeEngine;
+      private int         mMode;
 
       @Override
       public int getIntrinsicWidth ( ) {
