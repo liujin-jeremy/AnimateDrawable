@@ -24,7 +24,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```
 	dependencies {
-	        implementation 'com.github.threekilogram:animateDrawable:1.1.6'
+	        implementation 'com.github.threekilogram:animateDrawable:1.1.7'
 	}
 ```
 
