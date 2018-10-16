@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
       private ImageView           mCornerImage;
       private SeekBar             mCornerSeek;
       private ImageView           mCornerAnimateImage;
-      private AnimateDrawableView mAnimateView;
+      private AnimateDrawableView mBilibiliView;
+      private AnimateDrawableView mCircleView;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -63,16 +64,31 @@ public class MainActivity extends AppCompatActivity {
             testCircle( color );
             testPath( color );
             testCorner( color );
+            testView();
+      }
 
-            mAnimateView = findViewById( R.id.animateView );
+      private void testView ( ) {
+
+            mBilibiliView = findViewById( R.id.bilibiliView );
             BiliBiliLoadingDrawable loadingDrawable = new BiliBiliLoadingDrawable();
-            mAnimateView.setDrawable( loadingDrawable );
-            mAnimateView.setOnClickListener( v -> {
+            mBilibiliView.setDrawable( loadingDrawable );
+            mBilibiliView.setOnClickListener( v -> {
 
-                  if( mAnimateView.isRunning() ) {
-                        mAnimateView.stop();
+                  if( mBilibiliView.isRunning() ) {
+                        mBilibiliView.stop();
                   } else {
-                        mAnimateView.start();
+                        mBilibiliView.start();
+                  }
+            } );
+
+            CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable();
+            mCircleView = findViewById( R.id.circleView );
+            mCircleView.setDrawable( circleLoadingDrawable );
+            mCircleView.setOnClickListener( v -> {
+                  if( mCircleView.isRunning() ) {
+                        mCircleView.stop();
+                  } else {
+                        mCircleView.start();
                   }
             } );
       }
