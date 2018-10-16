@@ -2,6 +2,7 @@ package com.threekilogram.drawable;
 
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
@@ -47,6 +48,11 @@ public abstract class BaseProgressDrawable extends Drawable {
       public Paint getPaint ( ) {
 
             return mPaint;
+      }
+
+      public void setPaintStyle ( Style style ) {
+
+            mPaint.setStyle( style );
       }
 
       @Override

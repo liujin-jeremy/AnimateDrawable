@@ -34,7 +34,7 @@ public class AnimateWrapperDrawable extends Drawable {
       /**
        * 强制停止
        */
-      private boolean          isForceStop;
+      private boolean          isForceStop   = true;
       /**
        * 差值器
        */

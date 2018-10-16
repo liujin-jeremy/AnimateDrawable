@@ -52,10 +52,10 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
             RectF rectF = new RectF();
 
             rectF.set(
-                strokeWidth,
-                strokeWidth,
-                size - strokeWidth,
-                size - strokeWidth
+                strokeWidth / 2,
+                strokeWidth / 2,
+                size - strokeWidth / 2,
+                size - strokeWidth / 2
             );
 
             mSrcPath.reset();

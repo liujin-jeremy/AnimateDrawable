@@ -1,4 +1,5 @@
 <resources>
       <string name="app_name">AnimateDrawable</string>
       <string name="click_text">点击图片播放动画</string>
+      <string name="text">微信底部</string>
 </resources>
