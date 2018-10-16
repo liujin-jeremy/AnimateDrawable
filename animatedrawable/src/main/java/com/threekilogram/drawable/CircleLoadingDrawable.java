@@ -17,8 +17,6 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
       private Path        mDstPath;
       private int         mSize;
       private float       mLength;
-      private float       mProgress;
-      private int         mDrawCount;
 
       public CircleLoadingDrawable ( int size ) {
 
@@ -30,6 +28,8 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
             mSrcPath = new Path();
             mPathMeasure = new PathMeasure();
             mDstPath = new Path();
+
+            initPath();
       }
 
       @Override
@@ -47,7 +47,6 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
       private void initPath ( ) {
 
             int size = mSize;
-            int r = size >> 1;
             float strokeWidth = mPaint.getStrokeWidth();
 
             RectF rectF = new RectF();
@@ -59,7 +58,8 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
                 size - strokeWidth
             );
 
-            mSrcPath.addArc( rectF, -90, 359.9f );
+            mSrcPath.reset();
+            mSrcPath.addArc( rectF, -90, 360f );
             mPathMeasure.setPath( mSrcPath, true );
 
             mLength = mPathMeasure.getLength();
@@ -73,32 +73,32 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
             mDstPath.reset();
             mDstPath.moveTo( mSize >> 1, 0 );
 
-            if( mDrawCount % 2 == 0 ) {
+            final float middle = 0.5f;
+            if( fraction <= middle ) {
 
-                  mPathMeasure.getSegment( 0, mLength * fraction, mDstPath, true );
+                  mPathMeasure.getSegment(
+                      0,
+                      mLength * fraction * 2,
+                      mDstPath,
+                      true
+                  );
             } else {
 
-                  mPathMeasure.getSegment( mLength * fraction, mLength, mDstPath, true );
+                  mPathMeasure.getSegment(
+                      mLength * ( fraction - 0.5f ) * 2,
+                      mLength,
+                      mDstPath,
+                      true
+                  );
             }
-            mDrawCount++;
 
             canvas.drawPath( mDstPath, mPaint );
       }
 
+      @Override
       public void setStrokeWidth ( int strokeWidth ) {
 
-            mPaint.setStrokeWidth( strokeWidth );
-      }
-
-      public void setStrokeColor ( int color ) {
-
-            mPaint.setColor( color );
-      }
-
-      @Override
-      public void setProgress ( float progress ) {
-
-            mProgress = progress;
-            invalidateSelf();
+            super.setStrokeWidth( strokeWidth );
+            initPath();
       }
 }

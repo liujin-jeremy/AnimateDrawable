@@ -88,6 +88,7 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
             mPathMeasure.setPath( mSrcPath, false );
       }
 
+      @Override
       public void setStrokeWidth ( int strokeWidth ) {
 
             mStrokeWidth = strokeWidth;
@@ -117,9 +118,7 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
             if( fraction <= flag01 ) {
 
                   mCurrentState = STATE2;
-
                   mStateFraction = ( fraction ) * 2.5f;
-                  invalidateSelf();
                   return;
             }
 
@@ -128,7 +127,6 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
 
                   mCurrentState = STATE4;
                   mStateFraction = ( fraction - flag01 ) * 5;
-                  invalidateSelf();
                   return;
             }
 
@@ -137,7 +135,6 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
 
                   mCurrentState = STATE5;
                   mStateFraction = ( fraction - flag03 ) * 5;
-                  invalidateSelf();
                   return;
             }
 
@@ -146,7 +143,6 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
 
                   mCurrentState = STATE6;
                   mStateFraction = ( fraction - flag04 ) * 5;
-                  invalidateSelf();
             } else {
 
                   /* == 1 */
@@ -158,6 +154,8 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
 
       @Override
       public void draw ( @NonNull Canvas canvas ) {
+
+            calculate( mProgress );
 
             int size = mSize;
             int size20Percent = size / 5;
@@ -254,11 +252,5 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
             mPaint.setAlpha( alpha );
             canvas.drawCircle( rX, rY, radius, mPaint );
             mPaint.setAlpha( 255 );
-      }
-
-      @Override
-      public void setProgress ( float progress ) {
-
-            calculate( progress );
       }
 }

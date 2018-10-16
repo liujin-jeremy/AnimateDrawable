@@ -1,18 +1,14 @@
 package com.threekilogram.wuxio.animatedrawable;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
+import com.threekilogram.drawable.AnimateWrapperDrawable;
 import com.threekilogram.drawable.BiliBiliLoadingDrawable;
 import com.threekilogram.drawable.CircleLoadingDrawable;
-import com.threekilogram.drawable.RoundRectAnimDrawable;
-import com.threekilogram.drawable.RoundRectProgressDrawable;
 
 /**
  * @author wuxio
@@ -21,11 +17,12 @@ public class MainActivity extends AppCompatActivity {
 
       private static final String TAG = MainActivity.class.getSimpleName();
 
-      protected ImageView mAnimate;
-      protected ImageView mImageView;
-      private   TextView  mCountDownText;
-      private   TextView  mRectProcess;
-      private   SeekBar   mRoundRectSeek;
+      private ImageView mBilibiliImage;
+      private SeekBar   mBilibiliSeek;
+      private ImageView mBilibiliAnimateImage;
+      private ImageView mCircleImage;
+      private SeekBar   mCircleSeek;
+      private ImageView mCircleAnimateImage;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -37,116 +34,94 @@ public class MainActivity extends AppCompatActivity {
 
       private void initView ( ) {
 
-            /* bili bili */
+            int color = getResources().getColor( R.color.orangered );
 
-            final BiliBiliLoadingDrawable biliLoadingDrawable = new BiliBiliLoadingDrawable( 300 );
-            biliLoadingDrawable.setStrokeWidth( 10 );
-            biliLoadingDrawable.setRadius( 10 );
-            biliLoadingDrawable.setDuration( 3500 );
-            biliLoadingDrawable.setRepeat( 3000 );
-            biliLoadingDrawable.setPaintColor( getResources().getColor( R.color.colorAccent ) );
-            mAnimate = findViewById( R.id.animate );
-            mAnimate.setImageDrawable( biliLoadingDrawable );
+            /* bilibili progress */
+            BiliBiliLoadingDrawable biliBiliLoadingDrawable = new BiliBiliLoadingDrawable( 200 );
+            biliBiliLoadingDrawable.setRadius( 20 );
+            biliBiliLoadingDrawable.setStrokeWidth( 10 );
+            biliBiliLoadingDrawable
+                .setColor( color );
 
-            mAnimate.setOnClickListener( new OnClickListener() {
-
-                  @Override
-                  public void onClick ( View v ) {
-
-                        if( biliLoadingDrawable.isRunning() ) {
-                              biliLoadingDrawable.stop();
-                        } else {
-                              biliLoadingDrawable.start();
-                        }
-                  }
-            } );
-
-            /* circle */
-
-            mImageView = (ImageView) findViewById( R.id.imageView );
-
-            final CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable( 300 );
-            circleLoadingDrawable.setStrokeColor( getResources().getColor( R.color.colorAccent ) );
-            circleLoadingDrawable.setStrokeWidth( 12 );
-
-            mImageView.setImageDrawable( circleLoadingDrawable );
-            mImageView.setOnClickListener( new OnClickListener() {
-
-                  @Override
-                  public void onClick ( View v ) {
-
-                        if( circleLoadingDrawable.isRunning() ) {
-
-                              circleLoadingDrawable.stop();
-                        } else {
-
-                              circleLoadingDrawable.start( 1500 );
-                        }
-                  }
-            } );
-
-            mCountDownText = (TextView) findViewById( R.id.countDownText );
-            RoundRectAnimDrawable rectAnimDrawable = new RoundRectAnimDrawable();
-            rectAnimDrawable.setPaintColor( Color.BLUE );
-            rectAnimDrawable.setStrokeWidth( 16 );
-            rectAnimDrawable.setDuration( 1500 );
-            mCountDownText.setBackgroundDrawable( rectAnimDrawable );
-
-            mCountDownText.setOnClickListener( new OnClickListener() {
-
-                  private int[] modes = {
-                      RoundRectAnimDrawable.CLOCK_WISE_ADD,
-                      RoundRectAnimDrawable.CLOCK_WISE_SUB,
-                      RoundRectAnimDrawable.COUNTER_CLOCK_WISE_ADD,
-                      RoundRectAnimDrawable.COUNTER_CLOCK_WISE_SUB
-                  };
-
-                  private int time = 0;
-
-                  @Override
-                  public void onClick ( View v ) {
-
-                        if( rectAnimDrawable.isRunning() ) {
-                              return;
-                        }
-
-                        int index = time % modes.length;
-                        rectAnimDrawable.setMode( modes[ index ] );
-                        rectAnimDrawable.setMode( modes[ 0 ] );
-                        rectAnimDrawable.start();
-
-                        time++;
-                  }
-            } );
-
-            mRectProcess = findViewById( R.id.rectProcess );
-            RoundRectProgressDrawable drawable = new RoundRectProgressDrawable();
-            drawable.setPaintColor( Color.RED );
-            mRectProcess.setBackgroundDrawable( drawable );
-            mRoundRectSeek = (SeekBar) findViewById( R.id.roundRectSeek );
-            mRoundRectSeek.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
+            mBilibiliImage = findViewById( R.id.bilibiliImage );
+            mBilibiliImage.setImageDrawable( biliBiliLoadingDrawable );
+            mBilibiliSeek = findViewById( R.id.bilibiliSeek );
+            mBilibiliSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
 
                   @Override
                   public void onProgressChanged (
                       SeekBar seekBar, int progress, boolean fromUser ) {
 
-                        drawable.setProgress( progress * 1.0f / mRoundRectSeek.getMax() );
+                        float v = progress * 1f / seekBar.getMax();
+                        biliBiliLoadingDrawable.setDrawProgress( v );
                   }
+            } );
+
+            /* bilibili animate */
+            BiliBiliLoadingDrawable biliLoadingDrawable = new BiliBiliLoadingDrawable( 200 );
+            biliLoadingDrawable.setRadius( 20 );
+            biliLoadingDrawable.setStrokeWidth( 10 );
+            biliLoadingDrawable
+                .setColor( color );
+            AnimateWrapperDrawable bilibiliWrapper = new AnimateWrapperDrawable(
+                biliLoadingDrawable );
+            bilibiliWrapper.setDuration( 4000 );
+
+            mBilibiliAnimateImage = findViewById( R.id.bilibiliAnimateImage );
+            mBilibiliAnimateImage.setImageDrawable( bilibiliWrapper );
+            mBilibiliAnimateImage.setOnClickListener( v -> {
+
+                  if( bilibiliWrapper.isRunning() ) {
+                        bilibiliWrapper.stop();
+                  } else {
+                        bilibiliWrapper.start();
+                  }
+            } );
+
+            /* circle progress */
+            CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable( 160 );
+            circleLoadingDrawable.setStrokeColor( color );
+            circleLoadingDrawable.setStrokeWidth( 16 );
+            mCircleImage = findViewById( R.id.circleImage );
+            mCircleImage.setImageDrawable( circleLoadingDrawable );
+            mCircleSeek = findViewById( R.id.circleSeek );
+            mCircleSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
 
                   @Override
-                  public void onStartTrackingTouch ( SeekBar seekBar ) {
+                  public void onProgressChanged (
+                      SeekBar seekBar, int progress, boolean fromUser ) {
 
+                        float v = progress * 1f / seekBar.getMax();
+                        circleLoadingDrawable.setDrawProgress( v );
                   }
+            } );
 
-                  @Override
-                  public void onStopTrackingTouch ( SeekBar seekBar ) {
+            /* circle animate */
+            CircleLoadingDrawable circleDrawable = new CircleLoadingDrawable( 160 );
+            circleDrawable.setStrokeColor( color );
+            circleDrawable.setStrokeWidth( 16 );
+            AnimateWrapperDrawable circleWrapper = new AnimateWrapperDrawable( circleDrawable );
+            circleWrapper.setDuration( 4000 );
+            circleWrapper.setInterpolator( new AccelerateDecelerateInterpolator() );
 
+            mCircleAnimateImage = findViewById( R.id.circleAnimateImage );
+            mCircleAnimateImage.setImageDrawable( circleWrapper );
+            mCircleAnimateImage.setOnClickListener( v -> {
+
+                  if( circleWrapper.isRunning() ) {
+                        circleWrapper.stop();
+                  } else {
+                        circleWrapper.start();
                   }
             } );
       }
 
-      public void toWechatBottom ( View view ) {
+      private abstract class SimpleOnSeekBarChangeListener implements OnSeekBarChangeListener {
 
-            WechatBottomActivity.start( this );
+            @Override
+            public void onStartTrackingTouch ( SeekBar seekBar ) { }
+
+            @Override
+            public void onStopTrackingTouch ( SeekBar seekBar ) { }
       }
 }
