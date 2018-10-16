@@ -3,6 +3,7 @@ package com.threekilogram.wuxio.animatedrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -13,6 +14,7 @@ import com.threekilogram.drawable.CircleLoadingDrawable;
 import com.threekilogram.drawable.RoundRectCornerDrawable;
 import com.threekilogram.drawable.RoundRectPathDrawable;
 import com.threekilogram.drawable.widget.AnimateDrawableView;
+import com.threekilogram.drawable.widget.StaticAnimateDrawableView;
 
 /**
  * @author wuxio
@@ -21,20 +23,23 @@ public class MainActivity extends AppCompatActivity {
 
       private static final String TAG = MainActivity.class.getSimpleName();
 
-      private ImageView           mBilibiliImage;
-      private SeekBar             mBilibiliSeek;
-      private ImageView           mBilibiliAnimateImage;
-      private ImageView           mCircleImage;
-      private SeekBar             mCircleSeek;
-      private ImageView           mCircleAnimateImage;
-      private ImageView           mPathImage;
-      private SeekBar             mPathSeek;
-      private ImageView           mPathAnimateImage;
-      private ImageView           mCornerImage;
-      private SeekBar             mCornerSeek;
-      private ImageView           mCornerAnimateImage;
-      private AnimateDrawableView mBilibiliView;
-      private AnimateDrawableView mCircleView;
+      private ImageView                 mBilibiliImage;
+      private SeekBar                   mBilibiliSeek;
+      private ImageView                 mBilibiliAnimateImage;
+      private ImageView                 mCircleImage;
+      private SeekBar                   mCircleSeek;
+      private ImageView                 mCircleAnimateImage;
+      private ImageView                 mPathImage;
+      private SeekBar                   mPathSeek;
+      private ImageView                 mPathAnimateImage;
+      private ImageView                 mCornerImage;
+      private SeekBar                   mCornerSeek;
+      private ImageView                 mCornerAnimateImage;
+      private AnimateDrawableView       mBilibiliView;
+      private AnimateDrawableView       mCircleView;
+      private StaticAnimateDrawableView mStatic0;
+      private StaticAnimateDrawableView mStatic1;
+      private StaticAnimateDrawableView mStatic2;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -58,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
             mCornerImage = findViewById( R.id.cornerImage );
             mCornerSeek = findViewById( R.id.cornerSeek );
             mCornerAnimateImage = findViewById( R.id.cornerAnimateImage );
+            mBilibiliView = findViewById( R.id.bilibiliView );
+            mCircleView = findViewById( R.id.circleView );
+            mStatic0 = findViewById( R.id.static0 );
+            mStatic1 = findViewById( R.id.static1 );
+            mStatic2 = findViewById( R.id.static2 );
 
             int color = getResources().getColor( R.color.orangered );
             testBilibili( color );
@@ -65,11 +75,38 @@ public class MainActivity extends AppCompatActivity {
             testPath( color );
             testCorner( color );
             testView();
+
+            testStatic( color );
+      }
+
+      private void testStatic ( int color ) {
+
+            BiliBiliLoadingDrawable loadingDrawable = new BiliBiliLoadingDrawable();
+            loadingDrawable.setRadius( 10 );
+            loadingDrawable.setRadius( 20 );
+            loadingDrawable.setColor( color );
+            StaticAnimateDrawableView.setDrawable( loadingDrawable );
+
+            OnClickListener listener = new OnClickListener() {
+
+                  @Override
+                  public void onClick ( View v ) {
+
+                        if( v.getVisibility() == View.VISIBLE ) {
+                              v.setVisibility( View.INVISIBLE );
+                        } else {
+                              v.setVisibility( View.VISIBLE );
+                        }
+                  }
+            };
+
+            mStatic0.setOnClickListener( listener );
+            mStatic1.setOnClickListener( listener );
+            mStatic2.setOnClickListener( listener );
       }
 
       private void testView ( ) {
 
-            mBilibiliView = findViewById( R.id.bilibiliView );
             BiliBiliLoadingDrawable loadingDrawable = new BiliBiliLoadingDrawable();
             mBilibiliView.setDrawable( loadingDrawable );
             mBilibiliView.setCount( Integer.MAX_VALUE );
@@ -83,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
             } );
 
             CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable();
-            mCircleView = findViewById( R.id.circleView );
             mCircleView.setDrawable( circleLoadingDrawable );
             mCircleView.setOnClickListener( v -> {
                   if( mCircleView.isRunning() ) {
@@ -242,6 +278,13 @@ public class MainActivity extends AppCompatActivity {
       public void toWeChat ( View view ) {
 
             WeChatBottomActivity.start( this );
+      }
+
+      public void allVisible ( View view ) {
+
+            mStatic0.setVisibility( View.VISIBLE );
+            mStatic1.setVisibility( View.VISIBLE );
+            mStatic2.setVisibility( View.VISIBLE );
       }
 
       private abstract class SimpleOnSeekBarChangeListener implements OnSeekBarChangeListener {

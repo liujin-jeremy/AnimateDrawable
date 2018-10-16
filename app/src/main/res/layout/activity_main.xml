@@ -168,5 +168,44 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@color/gainsboro"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                  <com.threekilogram.drawable.widget.StaticAnimateDrawableView
+                      android:id="@+id/static0"
+                      android:layout_width="100dp"
+                      android:layout_height="match_parent"
+                      android:background="@color/gainsboro"/>
+
+
+                  <com.threekilogram.drawable.widget.StaticAnimateDrawableView
+                      android:id="@+id/static1"
+                      android:layout_width="100dp"
+                      android:layout_height="match_parent"
+                      android:layout_marginStart="8dp"
+                      android:layout_marginLeft="8dp"
+                      android:background="@color/gainsboro"/>
+
+
+                  <com.threekilogram.drawable.widget.StaticAnimateDrawableView
+                      android:id="@+id/static2"
+                      android:layout_width="100dp"
+                      android:layout_height="match_parent"
+                      android:layout_marginStart="8dp"
+                      android:layout_marginLeft="8dp"
+                      android:background="@color/gainsboro"/>
+
+            </LinearLayout>
+            <Button
+                android:text="@string/all_visible"
+                android:onClick="allVisible"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
       </LinearLayout>
 </ScrollView>

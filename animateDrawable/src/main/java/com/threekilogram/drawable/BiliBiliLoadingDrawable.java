@@ -18,8 +18,8 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
       private final int STATE5 = 5;
       private final int STATE6 = 6;
 
-      private   int         mRadius      = 20;
-      private   int         mStrokeWidth = 10;
+      private   int         mRadius      = 8;
+      private   int         mStrokeWidth = 5;
       protected Path        mSrcPath;
       protected PathMeasure mPathMeasure;
       protected Path        mDstPath;

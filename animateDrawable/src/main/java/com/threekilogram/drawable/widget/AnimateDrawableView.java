@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import com.threekilogram.drawable.AnimateDrawableUtil;
+import com.threekilogram.drawable.AnimateDrawableUtil.OnViewRequestInvalidateListener;
 import com.threekilogram.drawable.BaseProgressDrawable;
 
 /**
@@ -18,7 +19,7 @@ public class AnimateDrawableView extends View {
       private static final int DEFAULT_SIZE = 200;
 
       private BaseProgressDrawable mDrawable;
-      private AnimateDrawableUtil  mUtil;
+      private AnimateDrawableUtil  mUtil = new AnimateDrawableUtil();
 
       public AnimateDrawableView ( Context context ) {
 
@@ -35,12 +36,13 @@ public class AnimateDrawableView extends View {
           Context context, @Nullable AttributeSet attrs, int defStyleAttr ) {
 
             super( context, attrs, defStyleAttr );
+            mUtil.setOnRequestInvalidateListener( new OnViewRequestInvalidateListener( this ) );
       }
 
       public void setDrawable ( BaseProgressDrawable progressDrawable ) {
 
             mDrawable = progressDrawable;
-            mUtil = new AnimateDrawableUtil( this );
+            mUtil.setDrawable( mDrawable );
       }
 
       public BaseProgressDrawable getDrawable ( ) {
@@ -78,11 +80,7 @@ public class AnimateDrawableView extends View {
       @Override
       protected void onDraw ( Canvas canvas ) {
 
-            try {
-                  mUtil.onDraw( canvas );
-            } catch(Exception e) {
-                  /* noting */
-            }
+            mUtil.onDraw( canvas );
       }
 
       /**

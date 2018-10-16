@@ -45,26 +45,50 @@ public class AnimateDrawableUtil {
       /**
        * 使用该类进行刷新界面
        */
-      private OnRequestInvalidateListener mInvalidateListener;
+      private OnRequestInvalidateListener mOnRequestInvalidateListener;
+
+      public AnimateDrawableUtil ( ) { }
 
       public AnimateDrawableUtil ( AnimateWrapperDrawable wrapperDrawable ) {
 
             mDrawable = wrapperDrawable.getDrawable();
-            mInvalidateListener = new OnDrawableRequestInvalidateListener( wrapperDrawable );
+            mOnRequestInvalidateListener = new OnDrawableRequestInvalidateListener(
+                wrapperDrawable );
       }
 
       public AnimateDrawableUtil ( AnimateDrawableView view ) {
 
             mDrawable = view.getDrawable();
-            mInvalidateListener = new OnViewRequestInvalidateListener( view );
+            mOnRequestInvalidateListener = new OnViewRequestInvalidateListener( view );
       }
 
       public AnimateDrawableUtil (
           BaseProgressDrawable drawable,
-          OnRequestInvalidateListener invalidateListener ) {
+          OnRequestInvalidateListener onRequestInvalidateListener ) {
 
             mDrawable = drawable;
-            mInvalidateListener = invalidateListener;
+            mOnRequestInvalidateListener = onRequestInvalidateListener;
+      }
+
+      public void setDrawable ( BaseProgressDrawable drawable ) {
+
+            mDrawable = drawable;
+      }
+
+      public BaseProgressDrawable getDrawable ( ) {
+
+            return mDrawable;
+      }
+
+      public void setOnRequestInvalidateListener (
+          OnRequestInvalidateListener onRequestInvalidateListener ) {
+
+            mOnRequestInvalidateListener = onRequestInvalidateListener;
+      }
+
+      public OnRequestInvalidateListener getOnRequestInvalidateListener ( ) {
+
+            return mOnRequestInvalidateListener;
       }
 
       /**
@@ -73,6 +97,10 @@ public class AnimateDrawableUtil {
        * @param canvas canvas
        */
       public void onDraw ( Canvas canvas ) {
+
+            if( mDrawable == null ) {
+                  return;
+            }
 
             mDrawable.draw( canvas );
 
@@ -88,14 +116,14 @@ public class AnimateDrawableUtil {
                   isRunning = true;
                   float progress = ( diff % mDuration ) * 1f / mDuration;
                   mDrawable.mProgress = mInterpolator.getInterpolation( progress );
-                  mInvalidateListener.onRequestInvalidate();
+                  mOnRequestInvalidateListener.onRequestInvalidate();
             } else {
 
                   if( mDrawable.mProgress < 1 ) {
 
                         isRunning = true;
                         mDrawable.mProgress = 1;
-                        mInvalidateListener.onRequestInvalidate();
+                        mOnRequestInvalidateListener.onRequestInvalidate();
                   } else {
                         isRunning = false;
                   }
@@ -143,7 +171,7 @@ public class AnimateDrawableUtil {
        */
       public boolean isRunning ( ) {
 
-            return isRunning;
+            return isRunning && !isForceStop;
       }
 
       /**
@@ -197,7 +225,7 @@ public class AnimateDrawableUtil {
                   isForceStop = false;
             }
             isRunning = true;
-            mInvalidateListener.onRequestInvalidate();
+            mOnRequestInvalidateListener.onRequestInvalidate();
       }
 
       /**
