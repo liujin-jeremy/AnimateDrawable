@@ -12,6 +12,7 @@ import com.threekilogram.drawable.BiliBiliLoadingDrawable;
 import com.threekilogram.drawable.CircleLoadingDrawable;
 import com.threekilogram.drawable.RoundRectCornerDrawable;
 import com.threekilogram.drawable.RoundRectPathDrawable;
+import com.threekilogram.drawable.widget.AnimateDrawableView;
 
 /**
  * @author wuxio
@@ -20,18 +21,19 @@ public class MainActivity extends AppCompatActivity {
 
       private static final String TAG = MainActivity.class.getSimpleName();
 
-      private ImageView mBilibiliImage;
-      private SeekBar   mBilibiliSeek;
-      private ImageView mBilibiliAnimateImage;
-      private ImageView mCircleImage;
-      private SeekBar   mCircleSeek;
-      private ImageView mCircleAnimateImage;
-      private ImageView mPathImage;
-      private SeekBar   mPathSeek;
-      private ImageView mPathAnimateImage;
-      private ImageView mCornerImage;
-      private SeekBar   mCornerSeek;
-      private ImageView mCornerAnimateImage;
+      private ImageView           mBilibiliImage;
+      private SeekBar             mBilibiliSeek;
+      private ImageView           mBilibiliAnimateImage;
+      private ImageView           mCircleImage;
+      private SeekBar             mCircleSeek;
+      private ImageView           mCircleAnimateImage;
+      private ImageView           mPathImage;
+      private SeekBar             mPathSeek;
+      private ImageView           mPathAnimateImage;
+      private ImageView           mCornerImage;
+      private SeekBar             mCornerSeek;
+      private ImageView           mCornerAnimateImage;
+      private AnimateDrawableView mAnimateView;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -60,8 +62,19 @@ public class MainActivity extends AppCompatActivity {
             testBilibili( color );
             testCircle( color );
             testPath( color );
-
             testCorner( color );
+
+            mAnimateView = findViewById( R.id.animateView );
+            BiliBiliLoadingDrawable loadingDrawable = new BiliBiliLoadingDrawable();
+            mAnimateView.setDrawable( loadingDrawable );
+            mAnimateView.setOnClickListener( v -> {
+
+                  if( mAnimateView.isRunning() ) {
+                        mAnimateView.stop();
+                  } else {
+                        mAnimateView.start();
+                  }
+            } );
       }
 
       private void testCorner ( int color ) {
@@ -83,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             RoundRectCornerDrawable animateCorner = new RoundRectCornerDrawable();
             animateCorner.setColor( color );
             AnimateWrapperDrawable wrapperDrawable = new AnimateWrapperDrawable( animateCorner );
-            wrapperDrawable.setDuration( 3000 );
+            wrapperDrawable.setDuration( 1000 );
             mCornerAnimateImage.setImageDrawable( wrapperDrawable );
             mCornerAnimateImage.setOnClickListener( v -> {
 

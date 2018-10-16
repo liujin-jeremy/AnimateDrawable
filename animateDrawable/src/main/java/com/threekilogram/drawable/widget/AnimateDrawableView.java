@@ -1,34 +1,37 @@
 package com.threekilogram.drawable.widget;
 
+import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import com.threekilogram.drawable.AnimateDrawableUtil;
 import com.threekilogram.drawable.BaseProgressDrawable;
 
 /**
  * @author Liujin 2018-10-16:13:14
  */
-public class ProgressDrawableView extends View {
+public class AnimateDrawableView extends View {
 
       private static final int DEFAULT_SIZE = 200;
 
       private BaseProgressDrawable mDrawable;
+      private AnimateDrawableUtil  mUtil;
 
-      public ProgressDrawableView ( Context context ) {
+      public AnimateDrawableView ( Context context ) {
 
             this( context, null, 0 );
       }
 
-      public ProgressDrawableView (
+      public AnimateDrawableView (
           Context context, @Nullable AttributeSet attrs ) {
 
             this( context, attrs, 0 );
       }
 
-      public ProgressDrawableView (
+      public AnimateDrawableView (
           Context context, @Nullable AttributeSet attrs, int defStyleAttr ) {
 
             super( context, attrs, defStyleAttr );
@@ -37,6 +40,7 @@ public class ProgressDrawableView extends View {
       public void setDrawable ( BaseProgressDrawable progressDrawable ) {
 
             mDrawable = progressDrawable;
+            mUtil = new AnimateDrawableUtil( this );
       }
 
       public BaseProgressDrawable getDrawable ( ) {
@@ -74,7 +78,11 @@ public class ProgressDrawableView extends View {
       @Override
       protected void onDraw ( Canvas canvas ) {
 
-            mDrawable.draw( canvas );
+            try {
+                  mUtil.onDraw( canvas );
+            } catch(Exception e) {
+                  /* noting */
+            }
       }
 
       /**
@@ -104,5 +112,89 @@ public class ProgressDrawableView extends View {
 
             mDrawable.setProgress( progress );
             invalidate();
+      }
+
+      /**
+       * 设置执行动画次数
+       *
+       * @param count 次数
+       */
+      public void setCount ( int count ) {
+
+            mUtil.setCount( count );
+      }
+
+      /**
+       * 获取设置的执行动画次数
+       */
+      public int getCount ( ) {
+
+            return mUtil.getCount();
+      }
+
+      /**
+       * 设置动画时长
+       */
+      public void setDuration ( int duration ) {
+
+            mUtil.setDuration( duration );
+      }
+
+      /**
+       * 获取设置的动画时长
+       */
+      public int getDuration ( ) {
+
+            return mUtil.getDuration();
+      }
+
+      /**
+       * 测试是否正在进行动画
+       *
+       * @return true 正在进行动画
+       */
+      public boolean isRunning ( ) {
+
+            return mUtil.isRunning();
+      }
+
+      /**
+       * 获取已经进行的次数
+       */
+      public int getFinishedCount ( ) {
+
+            return mUtil.getFinishedCount();
+      }
+
+      /**
+       * 设置差值器
+       */
+      public void setInterpolator ( TimeInterpolator interpolator ) {
+
+            mUtil.setInterpolator( interpolator );
+      }
+
+      /**
+       * 获取设置的差值器
+       */
+      public TimeInterpolator getInterpolator ( ) {
+
+            return mUtil.getInterpolator();
+      }
+
+      /**
+       * 开始动画
+       */
+      public void start ( ) {
+
+            mUtil.start();
+      }
+
+      /**
+       * 结束动画
+       */
+      public void stop ( ) {
+
+            mUtil.stop();
       }
 }

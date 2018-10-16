@@ -152,5 +152,13 @@
                 android:onClick="toWeChat"
                 android:text="@string/text"/>
 
+            <com.threekilogram.drawable.widget.AnimateDrawableView
+                android:layout_width="100dp"
+                android:id="@+id/animateView"
+                android:layout_height="100dp"
+                android:background="@color/gainsboro"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center_horizontal"/>
+
       </LinearLayout>
 </ScrollView>

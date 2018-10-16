@@ -5,20 +5,23 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import com.threekilogram.drawable.widget.ProgressDrawableView;
+import com.threekilogram.drawable.widget.AnimateDrawableView;
 
 /**
- * 辅助{@link BaseProgressDrawable}执行动画效果
+ * 辅助{@link BaseProgressDrawable}执行动画效果,一帧播放完成之后才播放下一帧
  *
  * @author Liujin 2018-10-16:13:29
  */
 public class AnimateDrawableUtil {
 
+      /**
+       * 真正进行绘制
+       */
       private BaseProgressDrawable        mDrawable;
       /**
        * 时长
        */
-      private int                         mDuration     = 2048;
+      private int                         mDuration     = 2000;
       /**
        * 播放总数
        */
@@ -26,7 +29,7 @@ public class AnimateDrawableUtil {
       /**
        * 开始时间,用于计算是否已经完成
        */
-      private long                        mStartTime;
+      private long                        mStartTime    = System.currentTimeMillis();
       /**
        * 记录是否正在运行
        */
@@ -50,7 +53,7 @@ public class AnimateDrawableUtil {
             mInvalidateListener = new OnDrawableRequestInvalidateListener( wrapperDrawable );
       }
 
-      public AnimateDrawableUtil ( ProgressDrawableView view ) {
+      public AnimateDrawableUtil ( AnimateDrawableView view ) {
 
             mDrawable = view.getDrawable();
             mInvalidateListener = new OnViewRequestInvalidateListener( view );
@@ -75,6 +78,7 @@ public class AnimateDrawableUtil {
 
             if( isForceStop ) {
                   isRunning = false;
+                  return;
             }
 
             long current = System.currentTimeMillis();
@@ -98,36 +102,61 @@ public class AnimateDrawableUtil {
             }
       }
 
+      /**
+       * 设置执行动画次数
+       *
+       * @param count 次数
+       */
       public void setCount ( int count ) {
 
             mCount = count;
       }
 
+      /**
+       * 获取设置的执行动画次数
+       */
       public int getCount ( ) {
 
             return mCount;
       }
 
+      /**
+       * 设置动画时长
+       */
       public void setDuration ( int duration ) {
 
             mDuration = duration;
       }
 
+      /**
+       * 获取设置的动画时长
+       */
       public int getDuration ( ) {
 
             return mDuration;
       }
 
+      /**
+       * 测试是否正在进行动画
+       *
+       * @return true 正在进行动画
+       */
       public boolean isRunning ( ) {
 
             return isRunning;
       }
 
+      /**
+       * 当前进度
+       */
       public float getProgress ( ) {
 
             return mDrawable.mProgress;
       }
 
+      /**
+       * 获取已经进行的次数
+       */
       public int getFinishedCount ( ) {
 
             long current = System.currentTimeMillis();
@@ -142,16 +171,25 @@ public class AnimateDrawableUtil {
             return result;
       }
 
+      /**
+       * 设置差值器
+       */
       public void setInterpolator ( TimeInterpolator interpolator ) {
 
             mInterpolator = interpolator;
       }
 
+      /**
+       * 获取设置的差值器
+       */
       public TimeInterpolator getInterpolator ( ) {
 
             return mInterpolator;
       }
 
+      /**
+       * 开始动画
+       */
       public void start ( ) {
 
             mStartTime = System.currentTimeMillis();
@@ -162,15 +200,12 @@ public class AnimateDrawableUtil {
             mInvalidateListener.onRequestInvalidate();
       }
 
+      /**
+       * 结束动画
+       */
       public void stop ( ) {
 
             isForceStop = true;
-      }
-
-      public void resume ( ) {
-
-            isForceStop = false;
-            mInvalidateListener.onRequestInvalidate();
       }
 
       /**

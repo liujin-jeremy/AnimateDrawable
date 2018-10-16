@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 
@@ -18,6 +19,11 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
       private int         mSize;
       private float       mLength;
 
+      public CircleLoadingDrawable ( ) {
+
+            this( 0 );
+      }
+
       public CircleLoadingDrawable ( int size ) {
 
             super();
@@ -26,47 +32,64 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
             mPaint.setStrokeWidth( 5 );
 
             mSrcPath = new Path();
-            mPathMeasure = new PathMeasure();
             mDstPath = new Path();
-
-            initPath();
       }
 
       @Override
       public int getIntrinsicWidth ( ) {
 
-            return mSize;
+            if( mSize != 0 ) {
+                  return mSize;
+            }
+            return getIntrinsicWidth();
       }
 
       @Override
       public int getIntrinsicHeight ( ) {
 
-            return mSize;
+            if( mSize != 0 ) {
+                  return mSize;
+            }
+            return getIntrinsicHeight();
       }
 
-      private void initPath ( ) {
+      private void initPath ( Canvas canvas ) {
 
-            int size = mSize;
-            float strokeWidth = mPaint.getStrokeWidth();
+            if( mPathMeasure == null ) {
 
-            RectF rectF = new RectF();
+                  mPathMeasure = new PathMeasure();
 
-            rectF.set(
-                strokeWidth / 2,
-                strokeWidth / 2,
-                size - strokeWidth / 2,
-                size - strokeWidth / 2
-            );
+                  int size = 0;
+                  if( mSize != 0 ) {
+                        size = mSize;
+                  } else {
+                        Rect bounds = canvas.getClipBounds();
+                        size = Math.min( bounds.width(), bounds.height() );
+                  }
 
-            mSrcPath.reset();
-            mSrcPath.addArc( rectF, -90, 360f );
-            mPathMeasure.setPath( mSrcPath, true );
+                  float strokeWidth = mPaint.getStrokeWidth();
 
-            mLength = mPathMeasure.getLength();
+                  RectF rectF = new RectF();
+
+                  rectF.set(
+                      strokeWidth / 2,
+                      strokeWidth / 2,
+                      size - strokeWidth / 2,
+                      size - strokeWidth / 2
+                  );
+
+                  mSrcPath.reset();
+                  mSrcPath.addArc( rectF, -90, 360f );
+                  mPathMeasure.setPath( mSrcPath, true );
+
+                  mLength = mPathMeasure.getLength();
+            }
       }
 
       @Override
       public void draw ( @NonNull Canvas canvas ) {
+
+            initPath( canvas );
 
             float fraction = mProgress;
 
@@ -93,12 +116,5 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
             }
 
             canvas.drawPath( mDstPath, mPaint );
-      }
-
-      @Override
-      public void setStrokeWidth ( int strokeWidth ) {
-
-            super.setStrokeWidth( strokeWidth );
-            initPath();
       }
 }

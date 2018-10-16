@@ -120,9 +120,4 @@ public class AnimateWrapperDrawable extends Drawable {
 
             mUtil.stop();
       }
-
-      public void resume ( ) {
-
-            mUtil.resume();
-      }
 }

@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 
 /**
@@ -17,26 +18,23 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
       private final int STATE5 = 5;
       private final int STATE6 = 6;
 
-      private   int         mSize;
-      private   int         mRadius;
-      private   int         mStrokeWidth;
+      private   int         mRadius      = 20;
+      private   int         mStrokeWidth = 10;
       protected Path        mSrcPath;
       protected PathMeasure mPathMeasure;
       protected Path        mDstPath;
       private   int         mCurrentState;
       private   float       mStateFraction;
+      private   int         mSize;
 
       public BiliBiliLoadingDrawable ( ) {
 
-            this( 100 );
+            this( 0 );
       }
 
       public BiliBiliLoadingDrawable ( int size ) {
 
             mSize = size;
-            initSize();
-            initPath();
-
             mPaint.setStyle( Paint.Style.STROKE );
             mPaint.setStrokeWidth( mStrokeWidth );
       }
@@ -44,48 +42,53 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
       @Override
       public int getIntrinsicWidth ( ) {
 
-            return mSize;
+            if( mSize != 0 ) {
+                  return mSize;
+            }
+            return super.getIntrinsicWidth();
       }
 
       @Override
       public int getIntrinsicHeight ( ) {
 
-            return mSize;
+            if( mSize != 0 ) {
+                  return mSize;
+            }
+            return super.getIntrinsicHeight();
       }
 
-      /**
-       * 设置默认尺寸
-       */
-      private void initSize ( ) {
+      private void initPath ( Canvas canvas ) {
 
-            mStrokeWidth = 4;
-            mRadius = 2;
-      }
+            if( mPathMeasure == null ) {
+                  mSrcPath = new Path();
+                  mDstPath = new Path();
+                  mPathMeasure = new PathMeasure();
 
-      private void initPath ( ) {
+                  int strokeWidth = mStrokeWidth;
+                  int size = 0;
+                  if( mSize != 0 ) {
+                        size = mSize;
+                  } else {
+                        Rect clipBounds = canvas.getClipBounds();
+                        mSize = size = Math.min( clipBounds.width(), clipBounds.height() );
+                  }
+                  int size20Percent = size / 5;
+                  int size80Percent = size - size20Percent;
 
-            mSrcPath = new Path();
-            mDstPath = new Path();
-            mPathMeasure = new PathMeasure();
+                  /* 一个矩形 */
 
-            int strokeWidth = mStrokeWidth;
-            int size = mSize;
-            int size20Percent = size / 5;
-            int size80Percent = size - size20Percent;
+                  mSrcPath.moveTo( size20Percent, 0 );
+                  mSrcPath.rLineTo( size / 2 - size20Percent, size20Percent );
+                  mSrcPath.lineTo( size / 2, size20Percent );
+                  mSrcPath.lineTo( strokeWidth, size20Percent );
+                  mSrcPath.rLineTo( 0, size80Percent - strokeWidth );
+                  mSrcPath.rLineTo( size - strokeWidth * 2, 0 );
+                  mSrcPath.rLineTo( 0, -size80Percent + strokeWidth );
+                  mSrcPath.lineTo( size / 2 + 2, size20Percent );
+                  mSrcPath.lineTo( size - size20Percent, 0 );
 
-            /* 一个矩形 */
-
-            mSrcPath.moveTo( size20Percent, 0 );
-            mSrcPath.rLineTo( size / 2 - size20Percent, size20Percent );
-            mSrcPath.lineTo( size / 2, size20Percent );
-            mSrcPath.lineTo( strokeWidth, size20Percent );
-            mSrcPath.rLineTo( 0, size80Percent - strokeWidth );
-            mSrcPath.rLineTo( size - strokeWidth * 2, 0 );
-            mSrcPath.rLineTo( 0, -size80Percent + strokeWidth );
-            mSrcPath.lineTo( size / 2 + 2, size20Percent );
-            mSrcPath.lineTo( size - size20Percent, 0 );
-
-            mPathMeasure.setPath( mSrcPath, false );
+                  mPathMeasure.setPath( mSrcPath, false );
+            }
       }
 
       @Override
@@ -154,6 +157,8 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
 
       @Override
       public void draw ( @NonNull Canvas canvas ) {
+
+            initPath( canvas );
 
             calculate( mProgress );
 
