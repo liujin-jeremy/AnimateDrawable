@@ -86,7 +86,7 @@ public class AnimateDrawableUtil {
             if( diff / mDuration < mCount ) {
 
                   isRunning = true;
-                  float progress = diff * 1f / mDuration;
+                  float progress = ( diff % mDuration ) * 1f / mDuration;
                   mDrawable.mProgress = mInterpolator.getInterpolation( progress );
                   mInvalidateListener.onRequestInvalidate();
             } else {

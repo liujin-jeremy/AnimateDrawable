@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             mBilibiliView = findViewById( R.id.bilibiliView );
             BiliBiliLoadingDrawable loadingDrawable = new BiliBiliLoadingDrawable();
             mBilibiliView.setDrawable( loadingDrawable );
+            mBilibiliView.setCount( Integer.MAX_VALUE );
             mBilibiliView.setOnClickListener( v -> {
 
                   if( mBilibiliView.isRunning() ) {
