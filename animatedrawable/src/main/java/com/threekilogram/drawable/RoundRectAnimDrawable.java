@@ -1,4 +1,4 @@
-package com.threekilogram.drawable.anim;
+package com.threekilogram.drawable;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Style;
@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
-import com.threekilogram.engine.TimeEngine;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
@@ -21,7 +20,7 @@ import java.lang.annotation.Target;
  * @date: 2018-07-23
  * @time: 10:57
  */
-public class RoundRectAnimDrawable extends BaseAnimateDrawable {
+public class RoundRectAnimDrawable extends BaseProgressDrawable {
 
       public static final int CLOCK_WISE_ADD         = 0;
       public static final int COUNTER_CLOCK_WISE_ADD = 1;
@@ -37,8 +36,14 @@ public class RoundRectAnimDrawable extends BaseAnimateDrawable {
       private Path        mDst;
       private PathMeasure mPathMeasure;
       private float       mTotalLength;
-      private TimeEngine  mTimeEngine;
       private int         mMode;
+      private float       mProgress;
+
+      public RoundRectAnimDrawable ( ) {
+
+            mPaint.setStyle( Style.STROKE );
+            mPaint.setStrokeWidth( mStrokeWidth );
+      }
 
       @Override
       public int getIntrinsicWidth ( ) {
@@ -61,17 +66,6 @@ public class RoundRectAnimDrawable extends BaseAnimateDrawable {
       public void setStrokeWidth ( float strokeWidth ) {
 
             mStrokeWidth = strokeWidth;
-            mPaint.setStrokeWidth( mStrokeWidth );
-      }
-
-      @Override
-      protected void init ( ) {
-
-            super.init();
-
-            mTimeEngine = new TimeEngine();
-
-            mPaint.setStyle( Style.STROKE );
             mPaint.setStrokeWidth( mStrokeWidth );
       }
 
@@ -111,25 +105,23 @@ public class RoundRectAnimDrawable extends BaseAnimateDrawable {
             float start = 0;
             float end = 0;
 
+            float fraction = mProgress;
+
             if( mMode == CLOCK_WISE_SUB ) {
 
-                  float fraction = mTimeEngine.getFraction();
                   start = mTotalLength * fraction;
                   end = mTotalLength;
             } else if( mMode == COUNTER_CLOCK_WISE_ADD ) {
 
-                  float fraction = mTimeEngine.getFraction();
                   start = mTotalLength * ( 1 - fraction );
                   end = mTotalLength;
             } else if( mMode == COUNTER_CLOCK_WISE_SUB ) {
 
                   start = 0;
-                  float fraction = mTimeEngine.getFraction();
                   end = mTotalLength * ( 1 - fraction );
             } else {
 
                   start = 0;
-                  float fraction = mTimeEngine.getFraction();
                   end = mTotalLength * fraction;
             }
 
@@ -138,21 +130,6 @@ public class RoundRectAnimDrawable extends BaseAnimateDrawable {
             mPathMeasure.getSegment( start, end, mDst, true );
 
             canvas.drawPath( mDst, mPaint );
-
-            if( mTimeEngine.isRunning() ) {
-
-                  invalidateSelf();
-            } else {
-
-                  if( mMode < 2 ) {
-                        canvas.drawPath( mSrc, mPaint );
-                  }
-            }
-      }
-
-      @Override
-      protected void calculate ( ) {
-
       }
 
       public void setMode ( @Mode int mode ) {
@@ -166,25 +143,10 @@ public class RoundRectAnimDrawable extends BaseAnimateDrawable {
       }
 
       @Override
-      public void start ( ) {
+      public void setProgress ( float progress ) {
 
-            if( mTimeEngine.isRunning() ) {
-                  mTimeEngine.stop();
-            }
-            mTimeEngine.setDuration( mDuration ).start();
+            mProgress = progress;
             invalidateSelf();
-      }
-
-      @Override
-      public void stop ( ) {
-
-            mTimeEngine.stop();
-      }
-
-      @Override
-      public boolean isRunning ( ) {
-
-            return mTimeEngine.isRunning();
       }
 
       @IntDef(value = { CLOCK_WISE_ADD,

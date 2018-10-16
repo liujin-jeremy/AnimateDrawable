@@ -21,8 +21,8 @@ import com.threekilogram.banner.pager.PagerScrollObserver;
 import com.threekilogram.constraint.Constraint;
 import com.threekilogram.constraint.ConstraintLayout;
 import com.threekilogram.constraint.adapter.BaseConstraintAdapter;
-import com.threekilogram.drawable.progress.AlphaProgressDrawable;
-import com.threekilogram.drawable.progress.widget.ProgressColorTextView;
+import com.threekilogram.drawable.AlphaProgressDrawable;
+import com.threekilogram.drawable.widget.ProgressColorTextView;
 
 /**
  * @author wuxio

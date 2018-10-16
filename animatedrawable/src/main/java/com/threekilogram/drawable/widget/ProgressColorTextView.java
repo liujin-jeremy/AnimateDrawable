@@ -1,4 +1,4 @@
-package com.threekilogram.drawable.progress.widget;
+package com.threekilogram.drawable.widget;
 
 import android.animation.ArgbEvaluator;
 import android.content.Context;

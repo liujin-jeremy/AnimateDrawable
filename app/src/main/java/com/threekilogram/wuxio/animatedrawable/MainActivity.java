@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import com.threekilogram.drawable.anim.BiliBiliLoadingDrawable;
-import com.threekilogram.drawable.anim.CircleLoadingDrawable;
-import com.threekilogram.drawable.anim.RoundRectAnimDrawable;
-import com.threekilogram.drawable.progress.RoundRectProgressDrawable;
+import com.threekilogram.drawable.BiliBiliLoadingDrawable;
+import com.threekilogram.drawable.CircleLoadingDrawable;
+import com.threekilogram.drawable.RoundRectAnimDrawable;
+import com.threekilogram.drawable.RoundRectProgressDrawable;
 
 /**
  * @author wuxio

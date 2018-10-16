@@ -24,7 +24,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```
 	dependencies {
-	        implementation 'com.github.threekilogram:animateDrawable:1.1.7'
+	        implementation 'com.github.threekilogram:animateDrawable:1.1.8'
 	}
 ```
 
@@ -144,7 +144,7 @@ textView.setProgress(progress);
 ```
  // 创建
  CircleRectAnimDrawable rectAnimDrawable = new CircleRectAnimDrawable();
- rectAnimDrawable.setColor(Color.BLUE); --> yanse
+ rectAnimDrawable.setColor(Color.BLUE); --> 颜色
  rectAnimDrawable.setStrokeWidth(16); --> 线宽
  rectAnimDrawable.setDuration(1500); --> 时长
  rectAnimDrawable.setMode(CircleRectAnimDrawable.COUNTER_CLOCK_WISE_ADD); --> 模式(顺时针或者逆时针)

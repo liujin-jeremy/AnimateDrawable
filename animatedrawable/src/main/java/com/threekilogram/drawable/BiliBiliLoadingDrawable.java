@@ -1,26 +1,22 @@
-package com.threekilogram.drawable.anim;
+package com.threekilogram.drawable;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.support.annotation.NonNull;
-import com.threekilogram.engine.TimeEngine;
 
 /**
  * @author wuxio 2018-05-12:11:03
  */
 @SuppressWarnings("WeakerAccess")
-public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
+public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
 
       private final int STATE2 = 2;
       private final int STATE4 = 4;
       private final int STATE5 = 5;
       private final int STATE6 = 6;
 
-      private   TimeEngine  mTimeEngine;
-      private   int         mDuration;
-      private   int         mRepeat;
       private   int         mSize;
       private   int         mRadius;
       private   int         mStrokeWidth;
@@ -40,6 +36,9 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
             mSize = size;
             initSize();
             initPath();
+
+            mPaint.setStyle( Paint.Style.STROKE );
+            mPaint.setStrokeWidth( mStrokeWidth );
       }
 
       @Override
@@ -60,44 +59,8 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
       private void initSize ( ) {
 
             mStrokeWidth = 4;
-            mDuration = 4000;
-            mRepeat = 1;
             mRadius = 2;
       }
-
-      public void setStrokeWidth ( int strokeWidth ) {
-
-            mStrokeWidth = strokeWidth;
-            mPaint.setStrokeWidth( mStrokeWidth );
-      }
-
-      public void setDuration ( int defaultDuration ) {
-
-            this.mDuration = defaultDuration;
-      }
-
-      public void setRepeat ( int repeat ) {
-
-            mRepeat = repeat;
-      }
-
-      public void setRadius ( int radius ) {
-
-            mRadius = radius;
-      }
-
-      //============================ 画笔 ============================
-
-      @Override
-      protected void init ( ) {
-
-            super.init();
-
-            mPaint.setStyle( Paint.Style.STROKE );
-            mPaint.setStrokeWidth( mStrokeWidth );
-      }
-
-      //============================ 路径动画 ============================
 
       private void initPath ( ) {
 
@@ -125,12 +88,28 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
             mPathMeasure.setPath( mSrcPath, false );
       }
 
-      //============================ 绘制 ============================
+      public void setStrokeWidth ( int strokeWidth ) {
 
-      @Override
-      protected void calculate ( ) {
+            mStrokeWidth = strokeWidth;
+            mPaint.setStrokeWidth( mStrokeWidth );
+      }
 
-            float fraction = mTimeEngine.getFraction();
+      public int getStrokeWidth ( ) {
+
+            return mStrokeWidth;
+      }
+
+      public void setRadius ( int radius ) {
+
+            mRadius = radius;
+      }
+
+      public int getRadius ( ) {
+
+            return mRadius;
+      }
+
+      protected void calculate ( float fraction ) {
 
             /* 电视外廓 */
 
@@ -188,7 +167,6 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
                   /* 电视轮廓 */
 
                   drawState2( canvas, size, size20Percent, mStateFraction );
-                  calculate();
                   return;
             }
 
@@ -198,7 +176,6 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
 
                   drawState2( canvas, size, size20Percent, 1 );
                   drawState4( canvas, size, mStateFraction );
-                  calculate();
                   return;
             }
 
@@ -209,7 +186,6 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
                   drawState2( canvas, size, size20Percent, 1 );
                   drawState4( canvas, size, 1 );
                   drawState5( canvas, size, mStateFraction );
-                  calculate();
                   return;
             }
 
@@ -221,7 +197,6 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
                   drawState4( canvas, size, 1 );
                   drawState5( canvas, size, 1 );
                   drawState6( canvas, size, mStateFraction );
-                  calculate();
             }
       }
 
@@ -282,30 +257,8 @@ public class BiliBiliLoadingDrawable extends BaseAnimateDrawable {
       }
 
       @Override
-      public void start ( ) {
+      public void setProgress ( float progress ) {
 
-            if( mTimeEngine == null ) {
-                  mTimeEngine = new TimeEngine();
-            }
-
-            if( !mTimeEngine.isRunning() ) {
-                  mTimeEngine.setDuration( mDuration ).setRepeat( mRepeat ).start();
-                  calculate();
-            }
-      }
-
-      @Override
-      public void stop ( ) {
-
-            mTimeEngine.stop();
-      }
-
-      @Override
-      public boolean isRunning ( ) {
-
-            if( mTimeEngine == null ) {
-                  mTimeEngine = new TimeEngine();
-            }
-            return mTimeEngine.isRunning();
+            calculate( progress );
       }
 }
