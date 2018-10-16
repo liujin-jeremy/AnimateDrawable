@@ -106,6 +106,14 @@ public abstract class BaseProgressDrawable extends Drawable {
       }
 
       /**
+       * 获取当前进度
+       */
+      public float getProgress ( ) {
+
+            return mProgress;
+      }
+
+      /**
        * 设置进度值,同时重绘
        *
        * @param progress 进度
