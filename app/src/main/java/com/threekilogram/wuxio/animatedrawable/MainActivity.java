@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
             /* circle progress */
             CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable( 160 );
-            circleLoadingDrawable.setStrokeColor( color );
+            circleLoadingDrawable.setColor( color );
             circleLoadingDrawable.setStrokeWidth( 16 );
             mCircleImage.setImageDrawable( circleLoadingDrawable );
             mCircleSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
             /* circle animate */
             CircleLoadingDrawable circleDrawable = new CircleLoadingDrawable( 160 );
-            circleDrawable.setStrokeColor( color );
+            circleDrawable.setColor( color );
             circleDrawable.setStrokeWidth( 16 );
             AnimateWrapperDrawable circleWrapper = new AnimateWrapperDrawable( circleDrawable );
             circleWrapper.setDuration( 4000 );

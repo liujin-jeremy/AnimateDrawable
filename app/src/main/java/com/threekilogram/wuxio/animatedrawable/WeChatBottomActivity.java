@@ -248,7 +248,7 @@ public class WeChatBottomActivity extends AppCompatActivity {
             public void setProgress ( int index, float progress ) {
 
                   mDrawables[ index ].setProgress( progress );
-                  mTextViews[ index ].setProgress( progress );
+                  mTextViews[ index ].setTextColorProgress( progress );
             }
       }
 

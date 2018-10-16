@@ -9,6 +9,8 @@ import android.graphics.RectF;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
@@ -110,5 +112,6 @@ public class RoundRectPathDrawable extends BaseProgressDrawable {
                         COUNTER_CLOCKWISE_ADD,
                         COUNTER_CLOCKWISE_SUB })
       @Target(ElementType.PARAMETER)
+      @Retention(RetentionPolicy.SOURCE)
       public @interface Mode { }
 }

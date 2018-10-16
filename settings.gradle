@@ -1,1 +1,1 @@
-include ':app', ':animatedrawable'
+include ':app', ':animateDrawable'
