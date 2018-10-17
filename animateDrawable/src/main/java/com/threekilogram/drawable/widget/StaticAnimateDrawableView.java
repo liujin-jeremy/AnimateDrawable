@@ -297,7 +297,7 @@ public class StaticAnimateDrawableView extends View {
             public void onRequestInvalidate ( ) {
 
                   mCount++;
-                  if( mCount >= mViewList.size() - 1 ) {
+                  if( mCount >= mViewList.size() ) {
                         for( View view : mViewList ) {
                               view.invalidate();
                         }
