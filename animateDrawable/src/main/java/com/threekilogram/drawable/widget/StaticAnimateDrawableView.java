@@ -3,6 +3,7 @@ package com.threekilogram.drawable.widget;
 import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -102,7 +103,8 @@ public class StaticAnimateDrawableView extends View {
       }
 
       @Override
-      public void setVisibility ( int visibility ) {
+      protected void onVisibilityChanged (
+          @NonNull View changedView, int visibility ) {
 
             if( visibility == VISIBLE ) {
                   if( !sInvalidateListener.containsOf( this ) ) {
@@ -111,7 +113,7 @@ public class StaticAnimateDrawableView extends View {
             } else {
                   sInvalidateListener.removeView( this );
             }
-            super.setVisibility( visibility );
+            super.onVisibilityChanged( changedView, visibility );
       }
 
       public static void setDrawable ( BaseProgressDrawable drawable ) {
