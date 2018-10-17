@@ -217,9 +217,36 @@ public class StaticAnimateDrawableView extends View {
             sUtil.stop();
       }
 
-      public static void clear ( ) {
+      /**
+       * 清除所有view
+       */
+      public static void clearView ( ) {
 
             sInvalidateListener.clearView();
+      }
+
+      /**
+       * 添加view
+       */
+      public static void addView ( View view ) {
+
+            sInvalidateListener.addView( view );
+      }
+
+      /**
+       * 删除view
+       */
+      public static void removeView ( View view ) {
+
+            sInvalidateListener.removeView( view );
+      }
+
+      /**
+       * 测试是否包含view
+       */
+      public static boolean containsOf ( View view ) {
+
+            return sInvalidateListener.containsOf( view );
       }
 
       /**
@@ -231,12 +258,12 @@ public class StaticAnimateDrawableView extends View {
             private List<View>          mViewList = new ArrayList<>();
             private AnimateDrawableUtil mUtil;
 
-            public OnListViewRequestInvalidateListener ( AnimateDrawableUtil util ) {
+            OnListViewRequestInvalidateListener ( AnimateDrawableUtil util ) {
 
                   mUtil = util;
             }
 
-            public void addView ( View view ) {
+            void addView ( View view ) {
 
                   mViewList.add( view );
                   if( !mUtil.isRunning() ) {
@@ -244,7 +271,7 @@ public class StaticAnimateDrawableView extends View {
                   }
             }
 
-            public void removeView ( View view ) {
+            void removeView ( View view ) {
 
                   mViewList.remove( view );
                   if( mViewList.size() == 0 ) {
@@ -252,13 +279,13 @@ public class StaticAnimateDrawableView extends View {
                   }
             }
 
-            public void clearView ( ) {
+            void clearView ( ) {
 
                   mViewList.clear();
                   mUtil.stop();
             }
 
-            public boolean containsOf ( View view ) {
+            boolean containsOf ( View view ) {
 
                   return mViewList.contains( view );
             }
