@@ -259,6 +259,7 @@ public class StaticAnimateDrawableView extends View {
 
             private List<View>          mViewList = new ArrayList<>();
             private AnimateDrawableUtil mUtil;
+            private int                 mCount;
 
             OnListViewRequestInvalidateListener ( AnimateDrawableUtil util ) {
 
@@ -295,8 +296,12 @@ public class StaticAnimateDrawableView extends View {
             @Override
             public void onRequestInvalidate ( ) {
 
-                  for( View view : mViewList ) {
-                        view.invalidate();
+                  mCount++;
+                  if( mCount >= mViewList.size() - 1 ) {
+                        for( View view : mViewList ) {
+                              view.invalidate();
+                        }
+                        mCount = 0;
                   }
             }
       }
