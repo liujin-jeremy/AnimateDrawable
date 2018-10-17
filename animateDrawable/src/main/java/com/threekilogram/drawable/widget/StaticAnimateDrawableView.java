@@ -217,6 +217,11 @@ public class StaticAnimateDrawableView extends View {
             sUtil.stop();
       }
 
+      public static void clear ( ) {
+
+            sInvalidateListener.clearView();
+      }
+
       /**
        * {@link OnRequestInvalidateListener}的{@link View}实现类
        */
