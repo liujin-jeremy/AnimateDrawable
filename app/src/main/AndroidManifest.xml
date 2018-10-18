@@ -19,6 +19,8 @@
             </activity>
             <activity android:name=".WeChatBottomActivity">
             </activity>
+            <activity android:name=".RecyclerActivity">
+            </activity>
       </application>
 
 </manifest>

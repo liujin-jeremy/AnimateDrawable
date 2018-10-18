@@ -201,11 +201,20 @@
 
             </LinearLayout>
             <Button
-                android:text="@string/all_visible"
-                android:onClick="allVisible"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="allVisible"
+                android:text="@string/all_visible"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:onClick="toRecycler"
+                android:text="reycler"/>
 
       </LinearLayout>
 </ScrollView>

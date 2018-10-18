@@ -287,6 +287,11 @@ public class MainActivity extends AppCompatActivity {
             mStatic2.setVisibility( View.VISIBLE );
       }
 
+      public void toRecycler ( View view ) {
+
+            RecyclerActivity.start( MainActivity.this );
+      }
+
       private abstract class SimpleOnSeekBarChangeListener implements OnSeekBarChangeListener {
 
             @Override

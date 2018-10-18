@@ -3,15 +3,11 @@ package com.threekilogram.drawable.widget;
 import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import com.threekilogram.drawable.AnimateDrawableUtil;
-import com.threekilogram.drawable.AnimateDrawableUtil.OnRequestInvalidateListener;
+import android.view.animation.LinearInterpolator;
 import com.threekilogram.drawable.BaseProgressDrawable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 该view全部示例共享一个动画drawable
@@ -22,19 +18,22 @@ public class StaticAnimateDrawableView extends View {
 
       private static final int DEFAULT_SIZE = 200;
 
+      private static final String TAG = StaticAnimateDrawableView.class.getSimpleName();
+
       private static BaseProgressDrawable sDrawable;
-
-      private static AnimateDrawableUtil                 sUtil;
-      private static OnListViewRequestInvalidateListener sInvalidateListener;
-
-      static {
-
-            sUtil = new AnimateDrawableUtil();
-            sInvalidateListener = new OnListViewRequestInvalidateListener( sUtil );
-            sUtil.setOnRequestInvalidateListener( sInvalidateListener );
-            sUtil.setCount( Integer.MAX_VALUE );
-            sUtil.setDuration( 4000 );
-      }
+      /**
+       * 时长
+       */
+      private static int                  sDuration     = 3000;
+      /**
+       * 开始时间,用于计算是否已经完成
+       */
+      private static long                 sStartTime    = System.currentTimeMillis();
+      private static long                 sSetTime      = System.currentTimeMillis();
+      /**
+       * 差值器
+       */
+      private static TimeInterpolator     sInterpolator = new LinearInterpolator();
 
       public StaticAnimateDrawableView ( Context context ) {
 
@@ -83,43 +82,22 @@ public class StaticAnimateDrawableView extends View {
       @Override
       protected void onDraw ( Canvas canvas ) {
 
-            sUtil.onDraw( canvas );
-      }
-
-      @Override
-      protected void onAttachedToWindow ( ) {
-
-            super.onAttachedToWindow();
-            if( !sInvalidateListener.containsOf( this ) ) {
-                  sInvalidateListener.addView( this );
+            if( sDrawable == null ) {
+                  return;
             }
-      }
 
-      @Override
-      protected void onDetachedFromWindow ( ) {
+            sDrawable.draw( canvas );
 
-            super.onDetachedFromWindow();
-            sInvalidateListener.removeView( this );
-      }
-
-      @Override
-      protected void onVisibilityChanged (
-          @NonNull View changedView, int visibility ) {
-
-            if( visibility == VISIBLE ) {
-                  if( !sInvalidateListener.containsOf( this ) ) {
-                        sInvalidateListener.addView( this );
-                  }
-            } else {
-                  sInvalidateListener.removeView( this );
-            }
-            super.onVisibilityChanged( changedView, visibility );
+            long current = System.currentTimeMillis();
+            long diff = current - sStartTime;
+            float progress = ( diff % sDuration ) * 1f / sDuration;
+            sDrawable.setProgress( sInterpolator.getInterpolation( progress ) );
+            invalidate();
       }
 
       public static void setDrawable ( BaseProgressDrawable drawable ) {
 
             sDrawable = drawable;
-            sUtil.setDrawable( drawable );
       }
 
       public static BaseProgressDrawable getDrawable ( ) {
@@ -136,29 +114,11 @@ public class StaticAnimateDrawableView extends View {
       }
 
       /**
-       * 设置执行动画次数
-       *
-       * @param count 次数
-       */
-      public static void setCount ( int count ) {
-
-            sUtil.setCount( count );
-      }
-
-      /**
-       * 获取设置的执行动画次数
-       */
-      public static int getCount ( ) {
-
-            return sUtil.getCount();
-      }
-
-      /**
        * 设置动画时长
        */
       public static void setDuration ( int duration ) {
 
-            sUtil.setDuration( duration );
+            sDuration = duration;
       }
 
       /**
@@ -166,25 +126,7 @@ public class StaticAnimateDrawableView extends View {
        */
       public static int getDuration ( ) {
 
-            return sUtil.getDuration();
-      }
-
-      /**
-       * 测试是否正在进行动画
-       *
-       * @return true 正在进行动画
-       */
-      public static boolean isRunning ( ) {
-
-            return sUtil.isRunning();
-      }
-
-      /**
-       * 获取已经进行的次数
-       */
-      public static int getFinishedCount ( ) {
-
-            return sUtil.getFinishedCount();
+            return sDuration;
       }
 
       /**
@@ -192,7 +134,7 @@ public class StaticAnimateDrawableView extends View {
        */
       public static void setInterpolator ( TimeInterpolator interpolator ) {
 
-            sUtil.setInterpolator( interpolator );
+            sInterpolator = interpolator;
       }
 
       /**
@@ -200,109 +142,6 @@ public class StaticAnimateDrawableView extends View {
        */
       public static TimeInterpolator getInterpolator ( ) {
 
-            return sUtil.getInterpolator();
-      }
-
-      /**
-       * 开始动画
-       */
-      public static void start ( ) {
-
-            sUtil.start();
-      }
-
-      /**
-       * 结束动画
-       */
-      public static void stop ( ) {
-
-            sUtil.stop();
-      }
-
-      /**
-       * 清除所有view
-       */
-      public static void clearView ( ) {
-
-            sInvalidateListener.clearView();
-      }
-
-      /**
-       * 添加view
-       */
-      public static void addView ( View view ) {
-
-            sInvalidateListener.addView( view );
-      }
-
-      /**
-       * 删除view
-       */
-      public static void removeView ( View view ) {
-
-            sInvalidateListener.removeView( view );
-      }
-
-      /**
-       * 测试是否包含view
-       */
-      public static boolean containsOf ( View view ) {
-
-            return sInvalidateListener.containsOf( view );
-      }
-
-      /**
-       * {@link OnRequestInvalidateListener}的{@link View}实现类
-       */
-      public static class OnListViewRequestInvalidateListener implements
-                                                              OnRequestInvalidateListener {
-
-            private List<View>          mViewList = new ArrayList<>();
-            private AnimateDrawableUtil mUtil;
-            private int                 mCount;
-
-            OnListViewRequestInvalidateListener ( AnimateDrawableUtil util ) {
-
-                  mUtil = util;
-            }
-
-            void addView ( View view ) {
-
-                  mViewList.add( view );
-                  if( !mUtil.isRunning() ) {
-                        mUtil.start();
-                  }
-            }
-
-            void removeView ( View view ) {
-
-                  mViewList.remove( view );
-                  if( mViewList.size() == 0 ) {
-                        mUtil.stop();
-                  }
-            }
-
-            void clearView ( ) {
-
-                  mViewList.clear();
-                  mUtil.stop();
-            }
-
-            boolean containsOf ( View view ) {
-
-                  return mViewList.contains( view );
-            }
-
-            @Override
-            public void onRequestInvalidate ( ) {
-
-                  mCount++;
-                  if( mCount >= mViewList.size() ) {
-                        for( View view : mViewList ) {
-                              view.invalidate();
-                        }
-                        mCount = 0;
-                  }
-            }
+            return sInterpolator;
       }
 }
