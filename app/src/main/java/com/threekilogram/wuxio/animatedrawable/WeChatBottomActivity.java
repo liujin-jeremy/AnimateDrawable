@@ -4,34 +4,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.design.widget.TabLayout.OnTabSelectedListener;
+import android.support.design.widget.TabLayout.Tab;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import com.threekilogram.banner.pager.OnPagerScrollObserver;
-import com.threekilogram.banner.pager.PagerScrollObserver;
-import com.threekilogram.constraint.Constraint;
-import com.threekilogram.constraint.ConstraintLayout;
-import com.threekilogram.constraint.adapter.BaseConstraintAdapter;
 import com.threekilogram.drawable.AlphaProgressDrawable;
 import com.threekilogram.drawable.widget.ProgressColorTextView;
+import tech.threekilogram.pager.scroll.pager.ViewPagerScrollListener;
 
 /**
  * @author wuxio
  */
 public class WeChatBottomActivity extends AppCompatActivity {
 
-      protected ViewPager               mPager;
-      protected ConstraintLayout        mBottomNavigation;
-      private   BottomNavigationAdapter mNavigationAdapter;
+      private static final String TAG = WeChatBottomActivity.class.getSimpleName();
+
+      protected ViewPager mPager;
+      private   TabLayout mTabLayout;
+
+      private String[] mTitles = { "微信", "通信录", "发现", "我" };
+
+      private AlphaProgressDrawable[] mDrawables = new AlphaProgressDrawable[ 4 ];
+      private ProgressColorTextView[] mTextViews = new ProgressColorTextView[ 4 ];
+
+      private boolean mTabSelect;
 
       public static void start ( Context context ) {
 
@@ -52,227 +57,127 @@ public class WeChatBottomActivity extends AppCompatActivity {
             mPager = findViewById( R.id.pager );
             PagerAdapter adapter = new PagerAdapter( getSupportFragmentManager() );
             mPager.setAdapter( adapter );
-            PagerScrollObserver.from( mPager ).setOnScrollObserver( new ChatPagerScrollObserver() );
+            mPager.addOnPageChangeListener( new PagerScroll( mPager ) );
+            mTabLayout = findViewById( R.id.tabLayout );
+            mTabLayout.setupWithViewPager( mPager );
+            mTabLayout.addOnTabSelectedListener( new TabSelectListener() );
 
-            mBottomNavigation = findViewById( R.id.bottomNavigation );
-            mNavigationAdapter = new BottomNavigationAdapter( adapter.getTitles() );
-            mBottomNavigation.setAdapter( mNavigationAdapter );
+            mTabLayout.post( ( ) -> {
 
-            mBottomNavigation.post( ( ) -> mNavigationAdapter.setProgress( 0, 1 ) );
-      }
-
-      //============================ constraintLayout adapter ============================
-
-      private class BottomNavigationAdapter extends BaseConstraintAdapter {
-
-            private String[]                titles;
-            private AlphaProgressDrawable[] mDrawables = new AlphaProgressDrawable[ 4 ];
-            private ProgressColorTextView[] mTextViews = new ProgressColorTextView[ 4 ];
-
-            public BottomNavigationAdapter ( String[] titles ) {
-
-                  this.titles = titles;
-            }
-
-            @Override
-            public View generateViewTo ( int position ) {
-
-                  if( position % 2 == 0 ) {
-
-                        //icon
-
-                        return getIconView();
-                  } else {
-
-                        //title
-
-                        ProgressColorTextView view = getTitleTextView();
-                        int index = position / 2;
-                        mTextViews[ index ] = view;
-                        return view;
-                  }
-            }
-
-            @Override
-            public ConstraintLayout.LayoutParams generateLayoutParamsTo (
-                int position, View view ) {
-
-                  if( position % 2 == 0 ) {
-
-                        return super.generateLayoutParamsTo( position, view );
-                  } else {
-
-                        return new ConstraintLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-                  }
-            }
-
-            @Override
-            public Constraint generateConstraintTo (
-                int position, Constraint constraint, View view ) {
-
-                  int cellWidth = constraint.getWeightWidth( 4, 1 );
-
-                  final int iconHeight = 88;
-
-                  if( position % 2 == 0 ) {
-
-                        int index = position / 2;
-
-                        Drawable drawable = mDrawables[ index ];
-                        if( drawable == null ) {
-                              mDrawables[ index ] = getIconDrawable( index );
-                        }
-                        ( (ImageView) view ).setImageDrawable( drawable );
-
-                        //icon
-                        constraint.topToTopOfParent( 0, iconHeight )
-                                  .leftToLeftOfParent( cellWidth * index, cellWidth );
-                  } else {
-
-                        //text
-
-                        final int textSize = 12;
-
-                        int index = position / 2;
-
-                        ( (TextView) view ).setTextSize( textSize );
-                        ( (TextView) view ).setText( titles[ index ] );
-
-                        constraint.leftToLeftOfView( position - 1, 0 )
-                                  .rightToRightOfView( position - 1, 0 )
-                                  .topToBottomOfView( position - 1, 0 );
-                  }
-
-                  return constraint;
-            }
-
-            @Override
-            public int getChildCount ( ) {
-
-                  return 8;
-            }
-
-            private ProgressColorTextView getTitleTextView ( ) {
-
+                  LayoutInflater layoutInflater = getLayoutInflater();
                   int colorNormal = getResources().getColor( R.color.textColorNormal );
                   int colorSelect = getResources().getColor( R.color.textColorSelected );
 
-                  ProgressColorTextView textView = new ProgressColorTextView(
-                      WeChatBottomActivity.this );
+                  for( int i = 0; i < mTabLayout.getTabCount(); i++ ) {
+                        Tab tabAt = mTabLayout.getTabAt( i );
+                        View view = layoutInflater.inflate( R.layout.item_tab, null );
+                        tabAt.setCustomView( view );
 
-                  textView.setTextColor( colorNormal, colorSelect );
+                        ImageView imageView = view.findViewById( R.id.image );
+                        setTabImageDrawable( i, imageView );
 
-                  textView.setGravity( Gravity.CENTER );
-                  return textView;
-            }
-
-            private ImageView getIconView ( ) {
-
-                  ImageView imageView = new ImageView( WeChatBottomActivity.this );
-                  return imageView;
-            }
-
-            private AlphaProgressDrawable getIconDrawable ( int index ) {
-
-                  if( index == 0 ) {
-
-                        Bitmap bitmapNormal = BitmapFactory.decodeResource(
-                            getResources(),
-                            R.drawable.home_normal
-                        );
-                        Bitmap bitmapSelected = BitmapFactory.decodeResource(
-                            getResources(),
-                            R.drawable.home_selected
-                        );
-
-                        return new AlphaProgressDrawable(
-                            bitmapNormal,
-                            bitmapSelected
-                        );
-                  } else if( index == 1 ) {
-
-                        Bitmap bitmapNormal = BitmapFactory.decodeResource(
-                            getResources(),
-                            R.drawable.category_normal
-                        );
-
-                        Bitmap bitmapSelected = BitmapFactory.decodeResource(
-                            getResources(),
-                            R.drawable.category_selected
-                        );
-
-                        return new AlphaProgressDrawable(
-                            bitmapNormal,
-                            bitmapSelected
-                        );
-                  } else if( index == 2 ) {
-
-                        Bitmap bitmapNormal = BitmapFactory.decodeResource(
-                            getResources(),
-                            R.drawable.find_normal
-                        );
-
-                        Bitmap bitmapSelected = BitmapFactory.decodeResource(
-                            getResources(),
-                            R.drawable.find_selected
-                        );
-
-                        return new AlphaProgressDrawable(
-                            bitmapNormal,
-                            bitmapSelected
-                        );
-                  } else if( index == 3 ) {
-
-                        Bitmap bitmapNormal = BitmapFactory.decodeResource(
-                            getResources(),
-                            R.drawable.mine_normal
-                        );
-
-                        Bitmap bitmapSelected = BitmapFactory.decodeResource(
-                            getResources(),
-                            R.drawable.mine_selected
-                        );
-
-                        return new AlphaProgressDrawable(
-                            bitmapNormal,
-                            bitmapSelected
-                        );
-                  } else {
-                        return null;
+                        ProgressColorTextView textView = view.findViewById( R.id.text );
+                        textView.setTextColor( colorNormal, colorSelect );
+                        textView.setText( mTitles[ i ] );
+                        mTextViews[ i ] = textView;
                   }
-            }
+            } );
+      }
 
-            public void setProgress ( int index, float progress ) {
+      private void setTabImageDrawable ( int index, ImageView imageView ) {
 
-                  mDrawables[ index ].setProgress( progress );
-                  mTextViews[ index ].setTextColorProgress( progress );
+            if( index == 0 ) {
+
+                  Bitmap bitmapNormal = BitmapFactory.decodeResource(
+                      getResources(),
+                      R.drawable.home_normal
+                  );
+                  Bitmap bitmapSelected = BitmapFactory.decodeResource(
+                      getResources(),
+                      R.drawable.home_selected
+                  );
+
+                  AlphaProgressDrawable alphaProgressDrawable = new AlphaProgressDrawable(
+                      bitmapNormal,
+                      bitmapSelected
+                  );
+                  imageView.setImageDrawable( alphaProgressDrawable );
+                  mDrawables[ 0 ] = alphaProgressDrawable;
+            } else if( index == 1 ) {
+
+                  Bitmap bitmapNormal = BitmapFactory.decodeResource(
+                      getResources(),
+                      R.drawable.category_normal
+                  );
+
+                  Bitmap bitmapSelected = BitmapFactory.decodeResource(
+                      getResources(),
+                      R.drawable.category_selected
+                  );
+
+                  AlphaProgressDrawable alphaProgressDrawable = new AlphaProgressDrawable(
+                      bitmapNormal,
+                      bitmapSelected
+                  );
+                  imageView.setImageDrawable( alphaProgressDrawable );
+                  mDrawables[ 1 ] = alphaProgressDrawable;
+            } else if( index == 2 ) {
+
+                  Bitmap bitmapNormal = BitmapFactory.decodeResource(
+                      getResources(),
+                      R.drawable.find_normal
+                  );
+
+                  Bitmap bitmapSelected = BitmapFactory.decodeResource(
+                      getResources(),
+                      R.drawable.find_selected
+                  );
+
+                  AlphaProgressDrawable alphaProgressDrawable = new AlphaProgressDrawable(
+                      bitmapNormal,
+                      bitmapSelected
+                  );
+                  imageView.setImageDrawable( alphaProgressDrawable );
+                  mDrawables[ 2 ] = alphaProgressDrawable;
+            } else if( index == 3 ) {
+
+                  Bitmap bitmapNormal = BitmapFactory.decodeResource(
+                      getResources(),
+                      R.drawable.mine_normal
+                  );
+
+                  Bitmap bitmapSelected = BitmapFactory.decodeResource(
+                      getResources(),
+                      R.drawable.mine_selected
+                  );
+
+                  AlphaProgressDrawable alphaProgressDrawable = new AlphaProgressDrawable(
+                      bitmapNormal,
+                      bitmapSelected
+                  );
+                  imageView.setImageDrawable( alphaProgressDrawable );
+                  mDrawables[ 3 ] = alphaProgressDrawable;
             }
       }
 
-      //============================ pager Adapter ============================
+      private void setProgress ( int i, float progress ) {
+
+            mDrawables[ i ].setProgress( progress );
+            mTextViews[ i ].setTextColorProgress( progress );
+      }
 
       private class PagerAdapter extends FragmentStatePagerAdapter {
 
-            private String[] titles = {
-                "微信",
-                "通信录",
-                "发现",
-                "我"
-            };
-
             private TextFragment[] mFragments = {
-                TextFragment.newInstance( titles[ 0 ] ),
-                TextFragment.newInstance( titles[ 1 ] ),
-                TextFragment.newInstance( titles[ 2 ] ),
-                TextFragment.newInstance( titles[ 3 ] ),
-                };
+                TextFragment.newInstance( mTitles[ 0 ] ),
+                TextFragment.newInstance( mTitles[ 1 ] ),
+                TextFragment.newInstance( mTitles[ 2 ] ),
+                TextFragment.newInstance( mTitles[ 3 ] )
+            };
 
             public String[] getTitles ( ) {
 
-                  return titles;
+                  return mTitles;
             }
 
             public PagerAdapter ( FragmentManager fm ) {
@@ -291,24 +196,66 @@ public class WeChatBottomActivity extends AppCompatActivity {
 
                   return mFragments.length;
             }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle ( int position ) {
+
+                  return mTitles[ position ];
+            }
       }
 
-      //============================ pager Scroll ============================
+      private class PagerScroll extends ViewPagerScrollListener {
 
-      private class ChatPagerScrollObserver implements OnPagerScrollObserver {
+            /**
+             * 创建
+             *
+             * @param pager pager
+             */
+            public PagerScroll ( ViewPager pager ) {
 
-            @Override
-            public void onCurrent ( int currentPosition, float offset ) {
-
-                  float progress = Math.abs( offset );
-                  mNavigationAdapter.setProgress( currentPosition, 1 - progress );
+                  super( pager );
             }
 
             @Override
-            public void onNext ( int nextPosition, float offset ) {
+            protected void onScroll ( int state, int currentIndex, int nextIndex, float offset ) {
 
-                  float progress = Math.abs( offset );
-                  mNavigationAdapter.setProgress( nextPosition, 1 - progress );
+                  if( mTabSelect ) {
+                        return;
+                  }
+                  setProgress( currentIndex, 1 - Math.abs( offset ) );
+                  setProgress( nextIndex, Math.abs( offset ) );
+            }
+
+            @Override
+            public void onPageScrollStateChanged ( int state ) {
+
+                  super.onPageScrollStateChanged( state );
+                  if( state == ViewPager.SCROLL_STATE_IDLE ) {
+                        mTabSelect = false;
+                  }
+            }
+      }
+
+      private class TabSelectListener implements OnTabSelectedListener {
+
+            @Override
+            public void onTabSelected ( Tab tab ) {
+
+                  int position = tab.getPosition();
+                  setProgress( position, 1 );
+                  mTabSelect = true;
+            }
+
+            @Override
+            public void onTabUnselected ( Tab tab ) {
+
+                  setProgress( tab.getPosition(), 0 );
+            }
+
+            @Override
+            public void onTabReselected ( Tab tab ) {
+
             }
       }
 }

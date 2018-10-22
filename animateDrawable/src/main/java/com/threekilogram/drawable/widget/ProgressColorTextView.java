@@ -43,7 +43,7 @@ public class ProgressColorTextView extends android.support.v7.widget.AppCompatTe
 
       public void setTextColorProgress ( @FloatRange(from = 0f, to = 1f) float progress ) {
 
-            if( progress == progress ) {
+            if( progress == mProgress ) {
                   return;
             }
             mProgress = progress;

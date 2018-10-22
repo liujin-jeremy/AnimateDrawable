@@ -79,7 +79,7 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
                   );
 
                   mSrcPath.reset();
-                  mSrcPath.addArc( rectF, -90, 360f );
+                  mSrcPath.addArc( rectF, -90, 359.9f );
                   mPathMeasure.setPath( mSrcPath, true );
 
                   mLength = mPathMeasure.getLength();

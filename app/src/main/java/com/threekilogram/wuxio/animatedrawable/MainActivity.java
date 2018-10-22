@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             testCircle( color );
             testPath( color );
             testCorner( color );
-            testView();
+            testView(color);
 
             testStatic( color );
       }
@@ -105,9 +105,12 @@ public class MainActivity extends AppCompatActivity {
             mStatic2.setOnClickListener( listener );
       }
 
-      private void testView ( ) {
+      private void testView ( int color) {
 
             BiliBiliLoadingDrawable loadingDrawable = new BiliBiliLoadingDrawable();
+            loadingDrawable.setRadius( 20 );
+            loadingDrawable.setStrokeWidth( 10 );
+            loadingDrawable.setColor( color );
             mBilibiliView.setDrawable( loadingDrawable );
             mBilibiliView.setCount( Integer.MAX_VALUE );
             mBilibiliView.setOnClickListener( v -> {
@@ -120,7 +123,10 @@ public class MainActivity extends AppCompatActivity {
             } );
 
             CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable();
+            circleLoadingDrawable.setColor( color );
+            circleLoadingDrawable.setStrokeWidth( 16 );
             mCircleView.setDrawable( circleLoadingDrawable );
+            mCircleView.setCount( Integer.MAX_VALUE );
             mCircleView.setOnClickListener( v -> {
                   if( mCircleView.isRunning() ) {
                         mCircleView.stop();
