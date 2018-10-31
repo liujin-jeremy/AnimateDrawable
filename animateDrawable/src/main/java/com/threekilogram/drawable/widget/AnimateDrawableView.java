@@ -7,8 +7,7 @@ import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import com.threekilogram.drawable.AnimateDrawableUtil;
-import com.threekilogram.drawable.AnimateDrawableUtil.OnViewRequestInvalidateListener;
+import android.view.animation.LinearInterpolator;
 import com.threekilogram.drawable.BaseProgressDrawable;
 
 /**
@@ -19,7 +18,26 @@ public class AnimateDrawableView extends View {
       private static final int DEFAULT_SIZE = 200;
 
       private BaseProgressDrawable mDrawable;
-      private AnimateDrawableUtil  mUtil = new AnimateDrawableUtil();
+      /**
+       * start time
+       */
+      private long                 mStartTime    = -1;
+      /**
+       * start progress
+       */
+      private float                mStartProgress;
+      /**
+       * 时长
+       */
+      private int                  mDuration     = 2000;
+      /**
+       * 播放总数
+       */
+      private int                  mCount        = 1;
+      /**
+       * 差值器
+       */
+      private TimeInterpolator     mInterpolator = new LinearInterpolator();
 
       public AnimateDrawableView ( Context context ) {
 
@@ -36,13 +54,11 @@ public class AnimateDrawableView extends View {
           Context context, @Nullable AttributeSet attrs, int defStyleAttr ) {
 
             super( context, attrs, defStyleAttr );
-            mUtil.setOnRequestInvalidateListener( new OnViewRequestInvalidateListener( this ) );
       }
 
       public void setDrawable ( BaseProgressDrawable progressDrawable ) {
 
             mDrawable = progressDrawable;
-            mUtil.setDrawable( mDrawable );
       }
 
       public BaseProgressDrawable getDrawable ( ) {
@@ -80,7 +96,33 @@ public class AnimateDrawableView extends View {
       @Override
       protected void onDraw ( Canvas canvas ) {
 
-            mUtil.onDraw( canvas );
+            if( mDrawable == null ) {
+                  return;
+            }
+
+            if( mStartTime == -1 ) {
+                  mDrawable.draw( canvas );
+                  return;
+            }
+
+            mDrawable.mProgress = calculateProgress();
+            mDrawable.draw( canvas );
+            invalidate();
+      }
+
+      private float calculateProgress ( ) {
+
+            long l = ( System.currentTimeMillis() );
+            if( ( l - mStartTime ) / mDuration >= mCount ) {
+                  mStartTime = -1;
+                  return 1;
+            }
+            long l1 = ( l - mStartTime ) % mDuration;
+            float input = l1 * 1f / mDuration + mStartProgress;
+            if( input > 1 ) {
+                  input -= 1;
+            }
+            return mInterpolator.getInterpolation( input );
       }
 
       /**
@@ -112,87 +154,50 @@ public class AnimateDrawableView extends View {
             invalidate();
       }
 
-      /**
-       * 设置执行动画次数
-       *
-       * @param count 次数
-       */
       public void setCount ( int count ) {
 
-            mUtil.setCount( count );
+            mCount = count;
       }
 
-      /**
-       * 获取设置的执行动画次数
-       */
       public int getCount ( ) {
 
-            return mUtil.getCount();
+            return mCount;
       }
 
-      /**
-       * 设置动画时长
-       */
       public void setDuration ( int duration ) {
 
-            mUtil.setDuration( duration );
+            mDuration = duration;
       }
 
-      /**
-       * 获取设置的动画时长
-       */
       public int getDuration ( ) {
 
-            return mUtil.getDuration();
+            return mDuration;
       }
 
-      /**
-       * 测试是否正在进行动画
-       *
-       * @return true 正在进行动画
-       */
       public boolean isRunning ( ) {
 
-            return mUtil.isRunning();
+            return false;
       }
 
-      /**
-       * 获取已经进行的次数
-       */
-      public int getFinishedCount ( ) {
-
-            return mUtil.getFinishedCount();
-      }
-
-      /**
-       * 设置差值器
-       */
       public void setInterpolator ( TimeInterpolator interpolator ) {
 
-            mUtil.setInterpolator( interpolator );
+            mInterpolator = interpolator;
       }
 
-      /**
-       * 获取设置的差值器
-       */
       public TimeInterpolator getInterpolator ( ) {
 
-            return mUtil.getInterpolator();
+            return mInterpolator;
       }
 
-      /**
-       * 开始动画
-       */
       public void start ( ) {
 
-            mUtil.start();
+            mStartTime = System.currentTimeMillis();
+            mStartProgress = mDrawable.mProgress;
+            invalidate();
       }
 
-      /**
-       * 结束动画
-       */
       public void stop ( ) {
 
-            mUtil.stop();
+            mStartTime = -1;
       }
 }

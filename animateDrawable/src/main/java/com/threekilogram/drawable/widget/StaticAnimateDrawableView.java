@@ -3,11 +3,13 @@ package com.threekilogram.drawable.widget;
 import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import com.threekilogram.drawable.BaseProgressDrawable;
+import java.util.ArrayList;
 
 /**
  * 该view全部示例共享一个动画drawable
@@ -18,22 +20,30 @@ public class StaticAnimateDrawableView extends View {
 
       private static final int DEFAULT_SIZE = 200;
 
-      private static final String TAG = StaticAnimateDrawableView.class.getSimpleName();
-
       private static BaseProgressDrawable sDrawable;
+      /**
+       * start time
+       */
+      private static long                 sStartTime    = -1;
+      private static long                 sSetTime;
+      /**
+       * start progress
+       */
+      private static float                sStartProgress;
       /**
        * 时长
        */
-      private static int                  sDuration     = 3000;
+      private static int                  sDuration     = 2000;
       /**
-       * 开始时间,用于计算是否已经完成
+       * 播放总数
        */
-      private static long                 sStartTime    = System.currentTimeMillis();
-      private static long                 sSetTime      = System.currentTimeMillis();
+      private static int                  sCount        = 1;
       /**
        * 差值器
        */
       private static TimeInterpolator     sInterpolator = new LinearInterpolator();
+
+      private static ArrayList<StaticAnimateDrawableView> sViews = new ArrayList<>();
 
       public StaticAnimateDrawableView ( Context context ) {
 
@@ -80,19 +90,56 @@ public class StaticAnimateDrawableView extends View {
       }
 
       @Override
+      protected void onAttachedToWindow ( ) {
+
+            super.onAttachedToWindow();
+            if( sViews.contains( this ) ) {
+                  return;
+            }
+            sViews.add( this );
+      }
+
+      @Override
+      protected void onDetachedFromWindow ( ) {
+
+            super.onDetachedFromWindow();
+            sViews.remove( this );
+      }
+
+      @Override
       protected void onDraw ( Canvas canvas ) {
 
             if( sDrawable == null ) {
                   return;
             }
 
-            sDrawable.draw( canvas );
+            if( sStartTime == -1 ) {
+                  sDrawable.draw( canvas );
+                  return;
+            }
 
-            long current = System.currentTimeMillis();
-            long diff = current - sStartTime;
-            float progress = ( diff % sDuration ) * 1f / sDuration;
-            sDrawable.setProgress( sInterpolator.getInterpolation( progress ) );
+            sDrawable.mProgress = calculateProgress();
+            sDrawable.draw( canvas );
             invalidate();
+      }
+
+      private static float calculateProgress ( ) {
+
+            long l = ( System.currentTimeMillis() );
+            if( l - sSetTime < 16 ) {
+                  return sDrawable.mProgress;
+            }
+            if( ( l - sStartTime ) / sDuration >= sCount ) {
+                  sStartTime = -1;
+                  return 1;
+            }
+            long l1 = ( l - sStartTime ) % sDuration;
+            float input = l1 * 1f / sDuration + sStartProgress;
+            if( input > 1 ) {
+                  input -= 1;
+            }
+            sSetTime = l;
+            return sInterpolator.getInterpolation( input );
       }
 
       public static void setDrawable ( BaseProgressDrawable drawable ) {
@@ -106,6 +153,16 @@ public class StaticAnimateDrawableView extends View {
       }
 
       /**
+       * 设置进度
+       *
+       * @param progress 进度
+       */
+      public static void setProgress ( @FloatRange(from = 0f, to = 1f) float progress ) {
+
+            sDrawable.setProgress( progress );
+      }
+
+      /**
        * 获取当前进度
        */
       public static float getProgress ( ) {
@@ -114,34 +171,60 @@ public class StaticAnimateDrawableView extends View {
       }
 
       /**
-       * 设置动画时长
+       * 设置进度值,同时重绘
+       *
+       * @param progress 进度
        */
+      public static void setDrawProgress ( @FloatRange(from = 0f, to = 1f) float progress ) {
+
+            sDrawable.setProgress( progress );
+            for( StaticAnimateDrawableView next : sViews ) {
+                  next.invalidate();
+            }
+      }
+
+      public static void setCount ( int count ) {
+
+            sCount = count;
+      }
+
+      public static int getCount ( ) {
+
+            return sCount;
+      }
+
       public static void setDuration ( int duration ) {
 
             sDuration = duration;
       }
 
-      /**
-       * 获取设置的动画时长
-       */
       public static int getDuration ( ) {
 
             return sDuration;
       }
 
-      /**
-       * 设置差值器
-       */
       public static void setInterpolator ( TimeInterpolator interpolator ) {
 
             sInterpolator = interpolator;
       }
 
-      /**
-       * 获取设置的差值器
-       */
       public static TimeInterpolator getInterpolator ( ) {
 
             return sInterpolator;
+      }
+
+      public static void start ( ) {
+
+            sStartTime = System.currentTimeMillis();
+            sStartProgress = sDrawable.mProgress;
+
+            for( StaticAnimateDrawableView next : sViews ) {
+                  next.invalidate();
+            }
+      }
+
+      public static void stop ( ) {
+
+            sStartTime = -1;
       }
 }

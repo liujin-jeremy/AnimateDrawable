@@ -6,14 +6,37 @@ import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.animation.LinearInterpolator;
 
 /**
  * @author Liujin 2018-10-16:9:36
  */
 public class AnimateWrapperDrawable extends Drawable {
 
+      /**
+       * drawable
+       */
       private BaseProgressDrawable mDrawable;
-      private AnimateDrawableUtil  mUtil;
+      /**
+       * start time
+       */
+      private long                 mStartTime    = -1;
+      /**
+       * start progress
+       */
+      private float                mStartProgress;
+      /**
+       * 时长
+       */
+      private int                  mDuration     = 2000;
+      /**
+       * 播放总数
+       */
+      private int                  mCount        = 1;
+      /**
+       * 差值器
+       */
+      private TimeInterpolator     mInterpolator = new LinearInterpolator();
 
       /**
        * 包装一个{@link BaseProgressDrawable}使其具有动画能力,一帧播放完成之后才播放下一帧
@@ -21,7 +44,6 @@ public class AnimateWrapperDrawable extends Drawable {
       public AnimateWrapperDrawable ( BaseProgressDrawable progressDrawable ) {
 
             mDrawable = progressDrawable;
-            mUtil = new AnimateDrawableUtil( this );
       }
 
       public BaseProgressDrawable getDrawable ( ) {
@@ -44,7 +66,33 @@ public class AnimateWrapperDrawable extends Drawable {
       @Override
       public void draw ( @NonNull Canvas canvas ) {
 
-            mUtil.onDraw( canvas );
+            if( mDrawable == null ) {
+                  return;
+            }
+
+            if( mStartTime == -1 ) {
+                  mDrawable.draw( canvas );
+                  return;
+            }
+
+            mDrawable.mProgress = calculateProgress();
+            mDrawable.draw( canvas );
+            invalidateSelf();
+      }
+
+      private float calculateProgress ( ) {
+
+            long l = ( System.currentTimeMillis() );
+            if( ( l - mStartTime ) / mDuration >= mCount ) {
+                  mStartTime = -1;
+                  return 1;
+            }
+            long l1 = ( l - mStartTime ) % mDuration;
+            float input = l1 * 1f / mDuration + mStartProgress;
+            if( input > 1 ) {
+                  input -= 1;
+            }
+            return mInterpolator.getInterpolation( input );
       }
 
       @Override
@@ -68,27 +116,27 @@ public class AnimateWrapperDrawable extends Drawable {
 
       public void setCount ( int count ) {
 
-            mUtil.setCount( count );
+            mCount = count;
       }
 
       public int getCount ( ) {
 
-            return mUtil.getCount();
+            return mCount;
       }
 
       public void setDuration ( int duration ) {
 
-            mUtil.setDuration( duration );
+            mDuration = duration;
       }
 
       public int getDuration ( ) {
 
-            return mUtil.getDuration();
+            return mDuration;
       }
 
       public boolean isRunning ( ) {
 
-            return mUtil.isRunning();
+            return false;
       }
 
       public float getProgress ( ) {
@@ -96,28 +144,25 @@ public class AnimateWrapperDrawable extends Drawable {
             return mDrawable.mProgress;
       }
 
-      public int getFinishedCount ( ) {
-
-            return mUtil.getFinishedCount();
-      }
-
       public void setInterpolator ( TimeInterpolator interpolator ) {
 
-            mUtil.setInterpolator( interpolator );
+            mInterpolator = interpolator;
       }
 
       public TimeInterpolator getInterpolator ( ) {
 
-            return mUtil.getInterpolator();
+            return mInterpolator;
       }
 
       public void start ( ) {
 
-            mUtil.start();
+            mStartTime = System.currentTimeMillis();
+            mStartProgress = mDrawable.mProgress;
+            invalidateSelf();
       }
 
       public void stop ( ) {
 
-            mUtil.stop();
+            mStartTime = -1;
       }
 }

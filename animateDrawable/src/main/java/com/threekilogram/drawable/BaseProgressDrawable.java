@@ -23,7 +23,7 @@ public abstract class BaseProgressDrawable extends Drawable {
       /**
        * 当前进度
        */
-      protected float mProgress;
+      public    float mProgress;
 
       public BaseProgressDrawable ( ) {
 

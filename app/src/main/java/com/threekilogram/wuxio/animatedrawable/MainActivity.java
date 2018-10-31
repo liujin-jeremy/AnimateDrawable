@@ -103,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
             mStatic0.setOnClickListener( listener );
             mStatic1.setOnClickListener( listener );
             mStatic2.setOnClickListener( listener );
+
+            StaticAnimateDrawableView.start();
+            StaticAnimateDrawableView.setCount( Integer.MAX_VALUE );
       }
 
       private void testView ( int color) {
