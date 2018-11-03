@@ -34,6 +34,7 @@ public class TabItemBuilder {
       protected int                     mImageViewId;
 
       protected boolean isTabSelect;
+      protected boolean isSetting;
       /**
        * 当前滚动状态
        */
@@ -246,10 +247,19 @@ public class TabItemBuilder {
                   if( state == ViewPager.SCROLL_STATE_DRAGGING ) {
                         mDragPosition = mViewPager.getCurrentItem();
                         isTabSelect = false;
+                        isSetting = false;
                   }
 
                   if( state == ViewPager.SCROLL_STATE_SETTLING ) {
                         mSettPosition = mViewPager.getCurrentItem();
+
+                        if( mState == ViewPager.SCROLL_STATE_DRAGGING ) {
+                              isSetting = true;
+                        }
+                  }
+
+                  if( state == ViewPager.SCROLL_STATE_IDLE ) {
+                        isSetting = false;
                   }
 
                   mState = state;
@@ -275,7 +285,11 @@ public class TabItemBuilder {
                   }
 
                   if( mState == ViewPager.SCROLL_STATE_SETTLING ) {
-                        return;
+
+                        if( isSetting ) {
+                              isSetting = false;
+                              return;
+                        }
                   }
 
                   isTabSelect = true;
