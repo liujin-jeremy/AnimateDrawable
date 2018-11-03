@@ -3,6 +3,7 @@ package com.threekilogram.drawable;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -11,16 +12,17 @@ import android.support.annotation.Nullable;
  */
 public class AlphaProgressDrawable extends BaseProgressDrawable {
 
-      private Bitmap      mNormalBitmap;
-      private Bitmap      mSelectedBitmap;
-      private float       mProgress;
-      private ColorFilter mNormalFilter;
-      private ColorFilter mSelectFilter;
+      private Bitmap mNormalBitmap;
+      private Bitmap mSelectedBitmap;
+      private float  mProgress;
+      private Paint  mSelectPaint;
 
       public AlphaProgressDrawable ( Bitmap normalBitmap, Bitmap selectedBitmap ) {
 
             mNormalBitmap = normalBitmap;
             mSelectedBitmap = selectedBitmap;
+
+            mSelectPaint = new Paint( Paint.ANTI_ALIAS_FLAG );
       }
 
       @Override
@@ -30,11 +32,9 @@ public class AlphaProgressDrawable extends BaseProgressDrawable {
             int selectedAlpha = 255 - normalAlpha;
 
             mPaint.setAlpha( normalAlpha );
-            mPaint.setColorFilter( mNormalFilter );
             canvas.drawBitmap( mNormalBitmap, 0, 0, mPaint );
-            mPaint.setAlpha( selectedAlpha );
-            mPaint.setColorFilter( mSelectFilter );
-            canvas.drawBitmap( mSelectedBitmap, 0, 0, mPaint );
+            mSelectPaint.setAlpha( selectedAlpha );
+            canvas.drawBitmap( mSelectedBitmap, 0, 0, mSelectPaint );
       }
 
       @Override
@@ -59,12 +59,17 @@ public class AlphaProgressDrawable extends BaseProgressDrawable {
       public void setSelectColorFilter (
           @Nullable ColorFilter colorFilter ) {
 
-            mSelectFilter = colorFilter;
+            mSelectPaint.setColorFilter( colorFilter );
       }
 
       public void setNormalColorFilter (
           @Nullable ColorFilter colorFilter ) {
 
-            mNormalFilter = colorFilter;
+            mPaint.setColorFilter( colorFilter );
+      }
+
+      public Paint getSelectPaint ( ) {
+
+            return mSelectPaint;
       }
 }

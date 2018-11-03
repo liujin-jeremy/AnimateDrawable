@@ -267,9 +267,11 @@ public class TabItemBuilder {
             @Override
             public void onTabUnselected ( Tab tab ) {
 
-                  int position = tab.getPosition();
-                  mDrawables[ position ].setProgress( 0 );
-                  mTextViews[ position ].setTextColorProgress( 0 );
+                  if( mState == ViewPager.SCROLL_STATE_IDLE ) {
+                        int position = tab.getPosition();
+                        mDrawables[ position ].setProgress( 0 );
+                        mTextViews[ position ].setTextColorProgress( 0 );
+                  }
             }
 
             @Override
