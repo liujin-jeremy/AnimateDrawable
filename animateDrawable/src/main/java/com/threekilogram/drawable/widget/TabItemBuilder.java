@@ -24,14 +24,20 @@ import com.threekilogram.drawable.R;
  */
 public class TabItemBuilder {
 
+      private static final String TAG = TabItemBuilder.class.getSimpleName();
+
       protected TabLayout mTabLayout;
       protected ViewPager mViewPager;
 
       protected ProgressColorTextView[] mTextViews;
-      protected int                     mImageViewId;
       protected AlphaProgressDrawable[] mDrawables;
+      protected int                     mImageViewId;
 
       protected boolean isTabSelect;
+      /**
+       * 当前滚动状态
+       */
+      protected int     mState = ViewPager.SCROLL_STATE_IDLE;
 
       public TabItemBuilder ( TabLayout tabLayout, ViewPager viewPager ) {
 
@@ -158,10 +164,6 @@ public class TabItemBuilder {
       protected class PagerScrollListener implements ViewPager.OnPageChangeListener {
 
             /**
-             * 当前滚动状态
-             */
-            protected int mState = ViewPager.SCROLL_STATE_IDLE;
-            /**
              * 按下时位置
              */
             protected int mDragPosition;
@@ -255,11 +257,13 @@ public class TabItemBuilder {
             @Override
             public void onTabSelected ( Tab tab ) {
 
-                  isTabSelect = true;
+                  if( mState == ViewPager.SCROLL_STATE_IDLE ) {
+                        isTabSelect = true;
 
-                  int position = tab.getPosition();
-                  mDrawables[ position ].setProgress( 1 );
-                  mTextViews[ position ].setTextColorProgress( 1 );
+                        int position = tab.getPosition();
+                        mDrawables[ position ].setProgress( 1 );
+                        mTextViews[ position ].setTextColorProgress( 1 );
+                  }
             }
 
             @Override
@@ -274,5 +278,22 @@ public class TabItemBuilder {
             public void onTabReselected ( Tab tab ) {
 
             }
+      }
+
+      private String scrollStateString ( int state ) {
+
+            if( state == ViewPager.SCROLL_STATE_IDLE ) {
+                  return "SCROLL_STATE_IDLE";
+            }
+
+            if( state == ViewPager.SCROLL_STATE_DRAGGING ) {
+                  return "SCROLL_STATE_DRAGGING";
+            }
+
+            if( state == ViewPager.SCROLL_STATE_SETTLING ) {
+                  return "SCROLL_STATE_SETTLING";
+            }
+
+            return null;
       }
 }
