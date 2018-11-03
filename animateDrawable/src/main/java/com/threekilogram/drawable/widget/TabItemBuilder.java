@@ -24,6 +24,8 @@ import com.threekilogram.drawable.R;
  */
 public class TabItemBuilder {
 
+      private static final String TAG = TabItemBuilder.class.getSimpleName();
+
       protected TabLayout mTabLayout;
       protected ViewPager mViewPager;
 
@@ -70,10 +72,10 @@ public class TabItemBuilder {
             mDrawables = new AlphaProgressDrawable[ tabCount ];
 
             for( int i = 0; i < tabCount; i++ ) {
-                  Tab tab = mTabLayout.getTabAt( i );
+
+                  TabLayout.Tab tab = tabLayout.getTabAt( i );
                   View view = inflater.inflate( itemLayout, null );
                   tab.setCustomView( view );
-
                   mTextViews[ i ] = view.findViewById( textId );
             }
       }
@@ -152,6 +154,13 @@ public class TabItemBuilder {
 
             float abs = Math.abs( progress );
 
+            for( int i = 0; i < mTextViews.length; i++ ) {
+                  if( i != current || i != next ) {
+                        mTextViews[ i ].setTextColorProgress( 0 );
+                        mDrawables[ i ].setProgress( 0 );
+                  }
+            }
+
             mTextViews[ current ].setTextColorProgress( 1 - abs );
             mDrawables[ current ].setProgress( 1 - abs );
 
@@ -218,32 +227,29 @@ public class TabItemBuilder {
                   int next = current;
                   if( offset < 0 ) {
                         next += 1;
+                        setProgress( current, next, offset );
                   }
                   if( offset > 0 ) {
                         next -= 1;
-                  }
-
-                  if( next != current ) {
                         setProgress( current, next, offset );
                   }
             }
 
             @Override
-            public void onPageSelected ( int position ) { }
+            public void onPageSelected ( int position ) {
+
+            }
 
             @Override
             public void onPageScrollStateChanged ( int state ) {
 
                   if( state == ViewPager.SCROLL_STATE_DRAGGING ) {
                         mDragPosition = mViewPager.getCurrentItem();
+                        isTabSelect = false;
                   }
 
                   if( state == ViewPager.SCROLL_STATE_SETTLING ) {
                         mSettPosition = mViewPager.getCurrentItem();
-                  }
-
-                  if( state == ViewPager.SCROLL_STATE_IDLE ) {
-                        isTabSelect = false;
                   }
 
                   mState = state;
@@ -255,23 +261,38 @@ public class TabItemBuilder {
             @Override
             public void onTabSelected ( Tab tab ) {
 
-                  if( mState == ViewPager.SCROLL_STATE_IDLE ) {
-                        isTabSelect = true;
+                  if( isTabSelect ) {
+                        for( AlphaProgressDrawable drawable : mDrawables ) {
+                              drawable.setProgress( 0 );
+                        }
+                        for( ProgressColorTextView textView : mTextViews ) {
+                              textView.setTextColorProgress( 0 );
+                        }
 
                         int position = tab.getPosition();
                         mDrawables[ position ].setProgress( 1 );
                         mTextViews[ position ].setTextColorProgress( 1 );
                   }
+
+                  if( mState == ViewPager.SCROLL_STATE_SETTLING ) {
+                        return;
+                  }
+
+                  isTabSelect = true;
+                  int position = tab.getPosition();
+                  for( int i = 0; i < mTextViews.length; i++ ) {
+                        if( i != position ) {
+                              mTextViews[ i ].setTextColorProgress( 0 );
+                              mDrawables[ i ].setProgress( 0 );
+                        }
+                  }
+                  mDrawables[ position ].setProgress( 1 );
+                  mTextViews[ position ].setTextColorProgress( 1 );
             }
 
             @Override
             public void onTabUnselected ( Tab tab ) {
 
-                  if( mState == ViewPager.SCROLL_STATE_IDLE ) {
-                        int position = tab.getPosition();
-                        mDrawables[ position ].setProgress( 0 );
-                        mTextViews[ position ].setTextColorProgress( 0 );
-                  }
             }
 
             @Override

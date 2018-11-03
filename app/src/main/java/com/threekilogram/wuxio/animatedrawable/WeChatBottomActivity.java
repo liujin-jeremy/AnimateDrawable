@@ -2,9 +2,6 @@ package com.threekilogram.wuxio.animatedrawable;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -116,8 +113,6 @@ public class WeChatBottomActivity extends AppCompatActivity {
             public TabItemBuilder setDrawable (
                 int position, AlphaProgressDrawable drawable ) {
 
-                  drawable
-                      .setSelectColorFilter( new PorterDuffColorFilter( Color.RED, Mode.SRC_IN ) );
                   return super.setDrawable( position, drawable );
             }
       }
