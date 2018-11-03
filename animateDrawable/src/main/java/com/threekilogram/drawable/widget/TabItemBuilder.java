@@ -24,14 +24,14 @@ import com.threekilogram.drawable.R;
  */
 public class TabItemBuilder {
 
-      private TabLayout mTabLayout;
-      private ViewPager mViewPager;
+      protected TabLayout mTabLayout;
+      protected ViewPager mViewPager;
 
-      private ProgressColorTextView[] mTextViews;
-      private int                     mImageViewId;
-      private AlphaProgressDrawable[] mDrawables;
+      protected ProgressColorTextView[] mTextViews;
+      protected int                     mImageViewId;
+      protected AlphaProgressDrawable[] mDrawables;
 
-      private boolean isTabSelect;
+      protected boolean isTabSelect;
 
       public TabItemBuilder ( TabLayout tabLayout, ViewPager viewPager ) {
 
@@ -155,7 +155,7 @@ public class TabItemBuilder {
             mDrawables[ next ].setProgress( abs );
       }
 
-      private class PagerScrollListener implements ViewPager.OnPageChangeListener {
+      protected class PagerScrollListener implements ViewPager.OnPageChangeListener {
 
             /**
              * 当前滚动状态
@@ -250,7 +250,7 @@ public class TabItemBuilder {
             }
       }
 
-      private class TabItemSelectListener implements OnTabSelectedListener {
+      protected class TabItemSelectListener implements OnTabSelectedListener {
 
             @Override
             public void onTabSelected ( Tab tab ) {
