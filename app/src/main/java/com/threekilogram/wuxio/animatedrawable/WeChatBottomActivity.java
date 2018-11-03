@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import com.threekilogram.drawable.AlphaProgressDrawable;
 import com.threekilogram.drawable.widget.TabItemBuilder;
 
 /**
@@ -45,7 +46,7 @@ public class WeChatBottomActivity extends AppCompatActivity {
             mPager.setAdapter( adapter );
             mTabLayout = findViewById( R.id.tabLayout );
 
-            TabItemBuilder builder = new TabItemBuilder( mTabLayout, mPager );
+            TabItemBuilder builder = new ItemBuilder( mTabLayout, mPager );
             builder.setTextColorRes( R.color.textColorNormal, R.color.textColorSelected );
             builder.setTitles( mTitles );
             builder.setDrawable( 0, R.drawable.home_normal, R.drawable.home_selected );
@@ -91,6 +92,29 @@ public class WeChatBottomActivity extends AppCompatActivity {
             public CharSequence getPageTitle ( int position ) {
 
                   return mTitles[ position ];
+            }
+      }
+
+      private class ItemBuilder extends TabItemBuilder {
+
+            public ItemBuilder ( TabLayout tabLayout, ViewPager viewPager ) {
+
+                  super( tabLayout, viewPager );
+            }
+
+            @Override
+            public TabItemBuilder setDrawable (
+                int position, int normalDrawable, int selectDrawable ) {
+
+                  return super.setDrawable( position, normalDrawable, selectDrawable );
+            }
+
+            @Override
+            public TabItemBuilder setDrawable (
+                int position, AlphaProgressDrawable drawable ) {
+
+                  //drawable.setSelectColorFilter( new PorterDuffColorFilter( Color.RED, Mode.SRC_IN ) );
+                  return super.setDrawable( position, drawable );
             }
       }
 }

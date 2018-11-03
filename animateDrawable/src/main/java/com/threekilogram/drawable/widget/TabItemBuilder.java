@@ -24,8 +24,6 @@ import com.threekilogram.drawable.R;
  */
 public class TabItemBuilder {
 
-      private static final String TAG = TabItemBuilder.class.getSimpleName();
-
       protected TabLayout mTabLayout;
       protected ViewPager mViewPager;
 
