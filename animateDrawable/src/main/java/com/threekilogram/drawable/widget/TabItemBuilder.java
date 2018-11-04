@@ -20,11 +20,11 @@ import com.threekilogram.drawable.AlphaProgressDrawable;
 import com.threekilogram.drawable.R;
 
 /**
+ * 用于创建TabLayout和ViewPager联动
+ *
  * @author Liujin 2018-11-03:20:05
  */
 public class TabItemBuilder {
-
-      private static final String TAG = TabItemBuilder.class.getSimpleName();
 
       protected TabLayout mTabLayout;
       protected ViewPager mViewPager;
