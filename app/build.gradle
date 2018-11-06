@@ -28,5 +28,5 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
     implementation 'com.android.support:design:27.1.1'
 
-    implementation 'com.github.threekilogram:PagerExtend:1.2.9'
+    implementation 'tech.threekilogram:pager-extend:2.0.0'
 }
