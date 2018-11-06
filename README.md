@@ -1,32 +1,9 @@
 
 ## 该库用于实现动画效果的 Drawable
 
-## 引入
-
-To get a Git project into your build:
-
-**Step 1.** Add the JitPack repository to your build file
-
-Add it in your root build.gradle at the end of repositories:
-
 ```
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+implementation 'tech.threekilogram:animateDrawable:2.0.0'
 ```
-
-**Step 2.** Add the dependency
-
-```
-	dependencies {
-	        implementation 'com.github.threekilogram:animateDrawable:1.3.4'
-	}
-```
-
-
 
 ## BiliBiliLoadingDrawable
 
