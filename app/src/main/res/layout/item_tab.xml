@@ -13,7 +13,7 @@
           android:layout_height="28dp"
           tools:src="@drawable/home_normal"/>
 
-      <com.threekilogram.drawable.widget.ProgressColorTextView
+      <com.threekilogram.drawable.widget.ColorTextView
           android:id="@+id/text"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

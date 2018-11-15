@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  * @date: 2018-07-23
  * @time: 10:57
  */
-public class RoundRectPathDrawable extends BaseProgressDrawable {
+public class RoundRectPathDrawable extends ProgressDrawable {
 
       public static final int CLOCKWISE_ADD         = 0;
       public static final int COUNTER_CLOCKWISE_ADD = 1;
@@ -50,6 +50,11 @@ public class RoundRectPathDrawable extends BaseProgressDrawable {
 
       @Override
       public void draw ( @NonNull Canvas canvas ) {
+
+      }
+
+      @Override
+      protected void draw ( @NonNull Canvas canvas, float progress ) {
 
             if( mPathMeasure == null ) {
 

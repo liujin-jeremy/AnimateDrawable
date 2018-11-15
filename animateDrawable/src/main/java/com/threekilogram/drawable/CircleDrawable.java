@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 /**
  * @author wuxio 2018-05-12:23:15
  */
-public class CircleLoadingDrawable extends BaseProgressDrawable {
+public class CircleDrawable extends ProgressDrawable {
 
       private Path        mSrcPath;
       private PathMeasure mPathMeasure;
@@ -19,12 +19,12 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
       private int         mSize;
       private float       mLength;
 
-      public CircleLoadingDrawable ( ) {
+      public CircleDrawable ( ) {
 
             this( 0 );
       }
 
-      public CircleLoadingDrawable ( int size ) {
+      public CircleDrawable ( int size ) {
 
             super();
             mSize = size;
@@ -87,7 +87,7 @@ public class CircleLoadingDrawable extends BaseProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas ) {
+      protected void draw ( @NonNull Canvas canvas, float progress ) {
 
             initPath( canvas );
 

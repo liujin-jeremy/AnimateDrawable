@@ -11,42 +11,42 @@ import android.view.animation.LinearInterpolator;
 /**
  * @author Liujin 2018-10-16:9:36
  */
-public class AnimateWrapperDrawable extends Drawable {
+public class AnimateDrawable extends Drawable {
 
       /**
        * drawable
        */
-      private BaseProgressDrawable mDrawable;
+      private ProgressDrawable mDrawable;
       /**
        * start time
        */
-      private long                 mStartTime    = -1;
+      private long             mStartTime    = -1;
       /**
        * start progress
        */
-      private float                mStartProgress;
+      private float            mStartProgress;
       /**
        * 时长
        */
-      private int                  mDuration     = 2000;
+      private int              mDuration     = 2000;
       /**
        * 播放总数
        */
-      private int                  mCount        = 1;
+      private int              mCount        = 1;
       /**
        * 差值器
        */
-      private TimeInterpolator     mInterpolator = new LinearInterpolator();
+      private TimeInterpolator mInterpolator = new LinearInterpolator();
 
       /**
-       * 包装一个{@link BaseProgressDrawable}使其具有动画能力,一帧播放完成之后才播放下一帧
+       * 包装一个{@link ProgressDrawable}使其具有动画能力,一帧播放完成之后才播放下一帧
        */
-      public AnimateWrapperDrawable ( BaseProgressDrawable progressDrawable ) {
+      public AnimateDrawable ( ProgressDrawable progressDrawable ) {
 
             mDrawable = progressDrawable;
       }
 
-      public BaseProgressDrawable getDrawable ( ) {
+      public ProgressDrawable getDrawable ( ) {
 
             return mDrawable;
       }
@@ -136,7 +136,8 @@ public class AnimateWrapperDrawable extends Drawable {
 
       public boolean isRunning ( ) {
 
-            return false;
+            long l = ( System.currentTimeMillis() );
+            return ( l - mStartTime ) / mDuration <= mCount;
       }
 
       public float getProgress ( ) {

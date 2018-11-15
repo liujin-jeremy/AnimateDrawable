@@ -8,7 +8,7 @@ import android.view.animation.LinearInterpolator;
 import com.threekilogram.drawable.widget.AnimateDrawableView;
 
 /**
- * 辅助{@link BaseProgressDrawable}执行动画效果,一帧播放完成之后才播放下一帧
+ * 辅助{@link ProgressDrawable}执行动画效果,一帧播放完成之后才播放下一帧
  *
  * @author Liujin 2018-10-16:13:29
  */
@@ -17,7 +17,7 @@ public class AnimateDrawableUtil {
       /**
        * 真正进行绘制
        */
-      private BaseProgressDrawable        mDrawable;
+      private ProgressDrawable            mDrawable;
       /**
        * 时长
        */
@@ -49,7 +49,7 @@ public class AnimateDrawableUtil {
 
       public AnimateDrawableUtil ( ) { }
 
-      public AnimateDrawableUtil ( AnimateWrapperDrawable wrapperDrawable ) {
+      public AnimateDrawableUtil ( AnimateDrawable wrapperDrawable ) {
 
             mDrawable = wrapperDrawable.getDrawable();
             mOnRequestInvalidateListener = new OnDrawableRequestInvalidateListener(
@@ -63,19 +63,19 @@ public class AnimateDrawableUtil {
       }
 
       public AnimateDrawableUtil (
-          BaseProgressDrawable drawable,
+          ProgressDrawable drawable,
           OnRequestInvalidateListener onRequestInvalidateListener ) {
 
             mDrawable = drawable;
             mOnRequestInvalidateListener = onRequestInvalidateListener;
       }
 
-      public void setDrawable ( BaseProgressDrawable drawable ) {
+      public void setDrawable ( ProgressDrawable drawable ) {
 
             mDrawable = drawable;
       }
 
-      public BaseProgressDrawable getDrawable ( ) {
+      public ProgressDrawable getDrawable ( ) {
 
             return mDrawable;
       }

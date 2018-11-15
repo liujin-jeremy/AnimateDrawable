@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import com.threekilogram.drawable.BaseProgressDrawable;
+import com.threekilogram.drawable.ProgressDrawable;
 
 /**
  * @author Liujin 2018-10-16:13:14
@@ -17,27 +17,27 @@ public class AnimateDrawableView extends View {
 
       private static final int DEFAULT_SIZE = 200;
 
-      private BaseProgressDrawable mDrawable;
+      public  ProgressDrawable mDrawable;
       /**
        * start time
        */
-      private long                 mStartTime    = -1;
+      private long             mStartTime    = -1;
       /**
        * start progress
        */
-      private float                mStartProgress;
+      private float            mStartProgress;
       /**
        * 时长
        */
-      private int                  mDuration     = 2000;
+      private int              mDuration     = 2000;
       /**
        * 播放总数
        */
-      private int                  mCount        = 1;
+      private int              mCount        = 1;
       /**
        * 差值器
        */
-      private TimeInterpolator     mInterpolator = new LinearInterpolator();
+      private TimeInterpolator mInterpolator = new LinearInterpolator();
 
       public AnimateDrawableView ( Context context ) {
 
@@ -56,12 +56,12 @@ public class AnimateDrawableView extends View {
             super( context, attrs, defStyleAttr );
       }
 
-      public void setDrawable ( BaseProgressDrawable progressDrawable ) {
+      public void setDrawable ( ProgressDrawable progressDrawable ) {
 
             mDrawable = progressDrawable;
       }
 
-      public BaseProgressDrawable getDrawable ( ) {
+      public ProgressDrawable getDrawable ( ) {
 
             return mDrawable;
       }
@@ -105,7 +105,7 @@ public class AnimateDrawableView extends View {
                   return;
             }
 
-            mDrawable.mProgress = calculateProgress();
+            mDrawable.setProgress( calculateProgress() );
             mDrawable.draw( canvas );
             invalidate();
       }
@@ -192,7 +192,7 @@ public class AnimateDrawableView extends View {
       public void start ( ) {
 
             mStartTime = System.currentTimeMillis();
-            mStartProgress = mDrawable.mProgress;
+            mStartProgress = mDrawable.getProgress();
             invalidate();
       }
 

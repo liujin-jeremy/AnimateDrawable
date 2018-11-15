@@ -2,15 +2,17 @@ package com.threekilogram.wuxio.animatedrawable;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import com.threekilogram.drawable.AnimateWrapperDrawable;
-import com.threekilogram.drawable.BiliBiliLoadingDrawable;
-import com.threekilogram.drawable.CircleLoadingDrawable;
+import com.threekilogram.drawable.AnimateDrawable;
+import com.threekilogram.drawable.BallScaleDrawable;
+import com.threekilogram.drawable.BiliBiliDrawable;
+import com.threekilogram.drawable.CircleDrawable;
 import com.threekilogram.drawable.RoundRectCornerDrawable;
 import com.threekilogram.drawable.RoundRectPathDrawable;
 import com.threekilogram.drawable.widget.AnimateDrawableView;
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
       private StaticAnimateDrawableView mStatic0;
       private StaticAnimateDrawableView mStatic1;
       private StaticAnimateDrawableView mStatic2;
+      private ImageView                 mBallScale;
+      private SeekBar                   mBallScaleSeek;
+      private ImageView                 mAnimateBallScale;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -74,14 +79,60 @@ public class MainActivity extends AppCompatActivity {
             testCircle( color );
             testPath( color );
             testCorner( color );
-            testView(color);
+            testView( color );
 
             testStatic( color );
+
+            testBallScale();
+      }
+
+      private void testBallScale ( ) {
+
+            mBallScale = findViewById( R.id.ballScale );
+            BallScaleDrawable ballScaleDrawable = new BallScaleDrawable();
+            mBallScale.setImageDrawable( ballScaleDrawable );
+            mBallScaleSeek = findViewById( R.id.ballScaleSeek );
+            mBallScaleSeek.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged (
+                      SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        ballScaleDrawable.setDrawProgress( v );
+                  }
+
+                  @Override
+                  public void onStartTrackingTouch ( SeekBar seekBar ) {
+
+                  }
+
+                  @Override
+                  public void onStopTrackingTouch ( SeekBar seekBar ) {
+
+                  }
+            } );
+            mAnimateBallScale = findViewById( R.id.animateBallScale );
+            AnimateDrawable wrapperDrawable = new AnimateDrawable(
+                ballScaleDrawable );
+            wrapperDrawable.setCount( 20 );
+            wrapperDrawable.setDuration( 2000 );
+            mAnimateBallScale.setOnClickListener( v -> {
+
+                  if( wrapperDrawable.isRunning() ) {
+                        Log.e( TAG, "testBallScale : stop" );
+                        wrapperDrawable.stop();
+                  } else {
+                        Log.e( TAG, "testBallScale : start" );
+                        wrapperDrawable.start();
+                  }
+            } );
+            mAnimateBallScale.setImageDrawable( wrapperDrawable );
       }
 
       private void testStatic ( int color ) {
 
-            BiliBiliLoadingDrawable loadingDrawable = new BiliBiliLoadingDrawable();
+            BiliBiliDrawable loadingDrawable = new BiliBiliDrawable();
             loadingDrawable.setRadius( 10 );
             loadingDrawable.setRadius( 20 );
             loadingDrawable.setColor( color );
@@ -108,9 +159,9 @@ public class MainActivity extends AppCompatActivity {
             StaticAnimateDrawableView.setCount( Integer.MAX_VALUE );
       }
 
-      private void testView ( int color) {
+      private void testView ( int color ) {
 
-            BiliBiliLoadingDrawable loadingDrawable = new BiliBiliLoadingDrawable();
+            BiliBiliDrawable loadingDrawable = new BiliBiliDrawable();
             loadingDrawable.setRadius( 20 );
             loadingDrawable.setStrokeWidth( 10 );
             loadingDrawable.setColor( color );
@@ -125,10 +176,10 @@ public class MainActivity extends AppCompatActivity {
                   }
             } );
 
-            CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable();
-            circleLoadingDrawable.setColor( color );
-            circleLoadingDrawable.setStrokeWidth( 16 );
-            mCircleView.setDrawable( circleLoadingDrawable );
+            CircleDrawable circleDrawable = new CircleDrawable();
+            circleDrawable.setColor( color );
+            circleDrawable.setStrokeWidth( 16 );
+            mCircleView.setDrawable( circleDrawable );
             mCircleView.setCount( Integer.MAX_VALUE );
             mCircleView.setOnClickListener( v -> {
                   if( mCircleView.isRunning() ) {
@@ -157,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
             RoundRectCornerDrawable animateCorner = new RoundRectCornerDrawable();
             animateCorner.setColor( color );
-            AnimateWrapperDrawable wrapperDrawable = new AnimateWrapperDrawable( animateCorner );
+            AnimateDrawable wrapperDrawable = new AnimateDrawable( animateCorner );
             wrapperDrawable.setDuration( 1000 );
             mCornerAnimateImage.setImageDrawable( wrapperDrawable );
             mCornerAnimateImage.setOnClickListener( v -> {
@@ -193,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
             rectPathDrawable.setMode( RoundRectPathDrawable.COUNTER_CLOCKWISE_SUB );
             rectPathDrawable.setStrokeWidth( 16 );
             rectPathDrawable.setColor( color );
-            AnimateWrapperDrawable pathWrapper = new AnimateWrapperDrawable( rectPathDrawable );
+            AnimateDrawable pathWrapper = new AnimateDrawable( rectPathDrawable );
             pathWrapper.setDuration( 2000 );
             mPathAnimateImage.setImageDrawable( pathWrapper );
             mPathAnimateImage.setOnClickListener( v -> {
@@ -208,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
       private void testCircle ( int color ) {
 
             /* circle progress */
-            CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable( 160 );
+            CircleDrawable circleLoadingDrawable = new CircleDrawable( 160 );
             circleLoadingDrawable.setColor( color );
             circleLoadingDrawable.setStrokeWidth( 16 );
             mCircleImage.setImageDrawable( circleLoadingDrawable );
@@ -224,10 +275,10 @@ public class MainActivity extends AppCompatActivity {
             } );
 
             /* circle animate */
-            CircleLoadingDrawable circleDrawable = new CircleLoadingDrawable( 160 );
+            CircleDrawable circleDrawable = new CircleDrawable( 160 );
             circleDrawable.setColor( color );
             circleDrawable.setStrokeWidth( 16 );
-            AnimateWrapperDrawable circleWrapper = new AnimateWrapperDrawable( circleDrawable );
+            AnimateDrawable circleWrapper = new AnimateDrawable( circleDrawable );
             circleWrapper.setDuration( 4000 );
             circleWrapper.setInterpolator( new AccelerateDecelerateInterpolator() );
 
@@ -245,13 +296,13 @@ public class MainActivity extends AppCompatActivity {
       private void testBilibili ( int color ) {
 
             /* bilibili progress */
-            BiliBiliLoadingDrawable biliBiliLoadingDrawable = new BiliBiliLoadingDrawable( 200 );
-            biliBiliLoadingDrawable.setRadius( 20 );
-            biliBiliLoadingDrawable.setStrokeWidth( 10 );
-            biliBiliLoadingDrawable
+            BiliBiliDrawable biliBiliDrawable = new BiliBiliDrawable( 200 );
+            biliBiliDrawable.setRadius( 20 );
+            biliBiliDrawable.setStrokeWidth( 10 );
+            biliBiliDrawable
                 .setColor( color );
 
-            mBilibiliImage.setImageDrawable( biliBiliLoadingDrawable );
+            mBilibiliImage.setImageDrawable( biliBiliDrawable );
             mBilibiliSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
 
                   @Override
@@ -259,17 +310,17 @@ public class MainActivity extends AppCompatActivity {
                       SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        biliBiliLoadingDrawable.setDrawProgress( v );
+                        biliBiliDrawable.setDrawProgress( v );
                   }
             } );
 
             /* bilibili animate */
-            BiliBiliLoadingDrawable biliLoadingDrawable = new BiliBiliLoadingDrawable( 200 );
+            BiliBiliDrawable biliLoadingDrawable = new BiliBiliDrawable( 200 );
             biliLoadingDrawable.setRadius( 20 );
             biliLoadingDrawable.setStrokeWidth( 10 );
             biliLoadingDrawable
                 .setColor( color );
-            AnimateWrapperDrawable bilibiliWrapper = new AnimateWrapperDrawable(
+            AnimateDrawable bilibiliWrapper = new AnimateDrawable(
                 biliLoadingDrawable );
             bilibiliWrapper.setDuration( 4000 );
 

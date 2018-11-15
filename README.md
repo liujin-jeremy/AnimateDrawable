@@ -12,22 +12,22 @@ implementation 'tech.threekilogram:animateDrawable:2.0.0'
 * 创建
 
 ```
-BiliBiliLoadingDrawable biliBiliLoadingDrawable = new BiliBiliLoadingDrawable( 200 );
-biliBiliLoadingDrawable.setRadius( 20 );
-biliBiliLoadingDrawable.setStrokeWidth( 10 );
-biliBiliLoadingDrawable.setColor( color );
+BiliBiliLoadingDrawable biliBiliDrawable = new BiliBiliLoadingDrawable( 200 );
+biliBiliDrawable.setRadius( 20 );
+biliBiliDrawable.setStrokeWidth( 10 );
+biliBiliDrawable.setColor( color );
 ```
 
 * 设置给view
 
 ```
-mBilibiliImage.setImageDrawable( biliBiliLoadingDrawable );
+mBilibiliImage.setImageDrawable( biliBiliDrawable );
 ```
 
 * 更新进度
 
 ```
-biliBiliLoadingDrawable.setDrawProgress( v );
+biliBiliDrawable.setDrawProgress( v );
 ```
 
 ![](img/pic.gif)
@@ -41,21 +41,21 @@ biliBiliLoadingDrawable.setDrawProgress( v );
 * 创建
 
 ```
-CircleLoadingDrawable circleLoadingDrawable = new CircleLoadingDrawable( 160 );
-circleLoadingDrawable.setColor( color );
-circleLoadingDrawable.setStrokeWidth( 16 );
+CircleLoadingDrawable circleDrawable = new CircleLoadingDrawable( 160 );
+circleDrawable.setColor( color );
+circleDrawable.setStrokeWidth( 16 );
 ```
 
 * 设置给view
 
 ```
-mCircleImage.setImageDrawable( circleLoadingDrawable );
+mCircleImage.setImageDrawable( circleDrawable );
 ```
 
 * 更新进度
 
 ```
-circleLoadingDrawable.setDrawProgress( v );
+circleDrawable.setDrawProgress( v );
 ```
 
 ![](img/pic01.gif)

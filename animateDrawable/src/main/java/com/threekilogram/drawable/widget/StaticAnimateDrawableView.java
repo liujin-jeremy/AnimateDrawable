@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import com.threekilogram.drawable.BaseProgressDrawable;
+import com.threekilogram.drawable.ProgressDrawable;
 import java.util.ArrayList;
 
 /**
@@ -20,28 +20,28 @@ public class StaticAnimateDrawableView extends View {
 
       private static final int DEFAULT_SIZE = 200;
 
-      private static BaseProgressDrawable sDrawable;
+      private static ProgressDrawable sDrawable;
       /**
        * start time
        */
-      private static long                 sStartTime    = -1;
-      private static long                 sSetTime;
+      private static long             sStartTime    = -1;
+      private static long             sSetTime;
       /**
        * start progress
        */
-      private static float                sStartProgress;
+      private static float            sStartProgress;
       /**
        * 时长
        */
-      private static int                  sDuration     = 2000;
+      private static int              sDuration     = 2000;
       /**
        * 播放总数
        */
-      private static int                  sCount        = 1;
+      private static int              sCount        = 1;
       /**
        * 差值器
        */
-      private static TimeInterpolator     sInterpolator = new LinearInterpolator();
+      private static TimeInterpolator sInterpolator = new LinearInterpolator();
 
       private static ArrayList<StaticAnimateDrawableView> sViews = new ArrayList<>();
 
@@ -118,7 +118,7 @@ public class StaticAnimateDrawableView extends View {
                   return;
             }
 
-            sDrawable.mProgress = calculateProgress();
+            sDrawable.setProgress( calculateProgress() );
             sDrawable.draw( canvas );
             invalidate();
       }
@@ -127,7 +127,7 @@ public class StaticAnimateDrawableView extends View {
 
             long l = ( System.currentTimeMillis() );
             if( l - sSetTime < 16 ) {
-                  return sDrawable.mProgress;
+                  return sDrawable.getProgress();
             }
             if( ( l - sStartTime ) / sDuration >= sCount ) {
                   sStartTime = -1;
@@ -142,12 +142,12 @@ public class StaticAnimateDrawableView extends View {
             return sInterpolator.getInterpolation( input );
       }
 
-      public static void setDrawable ( BaseProgressDrawable drawable ) {
+      public static void setDrawable ( ProgressDrawable drawable ) {
 
             sDrawable = drawable;
       }
 
-      public static BaseProgressDrawable getDrawable ( ) {
+      public static ProgressDrawable getDrawable ( ) {
 
             return sDrawable;
       }
@@ -216,7 +216,7 @@ public class StaticAnimateDrawableView extends View {
       public static void start ( ) {
 
             sStartTime = System.currentTimeMillis();
-            sStartProgress = sDrawable.mProgress;
+            sStartProgress = sDrawable.getProgress();
 
             for( StaticAnimateDrawableView next : sViews ) {
                   next.invalidate();

@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
  * @author wuxio 2018-05-12:11:03
  */
 @SuppressWarnings("WeakerAccess")
-public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
+public class BiliBiliDrawable extends ProgressDrawable {
 
       private final int STATE2 = 2;
       private final int STATE4 = 4;
@@ -27,12 +27,12 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
       private   float       mStateFraction;
       private   int         mSize;
 
-      public BiliBiliLoadingDrawable ( ) {
+      public BiliBiliDrawable ( ) {
 
             this( 0 );
       }
 
-      public BiliBiliLoadingDrawable ( int size ) {
+      public BiliBiliDrawable ( int size ) {
 
             mSize = size;
             mPaint.setStyle( Paint.Style.STROKE );
@@ -156,11 +156,11 @@ public class BiliBiliLoadingDrawable extends BaseProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas ) {
+      protected void draw ( @NonNull Canvas canvas, float progress ) {
 
             initPath( canvas );
 
-            calculate( mProgress );
+            calculate( progress );
 
             int size = mSize;
             int size20Percent = size / 5;

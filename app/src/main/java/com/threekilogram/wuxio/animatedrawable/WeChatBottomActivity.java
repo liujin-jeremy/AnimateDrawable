@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import com.threekilogram.drawable.AlphaProgressDrawable;
+import com.threekilogram.drawable.AlphaDrawable;
 import com.threekilogram.drawable.widget.TabItemBuilder;
 
 /**
@@ -111,7 +111,7 @@ public class WeChatBottomActivity extends AppCompatActivity {
 
             @Override
             public TabItemBuilder setDrawable (
-                int position, AlphaProgressDrawable drawable ) {
+                int position, AlphaDrawable drawable ) {
 
                   return super.setDrawable( position, drawable );
             }

@@ -10,14 +10,14 @@ import android.support.annotation.Nullable;
 /**
  * @author wuxio 2018-05-25:6:58
  */
-public class AlphaProgressDrawable extends BaseProgressDrawable {
+public class AlphaDrawable extends ProgressDrawable {
 
       private Bitmap mNormalBitmap;
       private Bitmap mSelectedBitmap;
       private float  mProgress;
       private Paint  mSelectPaint;
 
-      public AlphaProgressDrawable ( Bitmap normalBitmap, Bitmap selectedBitmap ) {
+      public AlphaDrawable ( Bitmap normalBitmap, Bitmap selectedBitmap ) {
 
             mNormalBitmap = normalBitmap;
             mSelectedBitmap = selectedBitmap;
@@ -26,9 +26,9 @@ public class AlphaProgressDrawable extends BaseProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas ) {
+      protected void draw ( @NonNull Canvas canvas, float progress ) {
 
-            int normalAlpha = (int) ( 255 * ( 1 - mProgress ) );
+            int normalAlpha = (int) ( 255 * ( 1 - progress ) );
             int selectedAlpha = 255 - normalAlpha;
 
             mPaint.setAlpha( normalAlpha );

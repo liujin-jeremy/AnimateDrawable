@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Path.Direction;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 
@@ -16,7 +15,7 @@ import android.support.annotation.NonNull;
  * @date: 2018-07-23
  * @time: 10:57
  */
-public class RoundRectCornerDrawable extends BaseProgressDrawable {
+public class RoundRectCornerDrawable extends ProgressDrawable {
 
       private Path    mPath;
       private RectF   mRectF;
@@ -30,11 +29,10 @@ public class RoundRectCornerDrawable extends BaseProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas ) {
+      protected void draw ( @NonNull Canvas canvas, float progress ) {
 
-            Rect bounds = canvas.getClipBounds();
-            int width = bounds.width();
-            int height = bounds.height();
+            int width = getWidth();
+            int height = getHeight();
             float[] radius = configRadius(
                 width, height, mRadius, mProgress );
             mRectF.left = 0;

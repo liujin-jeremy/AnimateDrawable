@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
-import com.threekilogram.drawable.BiliBiliLoadingDrawable;
+import com.threekilogram.drawable.BiliBiliDrawable;
 import com.threekilogram.drawable.widget.StaticAnimateDrawableView;
 
 public class RecyclerActivity extends AppCompatActivity {
@@ -88,9 +88,9 @@ public class RecyclerActivity extends AppCompatActivity {
                   return view;
             }
 
-            public BiliBiliLoadingDrawable createBiliBiliLoadingDrawable ( ) {
+            public BiliBiliDrawable createBiliBiliLoadingDrawable ( ) {
 
-                  BiliBiliLoadingDrawable loadingDrawable = new BiliBiliLoadingDrawable( 180 );
+                  BiliBiliDrawable loadingDrawable = new BiliBiliDrawable( 180 );
                   loadingDrawable.setColor( Color.BLUE );
                   loadingDrawable.setStrokeWidth( 5 );
                   loadingDrawable.setRadius( 8 );

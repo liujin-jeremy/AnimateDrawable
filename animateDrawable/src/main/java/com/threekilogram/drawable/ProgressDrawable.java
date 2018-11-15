@@ -5,6 +5,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
@@ -14,22 +15,28 @@ import android.support.annotation.Nullable;
 /**
  * @author wuxio 2018-05-25:7:11
  */
-public abstract class BaseProgressDrawable extends Drawable {
+public abstract class ProgressDrawable extends Drawable {
 
       /**
        * 画笔
        */
+      @SuppressWarnings("WeakerAccess")
       protected Paint mPaint;
       /**
        * 当前进度
        */
-      public    float mProgress;
+      protected float mProgress;
+      /**
+       * bounds
+       */
+      protected Rect  mRect;
 
-      public BaseProgressDrawable ( ) {
+      public ProgressDrawable ( ) {
 
             mPaint = new Paint( Paint.ANTI_ALIAS_FLAG );
             mPaint.setStrokeJoin( Paint.Join.ROUND );
             mPaint.setStrokeCap( Paint.Cap.ROUND );
+            mRect = new Rect();
       }
 
       /**
@@ -84,13 +91,46 @@ public abstract class BaseProgressDrawable extends Drawable {
             return PixelFormat.TRANSPARENT;
       }
 
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
+
+            draw( canvas, mProgress );
+      }
+
       /**
        * 根据进度值{@link #mProgress}绘制内容
        *
        * @param canvas :画布
+       * @param progress 进度值
        */
+      protected abstract void draw ( @NonNull Canvas canvas, float progress );
+
       @Override
-      public abstract void draw ( @NonNull Canvas canvas );
+      protected void onBoundsChange ( Rect bounds ) {
+
+            super.onBoundsChange( bounds );
+            mRect.set( bounds );
+      }
+
+      /**
+       * 绘制区域宽度
+       *
+       * @return 宽度
+       */
+      protected int getWidth ( ) {
+
+            return mRect.width();
+      }
+
+      /**
+       * 绘制区域高度
+       *
+       * @return 高度
+       */
+      protected int getHeight ( ) {
+
+            return mRect.height();
+      }
 
       /**
        * 设置进度

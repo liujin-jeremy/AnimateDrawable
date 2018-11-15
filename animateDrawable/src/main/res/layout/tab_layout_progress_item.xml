@@ -13,7 +13,7 @@
           android:layout_weight="1"
           tools:src="@android:drawable/btn_dialog"/>
 
-      <com.threekilogram.drawable.widget.ProgressColorTextView
+      <com.threekilogram.drawable.widget.ColorTextView
           android:id="@+id/tabText"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
