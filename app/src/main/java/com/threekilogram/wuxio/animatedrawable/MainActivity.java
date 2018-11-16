@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             AnimateDrawable wrapperDrawable = new AnimateDrawable(
                 ballScaleDrawable );
             wrapperDrawable.setCount( 20 );
-            wrapperDrawable.setDuration( 2000 );
+            wrapperDrawable.setDuration( 1000 );
             mAnimateBallScale.setOnClickListener( v -> {
 
                   if( wrapperDrawable.isRunning() ) {

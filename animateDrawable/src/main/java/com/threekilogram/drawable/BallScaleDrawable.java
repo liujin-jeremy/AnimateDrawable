@@ -40,9 +40,9 @@ public class BallScaleDrawable extends ProgressDrawable {
 
       private float calculateProgress ( int i, float progress ) {
 
-            progress = progress + 0.1f * i;
-            if( progress > 1f ) {
-                  progress = 1f - ( progress - 1f );
+            progress = progress - 0.2f * i;
+            if( progress < 0f ) {
+                  progress = -progress;
             }
 
             if( progress <= 0.5f ) {
