@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
       private void test (
           ProgressDrawable drawable, ImageView view, SeekBar seekBar, ImageView animate ) {
 
-            test( drawable, view, seekBar, animate, 1500, new LinearInterpolator() );
+            test( drawable, view, seekBar, animate, 10, 1500, new LinearInterpolator() );
       }
 
       private void test (
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
           int duration,
           TimeInterpolator interpolator ) {
 
-            test( drawable, view, seekBar, animate, 1, duration, interpolator );
+            test( drawable, view, seekBar, animate, 10, duration, interpolator );
       }
 
       private void test (

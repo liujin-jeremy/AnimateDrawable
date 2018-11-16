@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 public class BallPulseDrawable extends ProgressDrawable {
 
       private float mSpace;
-      private float mMinScale = 0.3f;
+      private float mMinScale = 0.4f;
       private float mRadius;
       private float mMinRadius;
       private float mDRadius;
