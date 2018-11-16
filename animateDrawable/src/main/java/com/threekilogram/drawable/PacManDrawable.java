@@ -12,8 +12,8 @@ import android.support.annotation.NonNull;
  */
 public class PacManDrawable extends ProgressDrawable {
 
-      private static final float MIN_ANGLE = 6;
-      private static final float MAX_ANGLE = 30;
+      private static final float MIN_ANGLE = 4;
+      private static final float MAX_ANGLE = 36;
       private static final float D_ANGLE   = MAX_ANGLE - MIN_ANGLE;
 
       private RectF mRectF;
@@ -34,7 +34,7 @@ public class PacManDrawable extends ProgressDrawable {
             super.onBoundsChange( bounds );
             int min = Math.min( bounds.width(), bounds.height() );
             mSize = min * 4 / 5;
-            mRadius = min / 15;
+            mRadius = min / 10;
             float v = mSize / 2;
             mRectF.set( -v, -v, v, v );
       }
@@ -51,7 +51,7 @@ public class PacManDrawable extends ProgressDrawable {
             float angle = calculateAngle( progress );
             canvas.drawArc( mRectF, -angle, -360 + angle * 2, true, mPaint );
 
-            float cx = left + mRadius - ( left + mRadius ) * progress;
+            float cx = left + mRadius - ( left + mRadius * 2 ) * progress;
             canvas.drawCircle( cx, 0, mRadius, mPaint );
       }
 

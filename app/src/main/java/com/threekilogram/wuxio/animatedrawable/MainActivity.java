@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
       private void testPacMan ( ) {
 
             PacManDrawable drawable = new PacManDrawable();
-            test( drawable, mPacMan, mPacManSeek, mPacManAnimate, 10, 1000,
+            test( drawable, mPacMan, mPacManSeek, mPacManAnimate, 10, 800,
                   new AccelerateDecelerateInterpolator()
             );
       }
