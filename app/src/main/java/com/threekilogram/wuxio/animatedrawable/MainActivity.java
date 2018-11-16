@@ -16,6 +16,7 @@ import com.threekilogram.drawable.BiliBiliDrawable;
 import com.threekilogram.drawable.CircleDrawable;
 import com.threekilogram.drawable.RoundRectCornerDrawable;
 import com.threekilogram.drawable.RoundRectPathDrawable;
+import com.threekilogram.drawable.SquareRotateDrawable;
 import com.threekilogram.drawable.widget.AnimateDrawableView;
 import com.threekilogram.drawable.widget.StaticAnimateDrawableView;
 
@@ -49,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView                 mBallGridScale;
       private SeekBar                   mBallGridScaleSeek;
       private ImageView                 mAnimateBallGridScale;
+      private ImageView                 mRectRotateScale;
+      private SeekBar                   mRectRotateSeek;
+      private ImageView                 mAnimateRectRotateScale;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -83,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
             mBallGridScale = findViewById( R.id.ballGridScale );
             mBallGridScaleSeek = findViewById( R.id.ballGridScaleSeek );
             mAnimateBallGridScale = findViewById( R.id.animateBallGridScale );
+            mRectRotateScale = findViewById( R.id.rectRotateScale );
+            mRectRotateSeek = findViewById( R.id.rectRotateSeek );
+            mAnimateRectRotateScale = findViewById( R.id.animateRectRotateScale );
 
             int color = getResources().getColor( R.color.orangered );
             testBilibili( color );
@@ -93,6 +100,43 @@ public class MainActivity extends AppCompatActivity {
             testStatic( color );
             testBallScale();
             testBallGrid();
+            testRectRotate();
+      }
+
+      private void testRectRotate ( ) {
+
+            SquareRotateDrawable drawable = new SquareRotateDrawable();
+            mRectRotateScale.setImageDrawable( drawable );
+            mRectRotateSeek.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged (
+                      SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+
+                  @Override
+                  public void onStartTrackingTouch ( SeekBar seekBar ) {
+
+                  }
+
+                  @Override
+                  public void onStopTrackingTouch ( SeekBar seekBar ) {
+
+                  }
+            } );
+            AnimateWrapperDrawable wrapperDrawable = new AnimateWrapperDrawable( drawable );
+            wrapperDrawable.setCount( 20 );
+            mAnimateRectRotateScale.setImageDrawable( wrapperDrawable );
+            mAnimateRectRotateScale.setOnClickListener( v -> {
+                  if( wrapperDrawable.isRunning() ) {
+                        wrapperDrawable.stop();
+                  } else {
+                        wrapperDrawable.start();
+                  }
+            } );
       }
 
       private void testBallGrid ( ) {
