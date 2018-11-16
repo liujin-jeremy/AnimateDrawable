@@ -21,6 +21,7 @@ import com.threekilogram.drawable.RectRotateDrawable;
 import com.threekilogram.drawable.RoundRectCornerDrawable;
 import com.threekilogram.drawable.RoundRectPathDrawable;
 import com.threekilogram.drawable.SquareFlipDrawable;
+import com.threekilogram.drawable.StrokeWaveDrawable;
 
 /**
  * @author wuxio
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mBallTriRotate;
       private SeekBar   mBallTriRotateSeek;
       private ImageView mBallTriRotateAnimate;
+      private ImageView mStreakWave;
+      private SeekBar   mStreakWaveSeek;
+      private ImageView mStreakWaveAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -76,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
             testBallRotate();
             testRectRotate();
             testBallTriRotate();
+            testStreakWave();
+      }
+
+      private void testStreakWave ( ) {
+
+            StrokeWaveDrawable drawable = new StrokeWaveDrawable();
+            test( drawable, mStreakWave, mStreakWaveSeek, mStreakWaveAnimate, 10, 1200,
+                  new LinearInterpolator()
+            );
       }
 
       private void testBallTriRotate ( ) {
@@ -122,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
             mBallTriRotate = findViewById( R.id.ballTriRotate );
             mBallTriRotateSeek = findViewById( R.id.ballTriRotateSeek );
             mBallTriRotateAnimate = findViewById( R.id.ballTriRotateAnimate );
+            mStreakWave = findViewById( R.id.streakWave );
+            mStreakWaveSeek = findViewById( R.id.streakWaveSeek );
+            mStreakWaveAnimate = findViewById( R.id.streakWaveAnimate );
       }
 
       private void test (
