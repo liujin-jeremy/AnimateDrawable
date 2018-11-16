@@ -21,6 +21,7 @@ import com.threekilogram.drawable.RectRotateDrawable;
 import com.threekilogram.drawable.RoundRectCornerDrawable;
 import com.threekilogram.drawable.RoundRectPathDrawable;
 import com.threekilogram.drawable.SquareFlipDrawable;
+import com.threekilogram.drawable.StrokePulseDrawable;
 import com.threekilogram.drawable.StrokeWaveDrawable;
 
 /**
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mStreakWave;
       private SeekBar   mStreakWaveSeek;
       private ImageView mStreakWaveAnimate;
+      private ImageView mStreakPulse;
+      private SeekBar   mStreakPulseSeek;
+      private ImageView mStreakPulseAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -81,6 +85,15 @@ public class MainActivity extends AppCompatActivity {
             testRectRotate();
             testBallTriRotate();
             testStreakWave();
+            testStreakPulse();
+      }
+
+      private void testStreakPulse ( ) {
+
+            StrokePulseDrawable drawable = new StrokePulseDrawable();
+            test( drawable, mStreakPulse, mStreakPulseSeek, mStreakPulseAnimate, 10, 1000,
+                  new LinearInterpolator()
+            );
       }
 
       private void testStreakWave ( ) {
@@ -138,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
             mStreakWave = findViewById( R.id.streakWave );
             mStreakWaveSeek = findViewById( R.id.streakWaveSeek );
             mStreakWaveAnimate = findViewById( R.id.streakWaveAnimate );
+            mStreakPulse = findViewById( R.id.streakPulse );
+            mStreakPulseSeek = findViewById( R.id.streakPulseSeek );
+            mStreakPulseAnimate = findViewById( R.id.streakPulseAnimate );
       }
 
       private void test (
@@ -214,7 +230,9 @@ public class MainActivity extends AppCompatActivity {
       private void testBallScale ( ) {
 
             BallPulseDrawable ballPulseDrawable = new BallPulseDrawable();
-            test( ballPulseDrawable, mBallPulse, mBallPulseSeek, mBallPulseAnimate );
+            test( ballPulseDrawable, mBallPulse, mBallPulseSeek, mBallPulseAnimate, 10, 1000,
+                  new LinearInterpolator()
+            );
       }
 
       private void testCorner ( int color ) {

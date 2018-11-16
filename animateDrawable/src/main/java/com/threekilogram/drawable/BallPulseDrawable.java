@@ -12,8 +12,7 @@ import android.support.annotation.NonNull;
 public class BallPulseDrawable extends ProgressDrawable {
 
       private float mSpace;
-      private float mMinScale = 0.5f;
-      private float mHalfSpace;
+      private float mMinScale = 0.3f;
       private float mRadius;
       private float mMinRadius;
       private float mDRadius;
@@ -29,25 +28,32 @@ public class BallPulseDrawable extends ProgressDrawable {
       @Override
       protected void draw ( @NonNull Canvas canvas, float progress ) {
 
-            int width = getWidth();
-            int height = getHeight();
-            int dX = ( width - mSize ) >> 1;
-            int dY = ( height - mSize ) >> 1;
+            int dX = ( getWidth() ) >> 1;
+            int dY = ( getHeight() ) >> 1;
             canvas.translate( dX, dY );
 
-            int y = getHeight() / 2;
-
-            for( int i = 0; i < 3; i++ ) {
-
-                  float x = mHalfSpace + mRadius + ( mRadius * 2 + mSpace ) * i;
-                  float r = mMinRadius + mDRadius * calculateProgress( i, progress );
-                  canvas.drawCircle( x, y, r, mPaint );
-            }
+            canvas.drawCircle(
+                -mRadius * 2 - mSpace,
+                0,
+                calculateRadius( calculateProgress( progress ) ),
+                mPaint
+            );
+            canvas.drawCircle(
+                0,
+                0,
+                calculateRadius( calculateProgress( progress - 0.5f / 3 ) ),
+                mPaint
+            );
+            canvas.drawCircle(
+                mRadius * 2 + mSpace,
+                0,
+                calculateRadius( calculateProgress( progress - 1f / 3 ) ),
+                mPaint
+            );
       }
 
-      private float calculateProgress ( int i, float progress ) {
+      private float calculateProgress ( float progress ) {
 
-            progress = progress - 0.2f * i;
             if( progress < 0f ) {
                   progress = -progress;
             }
@@ -61,15 +67,19 @@ public class BallPulseDrawable extends ProgressDrawable {
             return progress;
       }
 
+      private float calculateRadius ( float progress ) {
+
+            return mMinRadius + mDRadius * ( progress );
+      }
+
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
             super.onBoundsChange( bounds );
             mSize = Math.min( bounds.width(), bounds.height() );
 
-            mSpace = mSize / 9;
-            mHalfSpace = (int) ( mSpace / 2 );
-            mRadius = ( mSize - 3 * mSpace ) / 6;
+            mSpace = mSize / 16;
+            mRadius = mSize / 8;
             mMinRadius = mRadius * mMinScale;
             mDRadius = mRadius - mMinRadius;
       }
