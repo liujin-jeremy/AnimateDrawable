@@ -26,7 +26,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable {
       /**
        * 时长
        */
-      protected int              mDuration     = 2000;
+      protected int              mDuration     = 1000;
       /**
        * 播放总数
        */

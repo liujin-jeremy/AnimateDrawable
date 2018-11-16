@@ -10,7 +10,7 @@
           android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/bilibiliImage"
+                android:id="@+id/bilibili"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
@@ -24,7 +24,7 @@
                 android:layout_marginTop="8dp"/>
 
             <ImageView
-                android:id="@+id/bilibiliAnimateImage"
+                android:id="@+id/bilibiliAnimate"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
@@ -44,7 +44,7 @@
                 android:background="@color/colorPrimary"/>
 
             <ImageView
-                android:id="@+id/circleImage"
+                android:id="@+id/circle"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
@@ -58,7 +58,7 @@
                 android:layout_marginTop="8dp"/>
 
             <ImageView
-                android:id="@+id/circleAnimateImage"
+                android:id="@+id/circleAnimate"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
@@ -79,7 +79,7 @@
 
 
             <ImageView
-                android:id="@+id/pathImage"
+                android:id="@+id/roundRect"
                 android:layout_width="300dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
@@ -87,13 +87,13 @@
                 android:background="@color/gainsboro"/>
 
             <SeekBar
-                android:id="@+id/pathSeek"
+                android:id="@+id/roundRectSeek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"/>
 
             <ImageView
-                android:id="@+id/pathAnimateImage"
+                android:id="@+id/roundRectAnimate"
                 android:layout_width="300dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
@@ -113,7 +113,7 @@
                 android:background="@color/colorPrimary"/>
 
             <ImageView
-                android:id="@+id/cornerImage"
+                android:id="@+id/corner"
                 android:layout_width="300dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
@@ -127,7 +127,7 @@
                 android:layout_marginTop="8dp"/>
 
             <ImageView
-                android:id="@+id/cornerAnimateImage"
+                android:id="@+id/cornerAnimate"
                 android:layout_width="300dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
@@ -153,72 +153,8 @@
                 android:onClick="toWeChat"
                 android:text="@string/text"/>
 
-            <com.threekilogram.drawable.widget.AnimateDrawableView
-                android:id="@+id/bilibiliView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="8dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/gainsboro"/>
-
-            <com.threekilogram.drawable.widget.AnimateDrawableView
-                android:id="@+id/circleView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="8dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/gainsboro"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                  <com.threekilogram.drawable.widget.StaticAnimateDrawableView
-                      android:id="@+id/static0"
-                      android:layout_width="100dp"
-                      android:layout_height="match_parent"
-                      android:background="@color/gainsboro"/>
-
-
-                  <com.threekilogram.drawable.widget.StaticAnimateDrawableView
-                      android:id="@+id/static1"
-                      android:layout_width="100dp"
-                      android:layout_height="match_parent"
-                      android:layout_marginStart="8dp"
-                      android:layout_marginLeft="8dp"
-                      android:background="@color/gainsboro"/>
-
-
-                  <com.threekilogram.drawable.widget.StaticAnimateDrawableView
-                      android:id="@+id/static2"
-                      android:layout_width="100dp"
-                      android:layout_height="match_parent"
-                      android:layout_marginStart="8dp"
-                      android:layout_marginLeft="8dp"
-                      android:background="@color/gainsboro"/>
-
-            </LinearLayout>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="allVisible"
-                android:text="@string/all_visible"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:layout_gravity="center_horizontal"
-                android:onClick="toRecycler"
-                android:text="reycler"/>
-
             <ImageView
-                android:id="@+id/ballScale"
+                android:id="@+id/ballPulse"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="8dp"
@@ -227,13 +163,13 @@
                 tools:src="@android:color/darker_gray"/>
 
             <SeekBar
-                android:id="@+id/ballScaleSeek"
+                android:id="@+id/ballPulseSeek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"/>
 
             <ImageView
-                android:id="@+id/animateBallScale"
+                android:id="@+id/ballPulseAnimate"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="8dp"
@@ -254,7 +190,7 @@
                 android:background="@color/colorPrimary"/>
 
             <ImageView
-                android:id="@+id/ballGridScale"
+                android:id="@+id/ballGridPulse"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="8dp"
@@ -263,13 +199,13 @@
                 tools:src="@android:color/darker_gray"/>
 
             <SeekBar
-                android:id="@+id/ballGridScaleSeek"
+                android:id="@+id/ballGridPulseSeek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"/>
 
             <ImageView
-                android:id="@+id/animateBallGridScale"
+                android:id="@+id/ballGridPulseAnimate"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="8dp"
@@ -290,7 +226,79 @@
                 android:background="@color/colorPrimary"/>
 
             <ImageView
-                android:id="@+id/rectRotateScale"
+                android:id="@+id/ballFlip"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/ballFlipSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <ImageView
+                android:id="@+id/ballFlipAnimate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/click_text"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/ballRotate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/ballRotateSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <ImageView
+                android:id="@+id/ballRotateAnimate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/click_text"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/rectRotate"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="8dp"
@@ -305,7 +313,7 @@
                 android:layout_marginTop="8dp"/>
 
             <ImageView
-                android:id="@+id/animateRectRotateScale"
+                android:id="@+id/rectRotateAnimate"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="8dp"

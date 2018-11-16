@@ -17,6 +17,7 @@ public class BallPulseDrawable extends ProgressDrawable {
       private float mRadius;
       private float mMinRadius;
       private float mDRadius;
+      private int   mSize;
 
       public BallPulseDrawable ( ) {
 
@@ -27,6 +28,12 @@ public class BallPulseDrawable extends ProgressDrawable {
 
       @Override
       protected void draw ( @NonNull Canvas canvas, float progress ) {
+
+            int width = getWidth();
+            int height = getHeight();
+            int dX = ( width - mSize ) >> 1;
+            int dY = ( height - mSize ) >> 1;
+            canvas.translate( dX, dY );
 
             int y = getHeight() / 2;
 
@@ -58,11 +65,11 @@ public class BallPulseDrawable extends ProgressDrawable {
       protected void onBoundsChange ( Rect bounds ) {
 
             super.onBoundsChange( bounds );
-            int width = bounds.width();
+            mSize = Math.min( bounds.width(), bounds.height() );
 
-            mSpace = width / 9;
+            mSpace = mSize / 9;
             mHalfSpace = (int) ( mSpace / 2 );
-            mRadius = ( width - 3 * mSpace ) / 6;
+            mRadius = ( mSize - 3 * mSpace ) / 6;
             mMinRadius = mRadius * mMinScale;
             mDRadius = mRadius - mMinRadius;
       }
