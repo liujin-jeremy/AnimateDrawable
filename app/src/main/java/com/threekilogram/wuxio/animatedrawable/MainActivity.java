@@ -17,6 +17,7 @@ import com.threekilogram.drawable.BallsCircleScaleDrawable;
 import com.threekilogram.drawable.BallsTriangleRotateDrawable;
 import com.threekilogram.drawable.BiliBiliDrawable;
 import com.threekilogram.drawable.CircleDrawable;
+import com.threekilogram.drawable.PacManDrawable;
 import com.threekilogram.drawable.ProgressDrawable;
 import com.threekilogram.drawable.RectRotateDrawable;
 import com.threekilogram.drawable.RoundRectCornerDrawable;
@@ -69,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mBallsCircleScale;
       private SeekBar   mBallsCircleScaleSeek;
       private ImageView mBallsCircleScaleAnimate;
+      private ImageView mPacMan;
+      private SeekBar   mPacManSeek;
+      private ImageView mPacManAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -91,6 +95,15 @@ public class MainActivity extends AppCompatActivity {
             testStreakWave();
             testStreakPulse();
             testBallsCircleScale();
+            testPacMan();
+      }
+
+      private void testPacMan ( ) {
+
+            PacManDrawable drawable = new PacManDrawable();
+            test( drawable, mPacMan, mPacManSeek, mPacManAnimate, 10, 1000,
+                  new AccelerateDecelerateInterpolator()
+            );
       }
 
       private void testBallsCircleScale ( ) {
@@ -168,6 +181,9 @@ public class MainActivity extends AppCompatActivity {
             mBallsCircleScale = findViewById( R.id.ballsCircleScale );
             mBallsCircleScaleSeek = findViewById( R.id.ballsCircleScaleSeek );
             mBallsCircleScaleAnimate = findViewById( R.id.ballsCircleScaleAnimate );
+            mPacMan = findViewById( R.id.pacMan );
+            mPacManSeek = findViewById( R.id.pacManSeek );
+            mPacManAnimate = findViewById( R.id.pacManAnimate );
       }
 
       private void test (
