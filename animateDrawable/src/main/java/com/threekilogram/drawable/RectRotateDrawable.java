@@ -39,7 +39,7 @@ public class RectRotateDrawable extends ProgressDrawable {
             int cX = getWidth() >> 1;
             int cY = getHeight() >> 1;
             canvas.translate( cX, cY );
-            float degrees = 360 * progress;
+            float degrees = -45 + 360 * progress;
             canvas.rotate( degrees );
 
             float s;
@@ -54,13 +54,13 @@ public class RectRotateDrawable extends ProgressDrawable {
 
             int save = canvas.save();
             canvas.translate( -mSpace - mRadius * 2, 0 );
-            canvas.rotate( -degrees );
+            canvas.rotate( -degrees * 2 + 45 );
             canvas.drawRect( -mRadius, -mRadius, mRadius, mRadius, mPaint );
             canvas.restoreToCount( save );
 
             save = canvas.save();
             canvas.translate( mSpace + mRadius * 2, 0 );
-            canvas.rotate( -degrees );
+            canvas.rotate( -degrees * 2 + 45 );
             canvas.drawRect( -mRadius, -mRadius, mRadius, mRadius, mPaint );
             canvas.restoreToCount( save );
       }
