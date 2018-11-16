@@ -16,7 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import com.threekilogram.drawable.AlphaDrawable;
+import com.threekilogram.drawable.ProgressAlphaDrawable;
 import com.threekilogram.drawable.R;
 
 /**
@@ -29,9 +29,9 @@ public class TabItemBuilder {
       protected TabLayout mTabLayout;
       protected ViewPager mViewPager;
 
-      protected ColorTextView[] mTextViews;
-      protected AlphaDrawable[] mDrawables;
-      protected int             mImageViewId;
+      protected ProgressColorTextView[] mTextViews;
+      protected ProgressAlphaDrawable[] mDrawables;
+      protected int                     mImageViewId;
 
       protected boolean isTabSelect;
       protected boolean isSetting;
@@ -69,8 +69,8 @@ public class TabItemBuilder {
 
             int tabCount = mTabLayout.getTabCount();
 
-            mTextViews = new ColorTextView[ tabCount ];
-            mDrawables = new AlphaDrawable[ tabCount ];
+            mTextViews = new ProgressColorTextView[ tabCount ];
+            mDrawables = new ProgressAlphaDrawable[ tabCount ];
 
             for( int i = 0; i < tabCount; i++ ) {
 
@@ -91,7 +91,7 @@ public class TabItemBuilder {
 
       public TabItemBuilder setTextColor ( @ColorInt int colorNormal, @ColorInt int colorSelect ) {
 
-            for( ColorTextView mTextView : mTextViews ) {
+            for( ProgressColorTextView mTextView : mTextViews ) {
                   mTextView.setTextColor( colorNormal, colorSelect );
             }
             return this;
@@ -105,7 +105,7 @@ public class TabItemBuilder {
             int normal = resources.getColor( colorNormal );
             int select = resources.getColor( colorSelect );
 
-            for( ColorTextView mTextView : mTextViews ) {
+            for( ProgressColorTextView mTextView : mTextViews ) {
                   mTextView.setTextColor( normal, select );
             }
             return this;
@@ -119,12 +119,12 @@ public class TabItemBuilder {
 
             Bitmap normal = BitmapFactory.decodeResource( resources, normalDrawable );
             Bitmap select = BitmapFactory.decodeResource( resources, selectDrawable );
-            AlphaDrawable drawable = new AlphaDrawable( normal, select );
+            ProgressAlphaDrawable drawable = new ProgressAlphaDrawable( normal, select );
 
             return setDrawable( position, drawable );
       }
 
-      public TabItemBuilder setDrawable ( int position, AlphaDrawable drawable ) {
+      public TabItemBuilder setDrawable ( int position, ProgressAlphaDrawable drawable ) {
 
             Tab tab = mTabLayout.getTabAt( position );
             View customView = tab.getCustomView();
@@ -272,10 +272,10 @@ public class TabItemBuilder {
             public void onTabSelected ( Tab tab ) {
 
                   if( isTabSelect ) {
-                        for( AlphaDrawable drawable : mDrawables ) {
+                        for( ProgressAlphaDrawable drawable : mDrawables ) {
                               drawable.setProgress( 0 );
                         }
-                        for( ColorTextView textView : mTextViews ) {
+                        for( ProgressColorTextView textView : mTextViews ) {
                               textView.setTextColorProgress( 0 );
                         }
 

@@ -21,75 +21,49 @@ public class CircleDrawable extends ProgressDrawable {
 
       public CircleDrawable ( ) {
 
-            this( 0 );
-      }
-
-      public CircleDrawable ( int size ) {
-
             super();
-            mSize = size;
             mPaint.setStyle( Paint.Style.STROKE );
             mPaint.setStrokeWidth( 5 );
 
             mSrcPath = new Path();
             mDstPath = new Path();
+
+            mPathMeasure = new PathMeasure();
       }
 
       @Override
-      public int getIntrinsicWidth ( ) {
+      protected void onBoundsChange ( Rect bounds ) {
 
-            if( mSize != 0 ) {
-                  return mSize;
-            }
-            return getIntrinsicWidth();
-      }
+            super.onBoundsChange( bounds );
 
-      @Override
-      public int getIntrinsicHeight ( ) {
+            mSize = Math.min( bounds.width(), bounds.height() );
 
-            if( mSize != 0 ) {
-                  return mSize;
-            }
-            return getIntrinsicHeight();
-      }
+            float strokeWidth = mPaint.getStrokeWidth();
 
-      private void initPath ( Canvas canvas ) {
+            RectF rectF = new RectF();
 
-            if( mPathMeasure == null ) {
+            rectF.set(
+                strokeWidth / 2,
+                strokeWidth / 2,
+                mSize - strokeWidth / 2,
+                mSize - strokeWidth / 2
+            );
 
-                  mPathMeasure = new PathMeasure();
+            mSrcPath.reset();
+            mSrcPath.addArc( rectF, -90, 359.9f );
+            mPathMeasure.setPath( mSrcPath, true );
 
-                  int size = 0;
-                  if( mSize != 0 ) {
-                        size = mSize;
-                  } else {
-                        Rect bounds = canvas.getClipBounds();
-                        size = Math.min( bounds.width(), bounds.height() );
-                  }
-
-                  float strokeWidth = mPaint.getStrokeWidth();
-
-                  RectF rectF = new RectF();
-
-                  rectF.set(
-                      strokeWidth / 2,
-                      strokeWidth / 2,
-                      size - strokeWidth / 2,
-                      size - strokeWidth / 2
-                  );
-
-                  mSrcPath.reset();
-                  mSrcPath.addArc( rectF, -90, 359.9f );
-                  mPathMeasure.setPath( mSrcPath, true );
-
-                  mLength = mPathMeasure.getLength();
-            }
+            mLength = mPathMeasure.getLength();
       }
 
       @Override
       protected void draw ( @NonNull Canvas canvas, float progress ) {
 
-            initPath( canvas );
+            int width = getWidth();
+            int height = getHeight();
+            int dX = ( width - mSize ) >> 1;
+            int dY = ( height - mSize ) >> 1;
+            canvas.translate( dX, dY );
 
             float fraction = mProgress;
 

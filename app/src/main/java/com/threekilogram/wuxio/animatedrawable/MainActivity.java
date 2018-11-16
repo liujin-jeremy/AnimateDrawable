@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
       private void testCircle ( int color ) {
 
             /* circle progress */
-            CircleDrawable circleLoadingDrawable = new CircleDrawable( 160 );
+            CircleDrawable circleLoadingDrawable = new CircleDrawable();
             circleLoadingDrawable.setColor( color );
             circleLoadingDrawable.setStrokeWidth( 16 );
             mCircleImage.setImageDrawable( circleLoadingDrawable );
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
             } );
 
             /* circle animate */
-            CircleDrawable circleDrawable = new CircleDrawable( 160 );
+            CircleDrawable circleDrawable = new CircleDrawable();
             circleDrawable.setColor( color );
             circleDrawable.setStrokeWidth( 16 );
             AnimateDrawable circleWrapper = new AnimateDrawable( circleDrawable );
@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
       private void testBilibili ( int color ) {
 
             /* bilibili progress */
-            BiliBiliDrawable biliBiliDrawable = new BiliBiliDrawable( 200 );
+            BiliBiliDrawable biliBiliDrawable = new BiliBiliDrawable();
             biliBiliDrawable.setRadius( 20 );
             biliBiliDrawable.setStrokeWidth( 10 );
             biliBiliDrawable
@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
             } );
 
             /* bilibili animate */
-            BiliBiliDrawable biliLoadingDrawable = new BiliBiliDrawable( 200 );
+            BiliBiliDrawable biliLoadingDrawable = new BiliBiliDrawable();
             biliLoadingDrawable.setRadius( 20 );
             biliLoadingDrawable.setStrokeWidth( 10 );
             biliLoadingDrawable

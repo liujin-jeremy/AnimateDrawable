@@ -2,41 +2,39 @@ package com.threekilogram.drawable;
 
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.animation.LinearInterpolator;
 
 /**
  * @author Liujin 2018-10-16:9:36
  */
-public class AnimateDrawable extends Drawable {
+public class AnimateDrawable extends ProgressDrawable {
 
       /**
        * drawable
        */
-      private ProgressDrawable mDrawable;
+      protected ProgressDrawable mDrawable;
       /**
        * start time
        */
-      private long             mStartTime    = -1;
+      protected long             mStartTime    = -1;
       /**
        * start progress
        */
-      private float            mStartProgress;
+      protected float            mStartProgress;
       /**
        * 时长
        */
-      private int              mDuration     = 2000;
+      protected int              mDuration     = 2000;
       /**
        * 播放总数
        */
-      private int              mCount        = 1;
+      protected int              mCount        = 1;
       /**
        * 差值器
        */
-      private TimeInterpolator mInterpolator = new LinearInterpolator();
+      protected TimeInterpolator mInterpolator = new LinearInterpolator();
 
       /**
        * 包装一个{@link ProgressDrawable}使其具有动画能力,一帧播放完成之后才播放下一帧
@@ -49,6 +47,11 @@ public class AnimateDrawable extends Drawable {
       public ProgressDrawable getDrawable ( ) {
 
             return mDrawable;
+      }
+
+      public void setDrawable ( ProgressDrawable drawable ) {
+
+            mDrawable = drawable;
       }
 
       @Override
@@ -64,11 +67,14 @@ public class AnimateDrawable extends Drawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas ) {
+      protected void onBoundsChange ( Rect bounds ) {
 
-            if( mDrawable == null ) {
-                  return;
-            }
+            super.onBoundsChange( bounds );
+            mDrawable.onBoundsChange( bounds );
+      }
+
+      @Override
+      protected void draw ( @NonNull Canvas canvas, float progress ) {
 
             if( mStartTime == -1 ) {
                   mDrawable.draw( canvas );
@@ -77,7 +83,7 @@ public class AnimateDrawable extends Drawable {
 
             mDrawable.mProgress = calculateProgress();
             mDrawable.draw( canvas );
-            invalidateSelf();
+            requestInvalidate();
       }
 
       private float calculateProgress ( ) {
@@ -95,23 +101,9 @@ public class AnimateDrawable extends Drawable {
             return mInterpolator.getInterpolation( input );
       }
 
-      @Override
-      public void setAlpha ( int alpha ) {
+      public void requestInvalidate ( ) {
 
-            mDrawable.setAlpha( alpha );
-      }
-
-      @Override
-      public void setColorFilter (
-          @Nullable ColorFilter colorFilter ) {
-
-            mDrawable.setColorFilter( colorFilter );
-      }
-
-      @Override
-      public int getOpacity ( ) {
-
-            return mDrawable.getOpacity();
+            invalidateSelf();
       }
 
       public void setCount ( int count ) {
@@ -134,27 +126,6 @@ public class AnimateDrawable extends Drawable {
             return mDuration;
       }
 
-      public boolean isRunning ( ) {
-
-            long l = ( System.currentTimeMillis() );
-            return ( l - mStartTime ) / mDuration <= mCount;
-      }
-
-      public float getProgress ( ) {
-
-            return mDrawable.mProgress;
-      }
-
-      public void setInterpolator ( TimeInterpolator interpolator ) {
-
-            mInterpolator = interpolator;
-      }
-
-      public TimeInterpolator getInterpolator ( ) {
-
-            return mInterpolator;
-      }
-
       public void start ( ) {
 
             mStartTime = System.currentTimeMillis();
@@ -165,5 +136,21 @@ public class AnimateDrawable extends Drawable {
       public void stop ( ) {
 
             mStartTime = -1;
+      }
+
+      public boolean isRunning ( ) {
+
+            long l = ( System.currentTimeMillis() );
+            return ( l - mStartTime ) / mDuration <= mCount;
+      }
+
+      public void setInterpolator ( TimeInterpolator interpolator ) {
+
+            mInterpolator = interpolator;
+      }
+
+      public TimeInterpolator getInterpolator ( ) {
+
+            return mInterpolator;
       }
 }

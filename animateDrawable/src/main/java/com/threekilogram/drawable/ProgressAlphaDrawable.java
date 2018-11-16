@@ -10,14 +10,14 @@ import android.support.annotation.Nullable;
 /**
  * @author wuxio 2018-05-25:6:58
  */
-public class AlphaDrawable extends ProgressDrawable {
+public class ProgressAlphaDrawable extends ProgressDrawable {
 
       private Bitmap mNormalBitmap;
       private Bitmap mSelectedBitmap;
       private float  mProgress;
       private Paint  mSelectPaint;
 
-      public AlphaDrawable ( Bitmap normalBitmap, Bitmap selectedBitmap ) {
+      public ProgressAlphaDrawable ( Bitmap normalBitmap, Bitmap selectedBitmap ) {
 
             mNormalBitmap = normalBitmap;
             mSelectedBitmap = selectedBitmap;

@@ -10,24 +10,24 @@ import android.util.AttributeSet;
 /**
  * @author wuxio 2018-05-25:11:10
  */
-public class ColorTextView extends android.support.v7.widget.AppCompatTextView {
+public class ProgressColorTextView extends android.support.v7.widget.AppCompatTextView {
 
       private int           mStartColor;
       private int           mEndColor;
       private float         mProgress;
       private ArgbEvaluator mEvaluator = new ArgbEvaluator();
 
-      public ColorTextView ( Context context ) {
+      public ProgressColorTextView ( Context context ) {
 
             super( context );
       }
 
-      public ColorTextView ( Context context, @Nullable AttributeSet attrs ) {
+      public ProgressColorTextView ( Context context, @Nullable AttributeSet attrs ) {
 
             super( context, attrs );
       }
 
-      public ColorTextView (
+      public ProgressColorTextView (
           Context context, @Nullable AttributeSet attrs, int defStyleAttr ) {
 
             super( context, attrs, defStyleAttr );

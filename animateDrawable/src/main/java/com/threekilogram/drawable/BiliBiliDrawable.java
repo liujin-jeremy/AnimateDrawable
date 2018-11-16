@@ -29,73 +29,19 @@ public class BiliBiliDrawable extends ProgressDrawable {
 
       public BiliBiliDrawable ( ) {
 
-            this( 0 );
-      }
-
-      public BiliBiliDrawable ( int size ) {
-
-            mSize = size;
             mPaint.setStyle( Paint.Style.STROKE );
             mPaint.setStrokeWidth( mStrokeWidth );
-      }
 
-      @Override
-      public int getIntrinsicWidth ( ) {
-
-            if( mSize != 0 ) {
-                  return mSize;
-            }
-            return super.getIntrinsicWidth();
-      }
-
-      @Override
-      public int getIntrinsicHeight ( ) {
-
-            if( mSize != 0 ) {
-                  return mSize;
-            }
-            return super.getIntrinsicHeight();
-      }
-
-      private void initPath ( Canvas canvas ) {
-
-            if( mPathMeasure == null ) {
-                  mSrcPath = new Path();
-                  mDstPath = new Path();
-                  mPathMeasure = new PathMeasure();
-
-                  int strokeWidth = mStrokeWidth;
-                  int size = 0;
-                  if( mSize != 0 ) {
-                        size = mSize;
-                  } else {
-                        Rect clipBounds = canvas.getClipBounds();
-                        mSize = size = Math.min( clipBounds.width(), clipBounds.height() );
-                  }
-                  int size20Percent = size / 5;
-                  int size80Percent = size - size20Percent;
-
-                  /* 一个矩形 */
-
-                  mSrcPath.moveTo( size20Percent, 0 );
-                  mSrcPath.rLineTo( size / 2 - size20Percent, size20Percent );
-                  mSrcPath.lineTo( size / 2, size20Percent );
-                  mSrcPath.lineTo( strokeWidth, size20Percent );
-                  mSrcPath.rLineTo( 0, size80Percent - strokeWidth );
-                  mSrcPath.rLineTo( size - strokeWidth * 2, 0 );
-                  mSrcPath.rLineTo( 0, -size80Percent + strokeWidth );
-                  mSrcPath.lineTo( size / 2 + 2, size20Percent );
-                  mSrcPath.lineTo( size - size20Percent, 0 );
-
-                  mPathMeasure.setPath( mSrcPath, false );
-            }
+            mSrcPath = new Path();
+            mDstPath = new Path();
+            mPathMeasure = new PathMeasure();
       }
 
       @Override
       public void setStrokeWidth ( int strokeWidth ) {
 
+            super.setStrokeWidth( strokeWidth );
             mStrokeWidth = strokeWidth;
-            mPaint.setStrokeWidth( mStrokeWidth );
       }
 
       public int getStrokeWidth ( ) {
@@ -111,6 +57,30 @@ public class BiliBiliDrawable extends ProgressDrawable {
       public int getRadius ( ) {
 
             return mRadius;
+      }
+
+      @Override
+      protected void onBoundsChange ( Rect bounds ) {
+
+            super.onBoundsChange( bounds );
+
+            int strokeWidth = mStrokeWidth;
+            mSize = Math.min( bounds.width(), bounds.height() );
+            int size20Percent = mSize / 5;
+            int size80Percent = mSize - size20Percent;
+
+            /* 一个矩形 */
+            mSrcPath.moveTo( size20Percent, 0 );
+            mSrcPath.rLineTo( mSize / 2 - size20Percent, size20Percent );
+            mSrcPath.lineTo( mSize / 2, size20Percent );
+            mSrcPath.lineTo( strokeWidth, size20Percent );
+            mSrcPath.rLineTo( 0, size80Percent - strokeWidth );
+            mSrcPath.rLineTo( mSize - strokeWidth * 2, 0 );
+            mSrcPath.rLineTo( 0, -size80Percent + strokeWidth );
+            mSrcPath.lineTo( mSize / 2 + 2, size20Percent );
+            mSrcPath.lineTo( mSize - size20Percent, 0 );
+
+            mPathMeasure.setPath( mSrcPath, false );
       }
 
       protected void calculate ( float fraction ) {
@@ -158,7 +128,11 @@ public class BiliBiliDrawable extends ProgressDrawable {
       @Override
       protected void draw ( @NonNull Canvas canvas, float progress ) {
 
-            initPath( canvas );
+            int width = getWidth();
+            int height = getHeight();
+            int dX = ( width - mSize ) >> 1;
+            int dY = ( height - mSize ) >> 1;
+            canvas.translate( dX, dY );
 
             calculate( progress );
 

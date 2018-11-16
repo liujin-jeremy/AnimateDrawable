@@ -90,7 +90,7 @@ public class RecyclerActivity extends AppCompatActivity {
 
             public BiliBiliDrawable createBiliBiliLoadingDrawable ( ) {
 
-                  BiliBiliDrawable loadingDrawable = new BiliBiliDrawable( 180 );
+                  BiliBiliDrawable loadingDrawable = new BiliBiliDrawable();
                   loadingDrawable.setColor( Color.BLUE );
                   loadingDrawable.setStrokeWidth( 5 );
                   loadingDrawable.setRadius( 8 );

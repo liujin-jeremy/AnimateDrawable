@@ -11,8 +11,6 @@ import android.support.annotation.NonNull;
  */
 public class BallScaleDrawable extends ProgressDrawable {
 
-      private static final String TAG = BallScaleDrawable.class.getSimpleName();
-
       private float mSpace;
       private float mMinScale = 0.5f;
       private float mHalfSpace;
@@ -22,6 +20,7 @@ public class BallScaleDrawable extends ProgressDrawable {
 
       public BallScaleDrawable ( ) {
 
+            super();
             mPaint.setStyle( Style.FILL );
             mPaint.setColor( Color.RED );
       }
@@ -61,25 +60,20 @@ public class BallScaleDrawable extends ProgressDrawable {
             super.onBoundsChange( bounds );
             int width = bounds.width();
 
-            if( mSpace <= 0 ) {
-                  mSpace = width / 9;
-            }
-
+            mSpace = width / 9;
             mHalfSpace = (int) ( mSpace / 2 );
             mRadius = ( width - 3 * mSpace ) / 6;
             mMinRadius = mRadius * mMinScale;
             mDRadius = mRadius - mMinRadius;
       }
 
-      public void setSpace ( float space ) {
+      public void setMinScale ( float minScale ) {
 
-            mSpace = space;
-            int width = getWidth();
-            if( width > 0 ) {
-                  mHalfSpace = (int) ( mSpace / 2 );
-                  mRadius = ( width - 3 * mSpace ) / 6;
-                  mMinRadius = mRadius * mMinScale;
-                  mDRadius = mRadius - mMinRadius;
-            }
+            mMinScale = minScale;
+      }
+
+      public float getMinScale ( ) {
+
+            return mMinScale;
       }
 }

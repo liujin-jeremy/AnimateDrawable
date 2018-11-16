@@ -5,6 +5,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Path.Direction;
 import android.graphics.PathMeasure;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
@@ -39,6 +40,8 @@ public class RoundRectPathDrawable extends ProgressDrawable {
 
             mPaint.setStyle( Style.STROKE );
             mPaint.setStrokeWidth( mStrokeWidth );
+            mPathMeasure = new PathMeasure();
+            mDst = new Path();
       }
 
       @Override
@@ -49,37 +52,32 @@ public class RoundRectPathDrawable extends ProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas ) {
+      protected void onBoundsChange ( Rect bounds ) {
 
+            super.onBoundsChange( bounds );
+
+            Path src = new Path();
+            RectF rectF = new RectF();
+
+            rectF.set(
+                0 + mStrokeWidth / 2,
+                0 + mStrokeWidth / 2,
+                bounds.width() - mStrokeWidth / 2,
+                bounds.height() - mStrokeWidth / 2
+            );
+            src.addRoundRect(
+                rectF,
+                Integer.MAX_VALUE >> 1,
+                Integer.MAX_VALUE >> 1,
+                Direction.CW
+            );
+
+            mPathMeasure.setPath( src, true );
+            mTotalLength = mPathMeasure.getLength();
       }
 
       @Override
       protected void draw ( @NonNull Canvas canvas, float progress ) {
-
-            if( mPathMeasure == null ) {
-
-                  mPathMeasure = new PathMeasure();
-                  mDst = new Path();
-
-                  Path src = new Path();
-                  RectF rectF = new RectF();
-
-                  rectF.set(
-                      0 + mStrokeWidth / 2,
-                      0 + mStrokeWidth / 2,
-                      canvas.getWidth() - mStrokeWidth / 2,
-                      canvas.getHeight() - mStrokeWidth / 2
-                  );
-                  src.addRoundRect(
-                      rectF,
-                      Integer.MAX_VALUE >> 1,
-                      Integer.MAX_VALUE >> 1,
-                      Direction.CW
-                  );
-
-                  mPathMeasure.setPath( src, true );
-                  mTotalLength = mPathMeasure.getLength();
-            }
 
             float start = 0;
             float end = 0;
@@ -118,5 +116,5 @@ public class RoundRectPathDrawable extends ProgressDrawable {
                         COUNTER_CLOCKWISE_SUB })
       @Target(ElementType.PARAMETER)
       @Retention(RetentionPolicy.SOURCE)
-      public @interface Mode { }
+      @interface Mode { }
 }
