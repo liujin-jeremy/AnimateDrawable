@@ -13,6 +13,7 @@ import com.threekilogram.drawable.AnimateWrapperDrawable;
 import com.threekilogram.drawable.BallGridPulseDrawable;
 import com.threekilogram.drawable.BallPulseDrawable;
 import com.threekilogram.drawable.BallRotateDrawable;
+import com.threekilogram.drawable.BallTriangleRotateDrawable;
 import com.threekilogram.drawable.BiliBiliDrawable;
 import com.threekilogram.drawable.CircleDrawable;
 import com.threekilogram.drawable.ProgressDrawable;
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mRectRotate;
       private SeekBar   mRectRotateSeek;
       private ImageView mRectRotateAnimate;
+      private ImageView mBallTriRotate;
+      private SeekBar   mBallTriRotateSeek;
+      private ImageView mBallTriRotateAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -71,6 +75,13 @@ public class MainActivity extends AppCompatActivity {
             testBallFlip();
             testBallRotate();
             testRectRotate();
+            testBallTriRotate();
+      }
+
+      private void testBallTriRotate ( ) {
+
+            BallTriangleRotateDrawable drawable = new BallTriangleRotateDrawable();
+            test( drawable, mBallTriRotate, mBallTriRotateSeek, mBallTriRotateAnimate );
       }
 
       private void testRectRotate ( ) {
@@ -108,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
             mRectRotate = findViewById( R.id.rectRotate );
             mRectRotateSeek = findViewById( R.id.rectRotateSeek );
             mRectRotateAnimate = findViewById( R.id.rectRotateAnimate );
+            mBallTriRotate = findViewById( R.id.ballTriRotate );
+            mBallTriRotateSeek = findViewById( R.id.ballTriRotateSeek );
+            mBallTriRotateAnimate = findViewById( R.id.ballTriRotateAnimate );
       }
 
       private void test (
