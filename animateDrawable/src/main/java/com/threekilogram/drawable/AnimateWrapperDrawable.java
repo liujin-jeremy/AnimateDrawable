@@ -9,7 +9,7 @@ import android.view.animation.LinearInterpolator;
 /**
  * @author Liujin 2018-10-16:9:36
  */
-public class AnimateDrawable extends ProgressDrawable {
+public class AnimateWrapperDrawable extends ProgressDrawable {
 
       /**
        * drawable
@@ -39,7 +39,7 @@ public class AnimateDrawable extends ProgressDrawable {
       /**
        * 包装一个{@link ProgressDrawable}使其具有动画能力,一帧播放完成之后才播放下一帧
        */
-      public AnimateDrawable ( ProgressDrawable progressDrawable ) {
+      public AnimateWrapperDrawable ( ProgressDrawable progressDrawable ) {
 
             mDrawable = progressDrawable;
       }

@@ -9,16 +9,17 @@ import android.support.annotation.NonNull;
 /**
  * @author Liujin 2018-11-15:22:10
  */
-public class BallScaleDrawable extends ProgressDrawable {
+public class BallGridPulseDrawable extends ProgressDrawable {
 
       private float mSpace;
-      private float mMinScale = 0.5f;
+      private float mMinScale = 0.4f;
       private float mHalfSpace;
       private float mRadius;
       private float mMinRadius;
       private float mDRadius;
+      private int   mSize;
 
-      public BallScaleDrawable ( ) {
+      public BallGridPulseDrawable ( ) {
 
             super();
             mPaint.setStyle( Style.FILL );
@@ -28,19 +29,28 @@ public class BallScaleDrawable extends ProgressDrawable {
       @Override
       protected void draw ( @NonNull Canvas canvas, float progress ) {
 
-            int y = getHeight() / 2;
+            int width = getWidth();
+            int height = getHeight();
+            int dX = ( width - mSize ) >> 1;
+            int dY = ( height - mSize ) >> 1;
+            canvas.translate( dX, dY );
 
             for( int i = 0; i < 3; i++ ) {
 
-                  float x = mHalfSpace + mRadius + ( mRadius * 2 + mSpace ) * i;
-                  float r = mMinRadius + mDRadius * calculateProgress( i, progress );
-                  canvas.drawCircle( x, y, r, mPaint );
+                  float y = mHalfSpace + mRadius + ( mRadius * 2 + mSpace ) * i;
+                  for( int j = 0; j < 3; j++ ) {
+                        float x = mHalfSpace + mRadius + ( mRadius * 2 + mSpace ) * j;
+                        float calculateProgress = calculateProgress( i * 3 + j, progress );
+                        float r =
+                            mMinRadius + mDRadius * calculateProgress;
+                        canvas.drawCircle( x, y, r, mPaint );
+                  }
             }
       }
 
       private float calculateProgress ( int i, float progress ) {
 
-            progress = progress - 0.2f * i;
+            progress = progress - 0.055f * i;
             if( progress < 0f ) {
                   progress = -progress;
             }
@@ -58,11 +68,12 @@ public class BallScaleDrawable extends ProgressDrawable {
       protected void onBoundsChange ( Rect bounds ) {
 
             super.onBoundsChange( bounds );
-            int width = bounds.width();
 
-            mSpace = width / 9;
-            mHalfSpace = (int) ( mSpace / 2 );
-            mRadius = ( width - 3 * mSpace ) / 6;
+            mSize = Math.min( bounds.width(), bounds.height() );
+
+            mSpace = mSize / 9;
+            mHalfSpace = mSpace / 2;
+            mRadius = ( mSize - 3 * mSpace ) / 6;
             mMinRadius = mRadius * mMinScale;
             mDRadius = mRadius - mMinRadius;
       }

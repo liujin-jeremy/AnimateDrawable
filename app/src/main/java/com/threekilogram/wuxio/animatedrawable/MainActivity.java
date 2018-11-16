@@ -9,8 +9,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import com.threekilogram.drawable.AnimateDrawable;
-import com.threekilogram.drawable.BallScaleDrawable;
+import com.threekilogram.drawable.AnimateWrapperDrawable;
+import com.threekilogram.drawable.BallGridPulseDrawable;
+import com.threekilogram.drawable.BallPulseDrawable;
 import com.threekilogram.drawable.BiliBiliDrawable;
 import com.threekilogram.drawable.CircleDrawable;
 import com.threekilogram.drawable.RoundRectCornerDrawable;
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView                 mBallScale;
       private SeekBar                   mBallScaleSeek;
       private ImageView                 mAnimateBallScale;
+      private ImageView                 mBallGridScale;
+      private SeekBar                   mBallGridScaleSeek;
+      private ImageView                 mAnimateBallGridScale;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -73,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
             mStatic0 = findViewById( R.id.static0 );
             mStatic1 = findViewById( R.id.static1 );
             mStatic2 = findViewById( R.id.static2 );
+            mBallScale = findViewById( R.id.ballScale );
+            mBallScaleSeek = findViewById( R.id.ballScaleSeek );
+            mAnimateBallScale = findViewById( R.id.animateBallScale );
+            mBallGridScale = findViewById( R.id.ballGridScale );
+            mBallGridScaleSeek = findViewById( R.id.ballGridScaleSeek );
+            mAnimateBallGridScale = findViewById( R.id.animateBallGridScale );
 
             int color = getResources().getColor( R.color.orangered );
             testBilibili( color );
@@ -80,26 +90,23 @@ public class MainActivity extends AppCompatActivity {
             testPath( color );
             testCorner( color );
             testView( color );
-
             testStatic( color );
-
             testBallScale();
+            testBallGrid();
       }
 
-      private void testBallScale ( ) {
+      private void testBallGrid ( ) {
 
-            mBallScale = findViewById( R.id.ballScale );
-            BallScaleDrawable ballScaleDrawable = new BallScaleDrawable();
-            mBallScale.setImageDrawable( ballScaleDrawable );
-            mBallScaleSeek = findViewById( R.id.ballScaleSeek );
-            mBallScaleSeek.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
+            BallGridPulseDrawable drawable = new BallGridPulseDrawable();
+            mBallGridScale.setImageDrawable( drawable );
+            mBallGridScaleSeek.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
 
                   @Override
                   public void onProgressChanged (
                       SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        ballScaleDrawable.setDrawProgress( v );
+                        drawable.setDrawProgress( v );
                   }
 
                   @Override
@@ -112,9 +119,46 @@ public class MainActivity extends AppCompatActivity {
 
                   }
             } );
-            mAnimateBallScale = findViewById( R.id.animateBallScale );
-            AnimateDrawable wrapperDrawable = new AnimateDrawable(
-                ballScaleDrawable );
+            AnimateWrapperDrawable wrapperDrawable = new AnimateWrapperDrawable( drawable );
+            wrapperDrawable.setCount( 20 );
+            mAnimateBallGridScale.setImageDrawable( wrapperDrawable );
+            mAnimateBallGridScale.setOnClickListener( v -> {
+
+                  if( wrapperDrawable.isRunning() ) {
+                        wrapperDrawable.stop();
+                  } else {
+                        wrapperDrawable.start();
+                  }
+            } );
+      }
+
+      private void testBallScale ( ) {
+
+            BallPulseDrawable ballPulseDrawable = new BallPulseDrawable();
+            mBallScale.setImageDrawable( ballPulseDrawable );
+            mBallScaleSeek.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged (
+                      SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        ballPulseDrawable.setDrawProgress( v );
+                  }
+
+                  @Override
+                  public void onStartTrackingTouch ( SeekBar seekBar ) {
+
+                  }
+
+                  @Override
+                  public void onStopTrackingTouch ( SeekBar seekBar ) {
+
+                  }
+            } );
+
+            AnimateWrapperDrawable wrapperDrawable = new AnimateWrapperDrawable(
+                ballPulseDrawable );
             wrapperDrawable.setCount( 20 );
             wrapperDrawable.setDuration( 1000 );
             mAnimateBallScale.setOnClickListener( v -> {
@@ -208,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
 
             RoundRectCornerDrawable animateCorner = new RoundRectCornerDrawable();
             animateCorner.setColor( color );
-            AnimateDrawable wrapperDrawable = new AnimateDrawable( animateCorner );
+            AnimateWrapperDrawable wrapperDrawable = new AnimateWrapperDrawable( animateCorner );
             wrapperDrawable.setDuration( 1000 );
             mCornerAnimateImage.setImageDrawable( wrapperDrawable );
             mCornerAnimateImage.setOnClickListener( v -> {
@@ -244,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
             rectPathDrawable.setMode( RoundRectPathDrawable.COUNTER_CLOCKWISE_SUB );
             rectPathDrawable.setStrokeWidth( 16 );
             rectPathDrawable.setColor( color );
-            AnimateDrawable pathWrapper = new AnimateDrawable( rectPathDrawable );
+            AnimateWrapperDrawable pathWrapper = new AnimateWrapperDrawable( rectPathDrawable );
             pathWrapper.setDuration( 2000 );
             mPathAnimateImage.setImageDrawable( pathWrapper );
             mPathAnimateImage.setOnClickListener( v -> {
@@ -278,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
             CircleDrawable circleDrawable = new CircleDrawable();
             circleDrawable.setColor( color );
             circleDrawable.setStrokeWidth( 16 );
-            AnimateDrawable circleWrapper = new AnimateDrawable( circleDrawable );
+            AnimateWrapperDrawable circleWrapper = new AnimateWrapperDrawable( circleDrawable );
             circleWrapper.setDuration( 4000 );
             circleWrapper.setInterpolator( new AccelerateDecelerateInterpolator() );
 
@@ -320,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
             biliLoadingDrawable.setStrokeWidth( 10 );
             biliLoadingDrawable
                 .setColor( color );
-            AnimateDrawable bilibiliWrapper = new AnimateDrawable(
+            AnimateWrapperDrawable bilibiliWrapper = new AnimateWrapperDrawable(
                 biliLoadingDrawable );
             bilibiliWrapper.setDuration( 4000 );
 
