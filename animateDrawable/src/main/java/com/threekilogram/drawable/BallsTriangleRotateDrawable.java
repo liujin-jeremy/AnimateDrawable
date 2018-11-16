@@ -9,12 +9,12 @@ import android.support.annotation.NonNull;
 /**
  * @author Liujin 2018-11-16:12:23
  */
-public class BallTriangleRotateDrawable extends ProgressDrawable {
+public class BallsTriangleRotateDrawable extends ProgressDrawable {
 
       private float mDis;
       private float mRadius;
 
-      public BallTriangleRotateDrawable ( ) {
+      public BallsTriangleRotateDrawable ( ) {
 
             mPaint.setStyle( Style.FILL );
             mPaint.setColor( Color.RED );

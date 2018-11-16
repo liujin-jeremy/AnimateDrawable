@@ -13,7 +13,8 @@ import com.threekilogram.drawable.AnimateWrapperDrawable;
 import com.threekilogram.drawable.BallGridPulseDrawable;
 import com.threekilogram.drawable.BallPulseDrawable;
 import com.threekilogram.drawable.BallRotateDrawable;
-import com.threekilogram.drawable.BallTriangleRotateDrawable;
+import com.threekilogram.drawable.BallsCircleScaleDrawable;
+import com.threekilogram.drawable.BallsTriangleRotateDrawable;
 import com.threekilogram.drawable.BiliBiliDrawable;
 import com.threekilogram.drawable.CircleDrawable;
 import com.threekilogram.drawable.ProgressDrawable;
@@ -65,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mStreakPulse;
       private SeekBar   mStreakPulseSeek;
       private ImageView mStreakPulseAnimate;
+      private ImageView mBallsCircleScale;
+      private SeekBar   mBallsCircleScaleSeek;
+      private ImageView mBallsCircleScaleAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -86,6 +90,13 @@ public class MainActivity extends AppCompatActivity {
             testBallTriRotate();
             testStreakWave();
             testStreakPulse();
+            testBallsCircleScale();
+      }
+
+      private void testBallsCircleScale ( ) {
+
+            BallsCircleScaleDrawable drawable = new BallsCircleScaleDrawable();
+            test( drawable, mBallsCircleScale, mBallsCircleScaleSeek, mBallsCircleScaleAnimate );
       }
 
       private void testStreakPulse ( ) {
@@ -106,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
       private void testBallTriRotate ( ) {
 
-            BallTriangleRotateDrawable drawable = new BallTriangleRotateDrawable();
+            BallsTriangleRotateDrawable drawable = new BallsTriangleRotateDrawable();
             test( drawable, mBallTriRotate, mBallTriRotateSeek, mBallTriRotateAnimate );
       }
 
@@ -154,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
             mStreakPulse = findViewById( R.id.streakPulse );
             mStreakPulseSeek = findViewById( R.id.streakPulseSeek );
             mStreakPulseAnimate = findViewById( R.id.streakPulseAnimate );
+            mBallsCircleScale = findViewById( R.id.ballsCircleScale );
+            mBallsCircleScaleSeek = findViewById( R.id.ballsCircleScaleSeek );
+            mBallsCircleScaleAnimate = findViewById( R.id.ballsCircleScaleAnimate );
       }
 
       private void test (

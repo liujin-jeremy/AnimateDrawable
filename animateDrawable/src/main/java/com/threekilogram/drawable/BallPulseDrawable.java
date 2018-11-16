@@ -11,11 +11,10 @@ import android.support.annotation.NonNull;
  */
 public class BallPulseDrawable extends ProgressDrawable {
 
-      private float mMinScale = 0.4f;
       private float mRadius;
+      private float mMinScale = 0.4f;
       private float mMinRadius;
       private float mDRadius;
-      private int   mSize;
 
       public BallPulseDrawable ( ) {
 
@@ -75,9 +74,9 @@ public class BallPulseDrawable extends ProgressDrawable {
       protected void onBoundsChange ( Rect bounds ) {
 
             super.onBoundsChange( bounds );
-            mSize = Math.min( bounds.width(), bounds.height() );
+            int size = Math.min( bounds.width(), bounds.height() );
 
-            mRadius = mSize / 6;
+            mRadius = size / 6;
             mMinRadius = mRadius * mMinScale;
             mDRadius = mRadius - mMinRadius;
       }
