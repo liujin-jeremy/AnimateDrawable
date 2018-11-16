@@ -9,15 +9,15 @@ import android.support.annotation.NonNull;
 /**
  * @author Liujin 2018-11-16:13:18
  */
-public class StrokePulseDrawable extends ProgressDrawable {
+public class StrokePulsePushDrawable extends ProgressDrawable {
 
-      private static final String TAG = StrokePulseDrawable.class.getSimpleName();
+      private static final String TAG = StrokePulsePushDrawable.class.getSimpleName();
 
       private int mStrokeWidth;
       private int mStrokeHigh;
       private int mStrokeLow;
 
-      public StrokePulseDrawable ( ) {
+      public StrokePulsePushDrawable ( ) {
 
             mPaint.setStyle( Style.STROKE );
             mPaint.setColor( Color.RED );
@@ -29,7 +29,7 @@ public class StrokePulseDrawable extends ProgressDrawable {
             super.onBoundsChange( bounds );
             mStrokeWidth = bounds.width() / 11;
             mStrokeHigh = bounds.height() / 5 * 2;
-            mStrokeLow = bounds.height() / 8;
+            mStrokeLow = bounds.height() / 5;
 
             mPaint.setStrokeWidth( mStrokeWidth );
       }
@@ -45,28 +45,25 @@ public class StrokePulseDrawable extends ProgressDrawable {
 
             int dY = mStrokeHigh - mStrokeLow;
 
-            for( int i = 0; i < 3; i++ ) {
+            for( int i = 0; i < 5; i++ ) {
 
                   float x = strokeWidth + half + ( strokeWidth * 2 * i );
                   float y = calculateY( dY, calculateProgress( i, progress ) );
                   canvas.drawLine( x, -y, x, y, mPaint );
-
-                  int j = 4 - i;
-                  if( j != i ) {
-                        x = strokeWidth + half + ( strokeWidth * 2 * j );
-                        y = calculateY( dY, calculateProgress( i, progress ) );
-                        canvas.drawLine( x, -y, x, y, mPaint );
-                  }
             }
       }
 
       private float calculateProgress ( int i, float progress ) {
 
-            progress -= i * 0.5f / 2;
-            if( progress < 0 ) {
-                  progress = -progress;
+            progress *= 26;
+
+            float low = i * 4;
+            float high = 10 + low;
+            if( progress >= low && progress <= high ) {
+                  return ( progress - low ) / 10;
+            } else {
+                  return 0;
             }
-            return progress;
       }
 
       private float calculateY ( int dY, float progress ) {

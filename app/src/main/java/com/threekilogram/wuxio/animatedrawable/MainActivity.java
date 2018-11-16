@@ -24,6 +24,7 @@ import com.threekilogram.drawable.RoundRectCornerDrawable;
 import com.threekilogram.drawable.RoundRectPathDrawable;
 import com.threekilogram.drawable.SquareFlipDrawable;
 import com.threekilogram.drawable.StrokePulseDrawable;
+import com.threekilogram.drawable.StrokePulsePushDrawable;
 import com.threekilogram.drawable.StrokeWaveDrawable;
 
 /**
@@ -73,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mPacMan;
       private SeekBar   mPacManSeek;
       private ImageView mPacManAnimate;
+      private ImageView mPulsePush;
+      private SeekBar   mPulsePushSeek;
+      private ImageView mPulsePushAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -96,6 +100,13 @@ public class MainActivity extends AppCompatActivity {
             testStreakPulse();
             testBallsCircleScale();
             testPacMan();
+            testPulsePush();
+      }
+
+      private void testPulsePush ( ) {
+
+            StrokePulsePushDrawable drawable = new StrokePulsePushDrawable();
+            test( drawable, mPulsePush, mPulsePushSeek, mPulsePushAnimate );
       }
 
       private void testPacMan ( ) {
@@ -184,6 +195,9 @@ public class MainActivity extends AppCompatActivity {
             mPacMan = findViewById( R.id.pacMan );
             mPacManSeek = findViewById( R.id.pacManSeek );
             mPacManAnimate = findViewById( R.id.pacManAnimate );
+            mPulsePush = findViewById( R.id.pulsePush );
+            mPulsePushSeek = findViewById( R.id.pulsePushSeek );
+            mPulsePushAnimate = findViewById( R.id.pulsePushAnimate );
       }
 
       private void test (
