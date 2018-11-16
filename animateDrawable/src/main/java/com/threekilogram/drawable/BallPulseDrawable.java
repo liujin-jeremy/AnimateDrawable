@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
  */
 public class BallPulseDrawable extends ProgressDrawable {
 
-      private float mSpace;
       private float mMinScale = 0.4f;
       private float mRadius;
       private float mMinRadius;
@@ -33,7 +32,7 @@ public class BallPulseDrawable extends ProgressDrawable {
             canvas.translate( dX, dY );
 
             canvas.drawCircle(
-                -mRadius * 2 - mSpace,
+                -mRadius * 2,
                 0,
                 calculateRadius( calculateProgress( progress ) ),
                 mPaint
@@ -41,13 +40,13 @@ public class BallPulseDrawable extends ProgressDrawable {
             canvas.drawCircle(
                 0,
                 0,
-                calculateRadius( calculateProgress( progress - 0.5f / 3 ) ),
+                calculateRadius( calculateProgress( progress - 0.2f ) ),
                 mPaint
             );
             canvas.drawCircle(
-                mRadius * 2 + mSpace,
+                mRadius * 2,
                 0,
-                calculateRadius( calculateProgress( progress - 1f / 3 ) ),
+                calculateRadius( calculateProgress( progress - 0.4f ) ),
                 mPaint
             );
       }
@@ -78,8 +77,7 @@ public class BallPulseDrawable extends ProgressDrawable {
             super.onBoundsChange( bounds );
             mSize = Math.min( bounds.width(), bounds.height() );
 
-            mSpace = mSize / 16;
-            mRadius = mSize / 8;
+            mRadius = mSize / 6;
             mMinRadius = mRadius * mMinScale;
             mDRadius = mRadius - mMinRadius;
       }

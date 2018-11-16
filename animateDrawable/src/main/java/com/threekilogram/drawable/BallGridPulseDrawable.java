@@ -11,9 +11,7 @@ import android.support.annotation.NonNull;
  */
 public class BallGridPulseDrawable extends ProgressDrawable {
 
-      private float mSpace;
       private float mMinScale = 0.4f;
-      private float mHalfSpace;
       private float mRadius;
       private float mMinRadius;
       private float mDRadius;
@@ -31,18 +29,19 @@ public class BallGridPulseDrawable extends ProgressDrawable {
 
             int width = getWidth();
             int height = getHeight();
+
             int dX = ( width - mSize ) >> 1;
             int dY = ( height - mSize ) >> 1;
             canvas.translate( dX, dY );
 
             for( int i = 0; i < 3; i++ ) {
 
-                  float y = mHalfSpace + mRadius + ( mRadius * 2 + mSpace ) * i;
+                  float y = mRadius + ( mRadius * 2 ) * i;
                   for( int j = 0; j < 3; j++ ) {
-                        float x = mHalfSpace + mRadius + ( mRadius * 2 + mSpace ) * j;
-                        float calculateProgress = calculateProgress( i * 3 + j, progress );
-                        float r =
-                            mMinRadius + mDRadius * calculateProgress;
+                        float x = mRadius + ( mRadius * 2 ) * j;
+                        int index = i * 3 + j;
+                        float calculateProgress = calculateProgress( index, progress );
+                        float r = mMinRadius + mDRadius * calculateProgress;
                         canvas.drawCircle( x, y, r, mPaint );
                   }
             }
@@ -50,7 +49,8 @@ public class BallGridPulseDrawable extends ProgressDrawable {
 
       private float calculateProgress ( int i, float progress ) {
 
-            progress = progress - 0.055f * i;
+            progress -= i * 0.5f / 8;
+
             if( progress < 0f ) {
                   progress = -progress;
             }
@@ -71,9 +71,7 @@ public class BallGridPulseDrawable extends ProgressDrawable {
 
             mSize = Math.min( bounds.width(), bounds.height() );
 
-            mSpace = mSize / 9;
-            mHalfSpace = mSpace / 2;
-            mRadius = ( mSize - 3 * mSpace ) / 6;
+            mRadius = mSize / 6;
             mMinRadius = mRadius * mMinScale;
             mDRadius = mRadius - mMinRadius;
       }
