@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
  */
 public class BallGridPulseDrawable extends ProgressDrawable {
 
-      private float mMinScale = 0.4f;
+      private float mMinScale = 0.1f;
       private float mRadius;
       private float mMinRadius;
       private float mDRadius;

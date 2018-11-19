@@ -64,11 +64,11 @@ public class BallsCircleScaleDrawable extends ProgressDrawable {
 
             if( progress <= 0.5f ) {
                   progress *= 2;
-                  mPaint.setAlpha( 50 + (int) ( 205 * progress ) );
+                  mPaint.setAlpha( (int) ( 205 * progress ) );
                   return mMinRadius + mDRadius * progress;
             } else {
                   progress = ( progress - 0.5f ) * 2;
-                  mPaint.setAlpha( 50 + (int) ( 205 * ( 1 - progress ) ) );
+                  mPaint.setAlpha( (int) ( 205 * ( 1 - progress ) ) );
                   return mRadius - mDRadius * progress;
             }
       }

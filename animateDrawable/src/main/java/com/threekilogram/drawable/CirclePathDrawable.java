@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 /**
  * @author wuxio 2018-05-12:23:15
  */
-public class CircleDrawable extends ProgressDrawable {
+public class CirclePathDrawable extends ProgressDrawable {
 
       private Path        mSrcPath;
       private PathMeasure mPathMeasure;
@@ -19,7 +19,7 @@ public class CircleDrawable extends ProgressDrawable {
       private int         mSize;
       private float       mLength;
 
-      public CircleDrawable ( ) {
+      public CirclePathDrawable ( ) {
 
             super();
             mPaint.setStyle( Paint.Style.STROKE );

@@ -12,17 +12,19 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import com.threekilogram.drawable.AnimateWrapperDrawable;
 import com.threekilogram.drawable.BallGridPulseDrawable;
 import com.threekilogram.drawable.BallPulseDrawable;
+import com.threekilogram.drawable.BallPulsePushDrawable;
 import com.threekilogram.drawable.BallRotateDrawable;
+import com.threekilogram.drawable.BallTwoRotateDrawable;
 import com.threekilogram.drawable.BallsCircleScaleDrawable;
 import com.threekilogram.drawable.BallsTriangleRotateDrawable;
 import com.threekilogram.drawable.BiliBiliDrawable;
-import com.threekilogram.drawable.CircleDrawable;
+import com.threekilogram.drawable.CirclePathDrawable;
+import com.threekilogram.drawable.CubeFlipDrawable;
+import com.threekilogram.drawable.CubeTwoRotateDrawable;
 import com.threekilogram.drawable.PacManDrawable;
 import com.threekilogram.drawable.ProgressDrawable;
-import com.threekilogram.drawable.RectRotateDrawable;
 import com.threekilogram.drawable.RoundRectCornerDrawable;
 import com.threekilogram.drawable.RoundRectPathDrawable;
-import com.threekilogram.drawable.SquareFlipDrawable;
 import com.threekilogram.drawable.StrokePulseDrawable;
 import com.threekilogram.drawable.StrokePulsePushDrawable;
 import com.threekilogram.drawable.StrokeWaveDrawable;
@@ -77,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mPulsePush;
       private SeekBar   mPulsePushSeek;
       private ImageView mPulsePushAnimate;
+      private ImageView mBallTwo;
+      private SeekBar   mBallTwoSeek;
+      private ImageView mBallTwoAnimate;
+      private ImageView mBallPush;
+      private SeekBar   mBallPushSeek;
+      private ImageView mBallPushAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -101,6 +109,24 @@ public class MainActivity extends AppCompatActivity {
             testBallsCircleScale();
             testPacMan();
             testPulsePush();
+            testBallTwo();
+            testBallPush();
+      }
+
+      private void testBallPush ( ) {
+
+            BallPulsePushDrawable drawable = new BallPulsePushDrawable();
+            test( drawable, mBallPush, mBallPushSeek, mBallPushAnimate, 10, 2000,
+                  new LinearInterpolator()
+            );
+      }
+
+      private void testBallTwo ( ) {
+
+            BallTwoRotateDrawable drawable = new BallTwoRotateDrawable();
+            test( drawable, mBallTwo, mBallTwoSeek, mBallTwoAnimate, 10, 1600,
+                  new LinearInterpolator()
+            );
       }
 
       private void testPulsePush ( ) {
@@ -147,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
       private void testRectRotate ( ) {
 
-            RectRotateDrawable drawable = new RectRotateDrawable();
+            CubeTwoRotateDrawable drawable = new CubeTwoRotateDrawable();
             test( drawable, mRectRotate, mRectRotateSeek, mRectRotateAnimate );
       }
 
@@ -198,6 +224,12 @@ public class MainActivity extends AppCompatActivity {
             mPulsePush = findViewById( R.id.pulsePush );
             mPulsePushSeek = findViewById( R.id.pulsePushSeek );
             mPulsePushAnimate = findViewById( R.id.pulsePushAnimate );
+            mBallTwo = findViewById( R.id.ballTwo );
+            mBallTwoSeek = findViewById( R.id.ballTwoSeek );
+            mBallTwoAnimate = findViewById( R.id.ballTwoAnimate );
+            mBallPush = findViewById( R.id.ballPush );
+            mBallPushSeek = findViewById( R.id.ballPushSeek );
+            mBallPushAnimate = findViewById( R.id.ballPushAnimate );
       }
 
       private void test (
@@ -261,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
 
       private void testBallFlip ( ) {
 
-            SquareFlipDrawable drawable = new SquareFlipDrawable();
+            CubeFlipDrawable drawable = new CubeFlipDrawable();
             test( drawable, mBallFlip, mBallFlipSeek, mBallFlipAnimate );
       }
 
@@ -300,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
       private void testCircle ( int color ) {
 
             /* circle progress */
-            CircleDrawable circleLoadingDrawable = new CircleDrawable();
+            CirclePathDrawable circleLoadingDrawable = new CirclePathDrawable();
             circleLoadingDrawable.setColor( color );
             circleLoadingDrawable.setStrokeWidth( 16 );
             test( circleLoadingDrawable, mCircle, mCircleSeek, mCircleAnimate );

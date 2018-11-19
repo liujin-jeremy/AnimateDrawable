@@ -11,14 +11,14 @@ import android.support.annotation.NonNull;
 /**
  * @author Liujin 2018-11-16:10:01
  */
-public class SquareFlipDrawable extends ProgressDrawable {
+public class CubeFlipDrawable extends ProgressDrawable {
 
       private int mSize;
 
       private Camera mCamera;
       private Matrix mMatrix;
 
-      public SquareFlipDrawable ( ) {
+      public CubeFlipDrawable ( ) {
 
             super();
 

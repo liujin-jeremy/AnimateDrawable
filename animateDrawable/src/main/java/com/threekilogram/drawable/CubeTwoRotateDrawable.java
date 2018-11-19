@@ -9,13 +9,13 @@ import android.support.annotation.NonNull;
 /**
  * @author Liujin 2018-11-16:10:54
  */
-public class RectRotateDrawable extends ProgressDrawable {
+public class CubeTwoRotateDrawable extends ProgressDrawable {
 
       private float mRadius;
       private int   mSize;
       private int   mSpace;
 
-      public RectRotateDrawable ( ) {
+      public CubeTwoRotateDrawable ( ) {
 
             mPaint.setStyle( Style.FILL );
             mPaint.setColor( Color.RED );
