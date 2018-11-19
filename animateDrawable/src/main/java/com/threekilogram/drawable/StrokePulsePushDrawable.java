@@ -2,6 +2,7 @@ package com.threekilogram.drawable;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ public class StrokePulsePushDrawable extends ProgressDrawable {
 
             mPaint.setStyle( Style.STROKE );
             mPaint.setColor( Color.RED );
+            mPaint.setStrokeCap( Cap.SQUARE );
       }
 
       @Override
