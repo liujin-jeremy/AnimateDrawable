@@ -694,5 +694,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="toWeChat"
+                android:text="微信底部导航"/>
+
       </LinearLayout>
 </ScrollView>

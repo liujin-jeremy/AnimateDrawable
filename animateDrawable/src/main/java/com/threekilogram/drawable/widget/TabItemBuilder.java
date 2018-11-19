@@ -16,7 +16,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import com.threekilogram.drawable.ProgressAlphaDrawable;
 import com.threekilogram.drawable.R;
 
 /**
@@ -134,21 +133,13 @@ public class TabItemBuilder {
             return this;
       }
 
-      public void build ( ) {
+      public void build ( int currentItem ) {
 
             mTabLayout.addOnTabSelectedListener( new TabItemSelectListener() );
             mViewPager.addOnPageChangeListener( new PagerScrollListener() );
 
-            mViewPager.post( new Runnable() {
-
-                  @Override
-                  public void run ( ) {
-
-                        int currentItem = mViewPager.getCurrentItem();
-                        mTextViews[ currentItem ].setTextColorProgress( 1 );
-                        mDrawables[ currentItem ].setProgress( 1 );
-                  }
-            } );
+            mTextViews[ currentItem ].setTextColorProgress( 1 );
+            mDrawables[ currentItem ].setDrawProgress( 1 );
       }
 
       protected void setProgress ( int current, int next, float progress ) {
@@ -158,15 +149,15 @@ public class TabItemBuilder {
             for( int i = 0; i < mTextViews.length; i++ ) {
                   if( i != current || i != next ) {
                         mTextViews[ i ].setTextColorProgress( 0 );
-                        mDrawables[ i ].setProgress( 0 );
+                        mDrawables[ i ].setDrawProgress( 0 );
                   }
             }
 
             mTextViews[ current ].setTextColorProgress( 1 - abs );
-            mDrawables[ current ].setProgress( 1 - abs );
+            mDrawables[ current ].setDrawProgress( 1 - abs );
 
             mTextViews[ next ].setTextColorProgress( abs );
-            mDrawables[ next ].setProgress( abs );
+            mDrawables[ next ].setDrawProgress( abs );
       }
 
       protected class PagerScrollListener implements ViewPager.OnPageChangeListener {

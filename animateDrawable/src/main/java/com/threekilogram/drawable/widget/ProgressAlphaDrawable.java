@@ -1,4 +1,4 @@
-package com.threekilogram.drawable;
+package com.threekilogram.drawable.widget;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -6,6 +6,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.threekilogram.drawable.ProgressDrawable;
 
 /**
  * @author wuxio 2018-05-25:6:58
@@ -35,13 +36,6 @@ public class ProgressAlphaDrawable extends ProgressDrawable {
             canvas.drawBitmap( mNormalBitmap, 0, 0, mPaint );
             mSelectPaint.setAlpha( selectedAlpha );
             canvas.drawBitmap( mSelectedBitmap, 0, 0, mSelectPaint );
-      }
-
-      @Override
-      public void setProgress ( float progress ) {
-
-            mProgress = progress;
-            invalidateSelf();
       }
 
       @Override

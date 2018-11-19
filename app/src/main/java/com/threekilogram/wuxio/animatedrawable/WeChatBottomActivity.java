@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import com.threekilogram.drawable.ProgressAlphaDrawable;
+import com.threekilogram.drawable.widget.ProgressAlphaDrawable;
 import com.threekilogram.drawable.widget.TabItemBuilder;
 
 /**
@@ -53,7 +53,7 @@ public class WeChatBottomActivity extends AppCompatActivity {
             builder.setDrawable( 1, R.drawable.category_normal, R.drawable.category_selected );
             builder.setDrawable( 2, R.drawable.find_normal, R.drawable.find_selected );
             builder.setDrawable( 3, R.drawable.mine_normal, R.drawable.mine_selected );
-            builder.build();
+            builder.build( 0 );
       }
 
       private class PagerAdapter extends FragmentStatePagerAdapter {
@@ -64,11 +64,6 @@ public class WeChatBottomActivity extends AppCompatActivity {
                 TextFragment.newInstance( mTitles[ 2 ] ),
                 TextFragment.newInstance( mTitles[ 3 ] )
             };
-
-            public String[] getTitles ( ) {
-
-                  return mTitles;
-            }
 
             public PagerAdapter ( FragmentManager fm ) {
 
