@@ -21,16 +21,6 @@ public class BallTwoRotateDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void onBoundsChange ( Rect bounds ) {
-
-            super.onBoundsChange( bounds );
-
-            int size = Math.min( bounds.width(), bounds.height() );
-            mTotalRadius = size / 5;
-            mSpace = size / 40;
-      }
-
-      @Override
       protected void draw ( @NonNull Canvas canvas, float progress ) {
 
             canvas.translate( getWidth() / 2, getHeight() / 2 );
@@ -41,6 +31,16 @@ public class BallTwoRotateDrawable extends ProgressDrawable {
 
             canvas.drawCircle( -mSpace - left, 0, left, mPaint );
             canvas.drawCircle( mSpace + right, 0, right, mPaint );
+      }
+
+      @Override
+      protected void onBoundsChange ( Rect bounds ) {
+
+            super.onBoundsChange( bounds );
+
+            int size = Math.min( bounds.width(), bounds.height() );
+            mTotalRadius = size / 5;
+            mSpace = size / 40;
       }
 
       private float calculateProgress ( float progress ) {

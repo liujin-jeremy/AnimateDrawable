@@ -10,13 +10,14 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import com.threekilogram.drawable.AnimateWrapperDrawable;
+import com.threekilogram.drawable.BallCircleAlphaDrawable;
+import com.threekilogram.drawable.BallCircleScaleDrawable;
 import com.threekilogram.drawable.BallGridPulseDrawable;
 import com.threekilogram.drawable.BallPulseDrawable;
 import com.threekilogram.drawable.BallPulsePushDrawable;
 import com.threekilogram.drawable.BallRotateDrawable;
+import com.threekilogram.drawable.BallTriangleRotateDrawable;
 import com.threekilogram.drawable.BallTwoRotateDrawable;
-import com.threekilogram.drawable.BallsCircleScaleDrawable;
-import com.threekilogram.drawable.BallsTriangleRotateDrawable;
 import com.threekilogram.drawable.BiliBiliDrawable;
 import com.threekilogram.drawable.CirclePathDrawable;
 import com.threekilogram.drawable.CubeFlipDrawable;
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mCubeGrid;
       private SeekBar   mCubeGridSeek;
       private ImageView mCubeGridAnimate;
+      private ImageView mBallAlpha;
+      private SeekBar   mBallAlphaSeek;
+      private ImageView mBallAlphaAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -116,12 +120,21 @@ public class MainActivity extends AppCompatActivity {
             testBallTwo();
             testBallPush();
             testCubeGrid();
+            testBallAlpha();
+      }
+
+      private void testBallAlpha ( ) {
+
+            BallCircleAlphaDrawable drawable = new BallCircleAlphaDrawable();
+            test( drawable, mBallAlpha, mBallAlphaSeek, mBallAlphaAnimate );
       }
 
       private void testCubeGrid ( ) {
 
             CubeGridDrawable drawable = new CubeGridDrawable();
-            test( drawable, mCubeGrid, mCubeGridSeek, mCubeGridAnimate );
+            test( drawable, mCubeGrid, mCubeGridSeek, mCubeGridAnimate, 10, 2400,
+                  new LinearInterpolator()
+            );
       }
 
       private void testBallPush ( ) {
@@ -156,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
       private void testBallsCircleScale ( ) {
 
-            BallsCircleScaleDrawable drawable = new BallsCircleScaleDrawable();
+            BallCircleScaleDrawable drawable = new BallCircleScaleDrawable();
             test( drawable, mBallsCircleScale, mBallsCircleScaleSeek, mBallsCircleScaleAnimate );
       }
 
@@ -178,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
       private void testBallTriRotate ( ) {
 
-            BallsTriangleRotateDrawable drawable = new BallsTriangleRotateDrawable();
+            BallTriangleRotateDrawable drawable = new BallTriangleRotateDrawable();
             test( drawable, mBallTriRotate, mBallTriRotateSeek, mBallTriRotateAnimate );
       }
 
@@ -244,6 +257,9 @@ public class MainActivity extends AppCompatActivity {
             mCubeGrid = findViewById( R.id.cubeGrid );
             mCubeGridSeek = findViewById( R.id.cubeGridSeek );
             mCubeGridAnimate = findViewById( R.id.cubeGridAnimate );
+            mBallAlpha = findViewById( R.id.ballAlpha );
+            mBallAlphaSeek = findViewById( R.id.ballAlphaSeek );
+            mBallAlphaAnimate = findViewById( R.id.ballAlphaAnimate );
       }
 
       private void test (

@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 /**
  * @author Liujin 2018-11-16:16:04
  */
-public class BallsCircleScaleDrawable extends ProgressDrawable {
+public class BallCircleScaleDrawable extends ProgressDrawable {
 
       private float mRadius;
       private int   mSize;
@@ -17,7 +17,7 @@ public class BallsCircleScaleDrawable extends ProgressDrawable {
       private float mMinRadius;
       private float mDRadius;
 
-      public BallsCircleScaleDrawable ( ) {
+      public BallCircleScaleDrawable ( ) {
 
             mPaint.setStyle( Style.FILL );
             mPaint.setColor( Color.RED );
