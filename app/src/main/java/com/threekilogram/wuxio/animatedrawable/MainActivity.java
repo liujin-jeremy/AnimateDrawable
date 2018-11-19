@@ -20,6 +20,7 @@ import com.threekilogram.drawable.BallsTriangleRotateDrawable;
 import com.threekilogram.drawable.BiliBiliDrawable;
 import com.threekilogram.drawable.CirclePathDrawable;
 import com.threekilogram.drawable.CubeFlipDrawable;
+import com.threekilogram.drawable.CubeGridDrawable;
 import com.threekilogram.drawable.CubeTwoRotateDrawable;
 import com.threekilogram.drawable.PacManDrawable;
 import com.threekilogram.drawable.ProgressDrawable;
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mBallPush;
       private SeekBar   mBallPushSeek;
       private ImageView mBallPushAnimate;
+      private ImageView mCubeGrid;
+      private SeekBar   mCubeGridSeek;
+      private ImageView mCubeGridAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -111,6 +115,13 @@ public class MainActivity extends AppCompatActivity {
             testPulsePush();
             testBallTwo();
             testBallPush();
+            testCubeGrid();
+      }
+
+      private void testCubeGrid ( ) {
+
+            CubeGridDrawable drawable = new CubeGridDrawable();
+            test( drawable, mCubeGrid, mCubeGridSeek, mCubeGridAnimate );
       }
 
       private void testBallPush ( ) {
@@ -230,6 +241,9 @@ public class MainActivity extends AppCompatActivity {
             mBallPush = findViewById( R.id.ballPush );
             mBallPushSeek = findViewById( R.id.ballPushSeek );
             mBallPushAnimate = findViewById( R.id.ballPushAnimate );
+            mCubeGrid = findViewById( R.id.cubeGrid );
+            mCubeGridSeek = findViewById( R.id.cubeGridSeek );
+            mCubeGridAnimate = findViewById( R.id.cubeGridAnimate );
       }
 
       private void test (
