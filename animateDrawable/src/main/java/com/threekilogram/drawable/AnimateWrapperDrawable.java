@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.view.animation.LinearInterpolator;
 
 /**
+ * 包装一个{@link ProgressDrawable}使其具有动画效果,他会执行指定次数/指定时长的动画
+ *
  * @author Liujin 2018-10-16:9:36
  */
 public class AnimateWrapperDrawable extends ProgressDrawable {
@@ -44,11 +46,17 @@ public class AnimateWrapperDrawable extends ProgressDrawable {
             mDrawable = progressDrawable;
       }
 
+      /**
+       * @return 设置的{@link ProgressDrawable}
+       */
       public ProgressDrawable getDrawable ( ) {
 
             return mDrawable;
       }
 
+      /**
+       * 设置{@link ProgressDrawable}
+       */
       public void setDrawable ( ProgressDrawable drawable ) {
 
             mDrawable = drawable;
@@ -83,7 +91,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable {
 
             mDrawable.mProgress = calculateProgress();
             mDrawable.draw( canvas );
-            requestInvalidate();
+            invalidateSelf();
       }
 
       private float calculateProgress ( ) {
@@ -101,31 +109,41 @@ public class AnimateWrapperDrawable extends ProgressDrawable {
             return mInterpolator.getInterpolation( input );
       }
 
-      public void requestInvalidate ( ) {
-
-            invalidateSelf();
-      }
-
+      /**
+       * 设置播放次数
+       */
       public void setCount ( int count ) {
 
             mCount = count;
       }
 
+      /**
+       * 获取设置的播放次数
+       */
       public int getCount ( ) {
 
             return mCount;
       }
 
+      /**
+       * 设置播放时长
+       */
       public void setDuration ( int duration ) {
 
             mDuration = duration;
       }
 
+      /**
+       * 获取设置的播放时长
+       */
       public int getDuration ( ) {
 
             return mDuration;
       }
 
+      /**
+       * 开始
+       */
       public void start ( ) {
 
             mStartTime = System.currentTimeMillis();
@@ -133,22 +151,34 @@ public class AnimateWrapperDrawable extends ProgressDrawable {
             invalidateSelf();
       }
 
+      /**
+       * 结束
+       */
       public void stop ( ) {
 
             mStartTime = -1;
       }
 
+      /**
+       * 是否正在运行
+       */
       public boolean isRunning ( ) {
 
             long l = ( System.currentTimeMillis() );
             return ( l - mStartTime ) / mDuration <= mCount;
       }
 
+      /**
+       * 设置差值器
+       */
       public void setInterpolator ( TimeInterpolator interpolator ) {
 
             mInterpolator = interpolator;
       }
 
+      /**
+       * 获取设置的差值器
+       */
       public TimeInterpolator getInterpolator ( ) {
 
             return mInterpolator;

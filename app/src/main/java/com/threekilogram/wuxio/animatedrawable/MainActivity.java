@@ -345,7 +345,9 @@ public class MainActivity extends AppCompatActivity {
 
             RoundRectCornerDrawable cornerDrawable = new RoundRectCornerDrawable();
             cornerDrawable.setColor( color );
-            test( cornerDrawable, mCorner, mCornerSeek, mCornerAnimate );
+            test( cornerDrawable, mCorner, mCornerSeek, mCornerAnimate, 1, 1000,
+                  new LinearInterpolator()
+            );
       }
 
       private void testPath ( int color ) {
@@ -354,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
             RoundRectPathDrawable pathDrawable = new RoundRectPathDrawable();
             pathDrawable.setStrokeWidth( 16 );
             pathDrawable.setColor( color );
-            test( pathDrawable, mRoundRect, mRoundRectSeek, mRoundRectAnimate, 2000,
+            test( pathDrawable, mRoundRect, mRoundRectSeek, mRoundRectAnimate, 1, 2000,
                   new LinearInterpolator()
             );
       }
@@ -362,10 +364,12 @@ public class MainActivity extends AppCompatActivity {
       private void testCircle ( int color ) {
 
             /* circle progress */
-            CirclePathDrawable circleLoadingDrawable = new CirclePathDrawable();
-            circleLoadingDrawable.setColor( color );
-            circleLoadingDrawable.setStrokeWidth( 16 );
-            test( circleLoadingDrawable, mCircle, mCircleSeek, mCircleAnimate );
+            CirclePathDrawable drawable = new CirclePathDrawable();
+            drawable.setColor( color );
+            drawable.setStrokeWidth( 16 );
+            test( drawable, mCircle, mCircleSeek, mCircleAnimate, 10, 2000,
+                  new AccelerateDecelerateInterpolator()
+            );
       }
 
       private void testBilibili ( int color ) {
@@ -377,19 +381,19 @@ public class MainActivity extends AppCompatActivity {
             biliBiliDrawable
                 .setColor( color );
 
-            test( biliBiliDrawable, mBilibili, mBilibiliSeek, mBilibiliAnimate, 4000,
-                  new LinearInterpolator()
+            test(
+                biliBiliDrawable,
+                mBilibili,
+                mBilibiliSeek,
+                mBilibiliAnimate,
+                4000,
+                new LinearInterpolator()
             );
       }
 
       public void toWeChat ( View view ) {
 
             WeChatBottomActivity.start( this );
-      }
-
-      public void toRecycler ( View view ) {
-
-            RecyclerActivity.start( MainActivity.this );
       }
 
       private abstract class SimpleOnSeekBarChangeListener implements OnSeekBarChangeListener {
