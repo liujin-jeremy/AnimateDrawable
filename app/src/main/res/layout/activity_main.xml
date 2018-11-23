@@ -737,5 +737,99 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <ImageView
+                android:id="@+id/arc240"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/arc240Seek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <ImageView
+                android:id="@+id/arc240Animate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/click_text"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/arcProgress"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/arcProgressSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/arcChange"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/arcChangeSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <ImageView
+                android:id="@+id/arcChangeAnimate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/click_text"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
       </LinearLayout>
 </ScrollView>

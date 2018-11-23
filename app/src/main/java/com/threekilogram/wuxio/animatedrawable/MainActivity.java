@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import com.threekilogram.drawable.AnimateWrapperDrawable;
+import com.threekilogram.drawable.Arc240RotateDrawable;
+import com.threekilogram.drawable.ArcChangeRotateDrawable;
+import com.threekilogram.drawable.ArcProgressDrawable;
 import com.threekilogram.drawable.BallCircleAlphaDrawable;
 import com.threekilogram.drawable.BallCircleScaleDrawable;
 import com.threekilogram.drawable.BallGridPulseDrawable;
@@ -97,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mStrokeSkip;
       private SeekBar   mStrokeSkipSeek;
       private ImageView mStrokeSkipAnimate;
+      private ImageView mArc240;
+      private SeekBar   mArc240Seek;
+      private ImageView mArc240Animate;
+      private ImageView mArcProgress;
+      private SeekBar   mArcProgressSeek;
+      private ImageView mArcChange;
+      private SeekBar   mArcChangeSeek;
+      private ImageView mArcChangeAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -126,12 +137,48 @@ public class MainActivity extends AppCompatActivity {
             testCubeGrid();
             testBallAlpha();
             testStrokeSkip();
+            testArc240();
+            testArcProgress();
+            testArcChange();
+      }
+
+      private void testArcChange ( ) {
+
+            ArcChangeRotateDrawable drawable = new ArcChangeRotateDrawable();
+            test( drawable, mArcChange, mArcChangeSeek, mArcChangeAnimate );
+      }
+
+      private void testArcProgress ( ) {
+
+            ArcProgressDrawable drawable = new ArcProgressDrawable();
+            test( drawable, mArcProgress, mArcProgressSeek );
+      }
+
+      private void testArc240 ( ) {
+
+            Arc240RotateDrawable drawable = new Arc240RotateDrawable();
+            test( drawable, mArc240, mArc240Seek, mArc240Animate );
       }
 
       private void testStrokeSkip ( ) {
 
             StrokeSkipDrawable drawable = new StrokeSkipDrawable();
             test( drawable, mStrokeSkip, mStrokeSkipSeek, mStrokeSkipAnimate );
+      }
+
+      private void test ( ProgressDrawable drawable, ImageView view, SeekBar seekBar ) {
+
+            view.setImageDrawable( drawable );
+            seekBar.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged (
+                      SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
       }
 
       private void test (
@@ -247,6 +294,14 @@ public class MainActivity extends AppCompatActivity {
             mStrokeSkip = findViewById( R.id.strokeSkip );
             mStrokeSkipSeek = findViewById( R.id.strokeSkipSeek );
             mStrokeSkipAnimate = findViewById( R.id.strokeSkipAnimate );
+            mArc240 = findViewById( R.id.arc240 );
+            mArc240Seek = findViewById( R.id.arc240Seek );
+            mArc240Animate = findViewById( R.id.arc240Animate );
+            mArcProgress = findViewById( R.id.arcProgress );
+            mArcProgressSeek = findViewById( R.id.arcProgressSeek );
+            mArcChange = findViewById( R.id.arcChange );
+            mArcChangeSeek = findViewById( R.id.arcChangeSeek );
+            mArcChangeAnimate = findViewById( R.id.arcChangeAnimate );
       }
 
       private void testBallAlpha ( ) {
