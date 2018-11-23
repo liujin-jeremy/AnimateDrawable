@@ -129,3 +129,21 @@ implementation 'tech.threekilogram:animateDrawable:2.1.0'
 
 ![](img/pic19.gif)
 
+
+
+### StrokeSkipDrawable
+
+![](img/pic20.gif)
+
+
+
+### ArcProgressDrawable
+
+![](img/pic22.gif)
+
+
+
+### ArcChangeRotateDrawable
+
+![](img/pic23.gif)
+

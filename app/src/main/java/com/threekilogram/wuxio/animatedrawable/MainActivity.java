@@ -157,13 +157,15 @@ public class MainActivity extends AppCompatActivity {
       private void testArc240 ( ) {
 
             Arc240RotateDrawable drawable = new Arc240RotateDrawable();
-            test( drawable, mArc240, mArc240Seek, mArc240Animate );
+            test( drawable, mArc240, mArc240Seek, mArc240Animate, 800, new LinearInterpolator() );
       }
 
       private void testStrokeSkip ( ) {
 
             StrokeSkipDrawable drawable = new StrokeSkipDrawable();
-            test( drawable, mStrokeSkip, mStrokeSkipSeek, mStrokeSkipAnimate );
+            test( drawable, mStrokeSkip, mStrokeSkipSeek, mStrokeSkipAnimate, 800,
+                  new LinearInterpolator()
+            );
       }
 
       private void test ( ProgressDrawable drawable, ImageView view, SeekBar seekBar ) {
