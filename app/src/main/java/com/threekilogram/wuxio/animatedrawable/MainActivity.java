@@ -29,6 +29,7 @@ import com.threekilogram.drawable.RoundRectCornerDrawable;
 import com.threekilogram.drawable.RoundRectPathDrawable;
 import com.threekilogram.drawable.StrokePulseDrawable;
 import com.threekilogram.drawable.StrokePulsePushDrawable;
+import com.threekilogram.drawable.StrokeSkipDrawable;
 import com.threekilogram.drawable.StrokeWaveDrawable;
 
 /**
@@ -93,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mBallAlpha;
       private SeekBar   mBallAlphaSeek;
       private ImageView mBallAlphaAnimate;
+      private ImageView mStrokeSkip;
+      private SeekBar   mStrokeSkipSeek;
+      private ImageView mStrokeSkipAnimate;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -121,6 +125,128 @@ public class MainActivity extends AppCompatActivity {
             testBallPush();
             testCubeGrid();
             testBallAlpha();
+            testStrokeSkip();
+      }
+
+      private void testStrokeSkip ( ) {
+
+            StrokeSkipDrawable drawable = new StrokeSkipDrawable();
+            test( drawable, mStrokeSkip, mStrokeSkipSeek, mStrokeSkipAnimate );
+      }
+
+      private void test (
+          ProgressDrawable drawable, ImageView view, SeekBar seekBar, ImageView animate ) {
+
+            test( drawable, view, seekBar, animate, 10, 1500, new LinearInterpolator() );
+      }
+
+      private void test (
+          ProgressDrawable drawable,
+          ImageView view,
+          SeekBar seekBar,
+          ImageView animate,
+          int duration,
+          TimeInterpolator interpolator ) {
+
+            test( drawable, view, seekBar, animate, 10, duration, interpolator );
+      }
+
+      private void test (
+          ProgressDrawable drawable,
+          ImageView view,
+          SeekBar seekBar,
+          ImageView animate,
+          int count,
+          int duration,
+          TimeInterpolator interpolator ) {
+
+            view.setImageDrawable( drawable );
+            seekBar.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged (
+                      SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
+            AnimateWrapperDrawable wrapperDrawable = new AnimateWrapperDrawable( drawable );
+            wrapperDrawable.setCount( count );
+            wrapperDrawable.setDuration( duration );
+            wrapperDrawable.setInterpolator( interpolator );
+            animate.setImageDrawable( wrapperDrawable );
+            animate.setOnClickListener( v -> {
+                  if( wrapperDrawable.isRunning() ) {
+                        wrapperDrawable.stop();
+                  } else {
+                        wrapperDrawable.start();
+                  }
+            } );
+      }
+
+      private void initView ( ) {
+
+            mBilibili = findViewById( R.id.bilibili );
+            mBilibiliSeek = findViewById( R.id.bilibiliSeek );
+            mBilibiliAnimate = findViewById( R.id.bilibiliAnimate );
+            mCircle = findViewById( R.id.circle );
+            mCircleSeek = findViewById( R.id.circleSeek );
+            mCircleAnimate = findViewById( R.id.circleAnimate );
+            mRoundRect = findViewById( R.id.roundRect );
+            mRoundRectSeek = findViewById( R.id.roundRectSeek );
+            mRoundRectAnimate = findViewById( R.id.roundRectAnimate );
+            mCorner = findViewById( R.id.corner );
+            mCornerSeek = findViewById( R.id.cornerSeek );
+            mCornerAnimate = findViewById( R.id.cornerAnimate );
+            mBallPulse = findViewById( R.id.ballPulse );
+            mBallPulseSeek = findViewById( R.id.ballPulseSeek );
+            mBallPulseAnimate = findViewById( R.id.ballPulseAnimate );
+            mBallGridPulse = findViewById( R.id.ballGridPulse );
+            mBallGridPulseSeek = findViewById( R.id.ballGridPulseSeek );
+            mBallGridPulseAnimate = findViewById( R.id.ballGridPulseAnimate );
+            mBallFlip = findViewById( R.id.ballFlip );
+            mBallFlipSeek = findViewById( R.id.ballFlipSeek );
+            mBallFlipAnimate = findViewById( R.id.ballFlipAnimate );
+            mBallRotate = findViewById( R.id.ballRotate );
+            mBallRotateSeek = findViewById( R.id.ballRotateSeek );
+            mBallRotateAnimate = findViewById( R.id.ballRotateAnimate );
+            mRectRotate = findViewById( R.id.rectRotate );
+            mRectRotateSeek = findViewById( R.id.rectRotateSeek );
+            mRectRotateAnimate = findViewById( R.id.rectRotateAnimate );
+            mBallTriRotate = findViewById( R.id.ballTriRotate );
+            mBallTriRotateSeek = findViewById( R.id.ballTriRotateSeek );
+            mBallTriRotateAnimate = findViewById( R.id.ballTriRotateAnimate );
+            mStreakWave = findViewById( R.id.streakWave );
+            mStreakWaveSeek = findViewById( R.id.streakWaveSeek );
+            mStreakWaveAnimate = findViewById( R.id.streakWaveAnimate );
+            mStreakPulse = findViewById( R.id.streakPulse );
+            mStreakPulseSeek = findViewById( R.id.streakPulseSeek );
+            mStreakPulseAnimate = findViewById( R.id.streakPulseAnimate );
+            mBallsCircleScale = findViewById( R.id.ballsCircleScale );
+            mBallsCircleScaleSeek = findViewById( R.id.ballsCircleScaleSeek );
+            mBallsCircleScaleAnimate = findViewById( R.id.ballsCircleScaleAnimate );
+            mPacMan = findViewById( R.id.pacMan );
+            mPacManSeek = findViewById( R.id.pacManSeek );
+            mPacManAnimate = findViewById( R.id.pacManAnimate );
+            mPulsePush = findViewById( R.id.pulsePush );
+            mPulsePushSeek = findViewById( R.id.pulsePushSeek );
+            mPulsePushAnimate = findViewById( R.id.pulsePushAnimate );
+            mBallTwo = findViewById( R.id.ballTwo );
+            mBallTwoSeek = findViewById( R.id.ballTwoSeek );
+            mBallTwoAnimate = findViewById( R.id.ballTwoAnimate );
+            mBallPush = findViewById( R.id.ballPush );
+            mBallPushSeek = findViewById( R.id.ballPushSeek );
+            mBallPushAnimate = findViewById( R.id.ballPushAnimate );
+            mCubeGrid = findViewById( R.id.cubeGrid );
+            mCubeGridSeek = findViewById( R.id.cubeGridSeek );
+            mCubeGridAnimate = findViewById( R.id.cubeGridAnimate );
+            mBallAlpha = findViewById( R.id.ballAlpha );
+            mBallAlphaSeek = findViewById( R.id.ballAlphaSeek );
+            mBallAlphaAnimate = findViewById( R.id.ballAlphaAnimate );
+            mStrokeSkip = findViewById( R.id.strokeSkip );
+            mStrokeSkipSeek = findViewById( R.id.strokeSkipSeek );
+            mStrokeSkipAnimate = findViewById( R.id.strokeSkipAnimate );
       }
 
       private void testBallAlpha ( ) {
@@ -199,118 +325,6 @@ public class MainActivity extends AppCompatActivity {
 
             CubeTwoRotateDrawable drawable = new CubeTwoRotateDrawable();
             test( drawable, mRectRotate, mRectRotateSeek, mRectRotateAnimate );
-      }
-
-      private void initView ( ) {
-
-            mBilibili = findViewById( R.id.bilibili );
-            mBilibiliSeek = findViewById( R.id.bilibiliSeek );
-            mBilibiliAnimate = findViewById( R.id.bilibiliAnimate );
-            mCircle = findViewById( R.id.circle );
-            mCircleSeek = findViewById( R.id.circleSeek );
-            mCircleAnimate = findViewById( R.id.circleAnimate );
-            mRoundRect = findViewById( R.id.roundRect );
-            mRoundRectSeek = findViewById( R.id.roundRectSeek );
-            mRoundRectAnimate = findViewById( R.id.roundRectAnimate );
-            mCorner = findViewById( R.id.corner );
-            mCornerSeek = findViewById( R.id.cornerSeek );
-            mCornerAnimate = findViewById( R.id.cornerAnimate );
-            mBallPulse = findViewById( R.id.ballPulse );
-            mBallPulseSeek = findViewById( R.id.ballPulseSeek );
-            mBallPulseAnimate = findViewById( R.id.ballPulseAnimate );
-            mBallGridPulse = findViewById( R.id.ballGridPulse );
-            mBallGridPulseSeek = findViewById( R.id.ballGridPulseSeek );
-            mBallGridPulseAnimate = findViewById( R.id.ballGridPulseAnimate );
-            mBallFlip = findViewById( R.id.ballFlip );
-            mBallFlipSeek = findViewById( R.id.ballFlipSeek );
-            mBallFlipAnimate = findViewById( R.id.ballFlipAnimate );
-            mBallRotate = findViewById( R.id.ballRotate );
-            mBallRotateSeek = findViewById( R.id.ballRotateSeek );
-            mBallRotateAnimate = findViewById( R.id.ballRotateAnimate );
-            mRectRotate = findViewById( R.id.rectRotate );
-            mRectRotateSeek = findViewById( R.id.rectRotateSeek );
-            mRectRotateAnimate = findViewById( R.id.rectRotateAnimate );
-            mBallTriRotate = findViewById( R.id.ballTriRotate );
-            mBallTriRotateSeek = findViewById( R.id.ballTriRotateSeek );
-            mBallTriRotateAnimate = findViewById( R.id.ballTriRotateAnimate );
-            mStreakWave = findViewById( R.id.streakWave );
-            mStreakWaveSeek = findViewById( R.id.streakWaveSeek );
-            mStreakWaveAnimate = findViewById( R.id.streakWaveAnimate );
-            mStreakPulse = findViewById( R.id.streakPulse );
-            mStreakPulseSeek = findViewById( R.id.streakPulseSeek );
-            mStreakPulseAnimate = findViewById( R.id.streakPulseAnimate );
-            mBallsCircleScale = findViewById( R.id.ballsCircleScale );
-            mBallsCircleScaleSeek = findViewById( R.id.ballsCircleScaleSeek );
-            mBallsCircleScaleAnimate = findViewById( R.id.ballsCircleScaleAnimate );
-            mPacMan = findViewById( R.id.pacMan );
-            mPacManSeek = findViewById( R.id.pacManSeek );
-            mPacManAnimate = findViewById( R.id.pacManAnimate );
-            mPulsePush = findViewById( R.id.pulsePush );
-            mPulsePushSeek = findViewById( R.id.pulsePushSeek );
-            mPulsePushAnimate = findViewById( R.id.pulsePushAnimate );
-            mBallTwo = findViewById( R.id.ballTwo );
-            mBallTwoSeek = findViewById( R.id.ballTwoSeek );
-            mBallTwoAnimate = findViewById( R.id.ballTwoAnimate );
-            mBallPush = findViewById( R.id.ballPush );
-            mBallPushSeek = findViewById( R.id.ballPushSeek );
-            mBallPushAnimate = findViewById( R.id.ballPushAnimate );
-            mCubeGrid = findViewById( R.id.cubeGrid );
-            mCubeGridSeek = findViewById( R.id.cubeGridSeek );
-            mCubeGridAnimate = findViewById( R.id.cubeGridAnimate );
-            mBallAlpha = findViewById( R.id.ballAlpha );
-            mBallAlphaSeek = findViewById( R.id.ballAlphaSeek );
-            mBallAlphaAnimate = findViewById( R.id.ballAlphaAnimate );
-      }
-
-      private void test (
-          ProgressDrawable drawable, ImageView view, SeekBar seekBar, ImageView animate ) {
-
-            test( drawable, view, seekBar, animate, 10, 1500, new LinearInterpolator() );
-      }
-
-      private void test (
-          ProgressDrawable drawable,
-          ImageView view,
-          SeekBar seekBar,
-          ImageView animate,
-          int duration,
-          TimeInterpolator interpolator ) {
-
-            test( drawable, view, seekBar, animate, 10, duration, interpolator );
-      }
-
-      private void test (
-          ProgressDrawable drawable,
-          ImageView view,
-          SeekBar seekBar,
-          ImageView animate,
-          int count,
-          int duration,
-          TimeInterpolator interpolator ) {
-
-            view.setImageDrawable( drawable );
-            seekBar.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
-
-                  @Override
-                  public void onProgressChanged (
-                      SeekBar seekBar, int progress, boolean fromUser ) {
-
-                        float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
-                  }
-            } );
-            AnimateWrapperDrawable wrapperDrawable = new AnimateWrapperDrawable( drawable );
-            wrapperDrawable.setCount( count );
-            wrapperDrawable.setDuration( duration );
-            wrapperDrawable.setInterpolator( interpolator );
-            animate.setImageDrawable( wrapperDrawable );
-            animate.setOnClickListener( v -> {
-                  if( wrapperDrawable.isRunning() ) {
-                        wrapperDrawable.stop();
-                  } else {
-                        wrapperDrawable.start();
-                  }
-            } );
       }
 
       private void testBallRotate ( ) {

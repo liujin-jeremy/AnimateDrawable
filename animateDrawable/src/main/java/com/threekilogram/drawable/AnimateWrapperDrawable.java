@@ -3,6 +3,7 @@ package com.threekilogram.drawable;
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.drawable.Animatable;
 import android.support.annotation.NonNull;
 import android.view.animation.LinearInterpolator;
 
@@ -11,7 +12,7 @@ import android.view.animation.LinearInterpolator;
  *
  * @author Liujin 2018-10-16:9:36
  */
-public class AnimateWrapperDrawable extends ProgressDrawable {
+public class AnimateWrapperDrawable extends ProgressDrawable implements Animatable {
 
       /**
        * drawable
@@ -144,6 +145,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable {
       /**
        * 开始
        */
+      @Override
       public void start ( ) {
 
             mStartTime = System.currentTimeMillis();
@@ -154,6 +156,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable {
       /**
        * 结束
        */
+      @Override
       public void stop ( ) {
 
             mStartTime = -1;
@@ -162,6 +165,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable {
       /**
        * 是否正在运行
        */
+      @Override
       public boolean isRunning ( ) {
 
             long l = ( System.currentTimeMillis() );
