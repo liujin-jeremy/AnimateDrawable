@@ -37,6 +37,7 @@ import com.threekilogram.drawable.progress.StrokePulseDrawable;
 import com.threekilogram.drawable.progress.StrokePulsePushDrawable;
 import com.threekilogram.drawable.progress.StrokeSkipDrawable;
 import com.threekilogram.drawable.progress.StrokeWaveDrawable;
+import com.threekilogram.drawable.progress.WrongRightDrawable;
 import com.threekilogram.drawable.state.AddLoadDoneDrawable;
 import com.threekilogram.drawable.state.StartLoadDoneDrawable;
 import com.threekilogram.drawable.state.TextLoadDoneDrawable;
@@ -123,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
       private SeekBar      mArcChangeSeekV2;
       private ImageView    mArcChangeAnimateV2;
       private ImageView    mTextLoading;
+      private ImageView    mWrongRight;
+      private SeekBar      mWrongRightSeek;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -166,6 +169,23 @@ public class MainActivity extends AppCompatActivity {
             testArcChangeV2();
             testAddLoading();
             testTextLoading();
+            testWrongRight();
+      }
+
+      private void testWrongRight ( ) {
+
+            WrongRightDrawable drawable = new WrongRightDrawable();
+            mWrongRight.setImageDrawable( drawable );
+            mWrongRightSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged (
+                      SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
       }
 
       private void testTextLoading ( ) {
@@ -347,6 +367,8 @@ public class MainActivity extends AppCompatActivity {
             mArcChangeSeekV2 = findViewById( R.id.arcChangeSeekV2 );
             mArcChangeAnimateV2 = findViewById( R.id.arcChangeAnimateV2 );
             mTextLoading = findViewById( R.id.textLoading );
+            mWrongRight = findViewById( R.id.wrongRight );
+            mWrongRightSeek = findViewById( R.id.wrongRightSeek );
       }
 
       private void testArcChange ( ) {
