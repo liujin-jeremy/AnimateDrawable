@@ -1,11 +1,9 @@
-package com.threekilogram.drawable;
+package com.threekilogram.drawable.progress;
 
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
@@ -26,17 +24,12 @@ public abstract class ProgressDrawable extends Drawable {
        * 当前进度
        */
       protected float mProgress;
-      /**
-       * bounds
-       */
-      protected Rect  mRect;
 
       public ProgressDrawable ( ) {
 
             mPaint = new Paint( Paint.ANTI_ALIAS_FLAG );
             mPaint.setStrokeJoin( Paint.Join.ROUND );
             mPaint.setStrokeCap( Paint.Cap.ROUND );
-            mRect = new Rect();
       }
 
       /**
@@ -50,27 +43,11 @@ public abstract class ProgressDrawable extends Drawable {
       }
 
       /**
-       * 设置线宽
-       */
-      public void setStrokeWidth ( int strokeWidth ) {
-
-            mPaint.setStrokeWidth( strokeWidth );
-      }
-
-      /**
        * 获取画笔
        */
       public Paint getPaint ( ) {
 
             return mPaint;
-      }
-
-      /**
-       * 设置画笔样式
-       */
-      public void setPaintStyle ( Style style ) {
-
-            mPaint.setStyle( style );
       }
 
       @Override
@@ -105,13 +82,6 @@ public abstract class ProgressDrawable extends Drawable {
        */
       protected abstract void draw ( @NonNull Canvas canvas, float progress );
 
-      @Override
-      protected void onBoundsChange ( Rect bounds ) {
-
-            super.onBoundsChange( bounds );
-            mRect.set( bounds );
-      }
-
       /**
        * 绘制区域宽度
        *
@@ -119,7 +89,7 @@ public abstract class ProgressDrawable extends Drawable {
        */
       protected int getWidth ( ) {
 
-            return mRect.width();
+            return getBounds().width();
       }
 
       /**
@@ -129,7 +99,7 @@ public abstract class ProgressDrawable extends Drawable {
        */
       protected int getHeight ( ) {
 
-            return mRect.height();
+            return getBounds().height();
       }
 
       /**
@@ -139,9 +109,6 @@ public abstract class ProgressDrawable extends Drawable {
        */
       public void setProgress ( @FloatRange(from = 0f, to = 1f) float progress ) {
 
-            if( mProgress == progress ) {
-                  return;
-            }
             mProgress = progress;
       }
 

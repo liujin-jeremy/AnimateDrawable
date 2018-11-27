@@ -1,4 +1,4 @@
-package com.threekilogram.drawable;
+package com.threekilogram.drawable.progress;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Style;
@@ -44,11 +44,14 @@ public class RoundRectPathDrawable extends ProgressDrawable {
             mDst = new Path();
       }
 
-      @Override
-      public void setStrokeWidth ( int strokeWidth ) {
+      public void setStrokeWidth ( float strokeWidth ) {
 
-            super.setStrokeWidth( strokeWidth );
             mStrokeWidth = strokeWidth;
+      }
+
+      public float getStrokeWidth ( ) {
+
+            return mStrokeWidth;
       }
 
       @Override

@@ -6,7 +6,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.threekilogram.drawable.ProgressDrawable;
+import com.threekilogram.drawable.progress.ProgressDrawable;
 
 /**
  * @author wuxio 2018-05-25:6:58

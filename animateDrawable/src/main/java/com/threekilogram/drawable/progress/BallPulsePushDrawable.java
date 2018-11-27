@@ -1,4 +1,4 @@
-package com.threekilogram.drawable;
+package com.threekilogram.drawable.progress;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

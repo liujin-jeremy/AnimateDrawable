@@ -1,4 +1,4 @@
-package com.threekilogram.drawable;
+package com.threekilogram.drawable.progress;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -23,7 +23,6 @@ public class CirclePathDrawable extends ProgressDrawable {
 
             super();
             mPaint.setStyle( Paint.Style.STROKE );
-            mPaint.setStrokeWidth( 5 );
 
             mSrcPath = new Path();
             mDstPath = new Path();
@@ -38,7 +37,8 @@ public class CirclePathDrawable extends ProgressDrawable {
 
             mSize = Math.min( bounds.width(), bounds.height() );
 
-            float strokeWidth = mPaint.getStrokeWidth();
+            float strokeWidth = mSize / 20;
+            mPaint.setStrokeWidth( strokeWidth );
 
             RectF rectF = new RectF();
 

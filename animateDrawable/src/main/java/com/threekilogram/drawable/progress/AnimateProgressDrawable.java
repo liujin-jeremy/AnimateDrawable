@@ -1,50 +1,31 @@
-package com.threekilogram.drawable;
+package com.threekilogram.drawable.progress;
 
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.support.annotation.NonNull;
-import android.view.animation.LinearInterpolator;
 
 /**
  * 包装一个{@link ProgressDrawable}使其具有动画效果,他会执行指定次数/指定时长的动画
  *
  * @author Liujin 2018-10-16:9:36
  */
-public class AnimateWrapperDrawable extends ProgressDrawable implements Animatable {
+public class AnimateProgressDrawable extends ProgressDrawable implements Animatable {
 
       /**
        * drawable
        */
-      protected ProgressDrawable mDrawable;
-      /**
-       * start time
-       */
-      protected long             mStartTime    = -1;
-      /**
-       * start progress
-       */
-      protected float            mStartProgress;
-      /**
-       * 时长
-       */
-      protected int              mDuration     = 1000;
-      /**
-       * 播放总数
-       */
-      protected int              mCount        = 1;
-      /**
-       * 差值器
-       */
-      protected TimeInterpolator mInterpolator = new LinearInterpolator();
+      protected ProgressDrawable         mDrawable;
+      protected AnimateProgressEvaluator mEvaluator;
 
       /**
        * 包装一个{@link ProgressDrawable}使其具有动画能力,一帧播放完成之后才播放下一帧
        */
-      public AnimateWrapperDrawable ( ProgressDrawable progressDrawable ) {
+      public AnimateProgressDrawable ( ProgressDrawable progressDrawable ) {
 
             mDrawable = progressDrawable;
+            mEvaluator = new AnimateProgressEvaluator();
       }
 
       /**
@@ -58,7 +39,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
       /**
        * 设置{@link ProgressDrawable}
        */
-      public void setDrawable ( ProgressDrawable drawable ) {
+      public void changeDrawable ( ProgressDrawable drawable ) {
 
             mDrawable = drawable;
       }
@@ -79,13 +60,13 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
       protected void onBoundsChange ( Rect bounds ) {
 
             super.onBoundsChange( bounds );
-            mDrawable.onBoundsChange( bounds );
+            mDrawable.setBounds( bounds );
       }
 
       @Override
       protected void draw ( @NonNull Canvas canvas, float progress ) {
 
-            if( mStartTime == -1 ) {
+            if( mEvaluator.isStopped() ) {
                   mDrawable.draw( canvas );
                   return;
             }
@@ -97,17 +78,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
 
       private float calculateProgress ( ) {
 
-            long l = ( System.currentTimeMillis() );
-            if( ( l - mStartTime ) / mDuration >= mCount ) {
-                  mStartTime = -1;
-                  return 1;
-            }
-            long l1 = ( l - mStartTime ) % mDuration;
-            float input = l1 * 1f / mDuration + mStartProgress;
-            if( input > 1 ) {
-                  input -= 1;
-            }
-            return mInterpolator.getInterpolation( input );
+            return mEvaluator.calculateProgress();
       }
 
       /**
@@ -115,7 +86,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
        */
       public void setCount ( int count ) {
 
-            mCount = count;
+            mEvaluator.setCount( count );
       }
 
       /**
@@ -123,7 +94,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
        */
       public int getCount ( ) {
 
-            return mCount;
+            return mEvaluator.getCount();
       }
 
       /**
@@ -131,7 +102,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
        */
       public void setDuration ( int duration ) {
 
-            mDuration = duration;
+            mEvaluator.setDuration( duration );
       }
 
       /**
@@ -139,7 +110,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
        */
       public int getDuration ( ) {
 
-            return mDuration;
+            return mEvaluator.getDuration();
       }
 
       /**
@@ -148,8 +119,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
       @Override
       public void start ( ) {
 
-            mStartTime = System.currentTimeMillis();
-            mStartProgress = mDrawable.mProgress;
+            mEvaluator.start( mDrawable.mProgress );
             invalidateSelf();
       }
 
@@ -159,7 +129,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
       @Override
       public void stop ( ) {
 
-            mStartTime = -1;
+            mEvaluator.stop();
       }
 
       /**
@@ -168,8 +138,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
       @Override
       public boolean isRunning ( ) {
 
-            long l = ( System.currentTimeMillis() );
-            return ( l - mStartTime ) / mDuration <= mCount;
+            return mEvaluator.isRunning();
       }
 
       /**
@@ -177,7 +146,7 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
        */
       public void setInterpolator ( TimeInterpolator interpolator ) {
 
-            mInterpolator = interpolator;
+            mEvaluator.setInterpolator( interpolator );
       }
 
       /**
@@ -185,6 +154,6 @@ public class AnimateWrapperDrawable extends ProgressDrawable implements Animatab
        */
       public TimeInterpolator getInterpolator ( ) {
 
-            return mInterpolator;
+            return mEvaluator.getInterpolator();
       }
 }

@@ -1,4 +1,4 @@
-package com.threekilogram.drawable;
+package com.threekilogram.drawable.progress;
 
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
@@ -15,7 +15,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 public class ArcChangeRotateDrawable extends ProgressDrawable {
 
       private RectF            mRectF;
-      private float[]          mAngles;
       private TimeInterpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
       private float mStart;
@@ -27,7 +26,6 @@ public class ArcChangeRotateDrawable extends ProgressDrawable {
             mPaint.setColor( Color.RED );
             mPaint.setStyle( Style.STROKE );
             mRectF = new RectF();
-            mAngles = new float[ 2 ];
       }
 
       @Override
@@ -49,23 +47,26 @@ public class ArcChangeRotateDrawable extends ProgressDrawable {
             int dy = getHeight() / 2;
             canvas.translate( dx, dy );
 
+            float sweep = 240;
+            float changeAngle = 120;
+
             if( progress <= 0.5f ) {
 
                   progress *= 2;
                   /* 每转一圈起点增加240° */
-                  float angel = Math.abs( progress - mLastProgress ) * 120;
+                  float angel = Math.abs( progress - mLastProgress ) * changeAngle;
                   mLastProgress = progress;
                   progress = mInterpolator.getInterpolation( progress );
-                  /* 弧度角度最大160° */
-                  float sweep = 160 * progress;
+                  /* 弧度角度最大240° */
+                  sweep = sweep * progress;
                   mStart += angel;
                   mStop = mStart + sweep;
             } else {
                   progress = 1 - ( progress - 0.5f ) * 2;
-                  float angel = Math.abs( progress - mLastProgress ) * 120;
+                  float angel = Math.abs( progress - mLastProgress ) * changeAngle;
                   mLastProgress = progress;
                   progress = mInterpolator.getInterpolation( progress );
-                  float sweep = 160 * progress;
+                  sweep = sweep * progress;
                   mStop += angel;
                   mStart = mStop - sweep;
             }

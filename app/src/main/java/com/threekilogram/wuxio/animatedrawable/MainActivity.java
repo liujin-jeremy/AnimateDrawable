@@ -7,107 +7,120 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import com.threekilogram.drawable.AnimateWrapperDrawable;
-import com.threekilogram.drawable.Arc240RotateDrawable;
-import com.threekilogram.drawable.ArcChangeRotateDrawable;
-import com.threekilogram.drawable.ArcProgressDrawable;
-import com.threekilogram.drawable.BallCircleAlphaDrawable;
-import com.threekilogram.drawable.BallCircleScaleDrawable;
-import com.threekilogram.drawable.BallGridPulseDrawable;
-import com.threekilogram.drawable.BallPulseDrawable;
-import com.threekilogram.drawable.BallPulsePushDrawable;
-import com.threekilogram.drawable.BallRotateDrawable;
-import com.threekilogram.drawable.BallTriangleRotateDrawable;
-import com.threekilogram.drawable.BallTwoRotateDrawable;
-import com.threekilogram.drawable.BiliBiliDrawable;
-import com.threekilogram.drawable.CirclePathDrawable;
-import com.threekilogram.drawable.CubeFlipDrawable;
-import com.threekilogram.drawable.CubeGridDrawable;
-import com.threekilogram.drawable.CubeTwoRotateDrawable;
-import com.threekilogram.drawable.PacManDrawable;
-import com.threekilogram.drawable.ProgressDrawable;
-import com.threekilogram.drawable.RoundRectCornerDrawable;
-import com.threekilogram.drawable.RoundRectPathDrawable;
-import com.threekilogram.drawable.StrokePulseDrawable;
-import com.threekilogram.drawable.StrokePulsePushDrawable;
-import com.threekilogram.drawable.StrokeSkipDrawable;
-import com.threekilogram.drawable.StrokeWaveDrawable;
+import com.threekilogram.drawable.progress.AnimateProgressDrawable;
+import com.threekilogram.drawable.progress.Arc240RotateDrawable;
+import com.threekilogram.drawable.progress.ArcChangeRotateDrawable;
+import com.threekilogram.drawable.progress.ArcChangeRotateDrawableV2;
+import com.threekilogram.drawable.progress.ArcProgressDrawable;
+import com.threekilogram.drawable.progress.BallCircleAlphaDrawable;
+import com.threekilogram.drawable.progress.BallCircleScaleDrawable;
+import com.threekilogram.drawable.progress.BallGridPulseDrawable;
+import com.threekilogram.drawable.progress.BallPulseDrawable;
+import com.threekilogram.drawable.progress.BallPulsePushDrawable;
+import com.threekilogram.drawable.progress.BallRotateDrawable;
+import com.threekilogram.drawable.progress.BallTriangleRotateDrawable;
+import com.threekilogram.drawable.progress.BallTwoRotateDrawable;
+import com.threekilogram.drawable.progress.BiliBiliDrawable;
+import com.threekilogram.drawable.progress.CirclePathDrawable;
+import com.threekilogram.drawable.progress.CubeFlipDrawable;
+import com.threekilogram.drawable.progress.CubeGridDrawable;
+import com.threekilogram.drawable.progress.CubeTwoRotateDrawable;
+import com.threekilogram.drawable.progress.PacManDrawable;
+import com.threekilogram.drawable.progress.ProgressDrawable;
+import com.threekilogram.drawable.progress.RoundRectCornerDrawable;
+import com.threekilogram.drawable.progress.RoundRectPathDrawable;
+import com.threekilogram.drawable.progress.StrokePulseDrawable;
+import com.threekilogram.drawable.progress.StrokePulsePushDrawable;
+import com.threekilogram.drawable.progress.StrokeSkipDrawable;
+import com.threekilogram.drawable.progress.StrokeWaveDrawable;
+import com.threekilogram.drawable.state.AddLoadingDrawable;
+import com.threekilogram.drawable.state.StartLoadDoneDrawable;
 
 /**
  * @author wuxio
  */
 public class MainActivity extends AppCompatActivity {
 
-      private ImageView mBilibili;
-      private SeekBar   mBilibiliSeek;
-      private ImageView mBilibiliAnimate;
-      private ImageView mCircle;
-      private SeekBar   mCircleSeek;
-      private ImageView mCircleAnimate;
-      private ImageView mRoundRect;
-      private SeekBar   mRoundRectSeek;
-      private ImageView mRoundRectAnimate;
-      private ImageView mCorner;
-      private SeekBar   mCornerSeek;
-      private ImageView mCornerAnimate;
-      private ImageView mBallPulse;
-      private SeekBar   mBallPulseSeek;
-      private ImageView mBallPulseAnimate;
-      private ImageView mBallGridPulse;
-      private SeekBar   mBallGridPulseSeek;
-      private ImageView mBallGridPulseAnimate;
-      private ImageView mBallFlip;
-      private SeekBar   mBallFlipSeek;
-      private ImageView mBallFlipAnimate;
-      private ImageView mBallRotate;
-      private SeekBar   mBallRotateSeek;
-      private ImageView mBallRotateAnimate;
-      private ImageView mRectRotate;
-      private SeekBar   mRectRotateSeek;
-      private ImageView mRectRotateAnimate;
-      private ImageView mBallTriRotate;
-      private SeekBar   mBallTriRotateSeek;
-      private ImageView mBallTriRotateAnimate;
-      private ImageView mStreakWave;
-      private SeekBar   mStreakWaveSeek;
-      private ImageView mStreakWaveAnimate;
-      private ImageView mStreakPulse;
-      private SeekBar   mStreakPulseSeek;
-      private ImageView mStreakPulseAnimate;
-      private ImageView mBallsCircleScale;
-      private SeekBar   mBallsCircleScaleSeek;
-      private ImageView mBallsCircleScaleAnimate;
-      private ImageView mPacMan;
-      private SeekBar   mPacManSeek;
-      private ImageView mPacManAnimate;
-      private ImageView mPulsePush;
-      private SeekBar   mPulsePushSeek;
-      private ImageView mPulsePushAnimate;
-      private ImageView mBallTwo;
-      private SeekBar   mBallTwoSeek;
-      private ImageView mBallTwoAnimate;
-      private ImageView mBallPush;
-      private SeekBar   mBallPushSeek;
-      private ImageView mBallPushAnimate;
-      private ImageView mCubeGrid;
-      private SeekBar   mCubeGridSeek;
-      private ImageView mCubeGridAnimate;
-      private ImageView mBallAlpha;
-      private SeekBar   mBallAlphaSeek;
-      private ImageView mBallAlphaAnimate;
-      private ImageView mStrokeSkip;
-      private SeekBar   mStrokeSkipSeek;
-      private ImageView mStrokeSkipAnimate;
-      private ImageView mArc240;
-      private SeekBar   mArc240Seek;
-      private ImageView mArc240Animate;
-      private ImageView mArcProgress;
-      private SeekBar   mArcProgressSeek;
-      private ImageView mArcChange;
-      private SeekBar   mArcChangeSeek;
-      private ImageView mArcChangeAnimate;
+      private static final String TAG = MainActivity.class.getSimpleName();
+
+      private ImageView    mBilibili;
+      private SeekBar      mBilibiliSeek;
+      private ImageView    mBilibiliAnimate;
+      private ImageView    mCircle;
+      private SeekBar      mCircleSeek;
+      private ImageView    mCircleAnimate;
+      private ImageView    mRoundRect;
+      private SeekBar      mRoundRectSeek;
+      private ImageView    mRoundRectAnimate;
+      private ImageView    mCorner;
+      private SeekBar      mCornerSeek;
+      private ImageView    mCornerAnimate;
+      private ImageView    mBallPulse;
+      private SeekBar      mBallPulseSeek;
+      private ImageView    mBallPulseAnimate;
+      private ImageView    mBallGridPulse;
+      private SeekBar      mBallGridPulseSeek;
+      private ImageView    mBallGridPulseAnimate;
+      private ImageView    mBallFlip;
+      private SeekBar      mBallFlipSeek;
+      private ImageView    mBallFlipAnimate;
+      private ImageView    mBallRotate;
+      private SeekBar      mBallRotateSeek;
+      private ImageView    mBallRotateAnimate;
+      private ImageView    mRectRotate;
+      private SeekBar      mRectRotateSeek;
+      private ImageView    mRectRotateAnimate;
+      private ImageView    mBallTriRotate;
+      private SeekBar      mBallTriRotateSeek;
+      private ImageView    mBallTriRotateAnimate;
+      private ImageView    mStreakWave;
+      private SeekBar      mStreakWaveSeek;
+      private ImageView    mStreakWaveAnimate;
+      private ImageView    mStreakPulse;
+      private SeekBar      mStreakPulseSeek;
+      private ImageView    mStreakPulseAnimate;
+      private ImageView    mBallsCircleScale;
+      private SeekBar      mBallsCircleScaleSeek;
+      private ImageView    mBallsCircleScaleAnimate;
+      private ImageView    mPacMan;
+      private SeekBar      mPacManSeek;
+      private ImageView    mPacManAnimate;
+      private ImageView    mPulsePush;
+      private SeekBar      mPulsePushSeek;
+      private ImageView    mPulsePushAnimate;
+      private ImageView    mBallTwo;
+      private SeekBar      mBallTwoSeek;
+      private ImageView    mBallTwoAnimate;
+      private ImageView    mBallPush;
+      private SeekBar      mBallPushSeek;
+      private ImageView    mBallPushAnimate;
+      private ImageView    mCubeGrid;
+      private SeekBar      mCubeGridSeek;
+      private ImageView    mCubeGridAnimate;
+      private ImageView    mBallAlpha;
+      private SeekBar      mBallAlphaSeek;
+      private ImageView    mBallAlphaAnimate;
+      private ImageView    mStrokeSkip;
+      private SeekBar      mStrokeSkipSeek;
+      private ImageView    mStrokeSkipAnimate;
+      private ImageView    mArc240;
+      private SeekBar      mArc240Seek;
+      private ImageView    mArc240Animate;
+      private ImageView    mArcProgress;
+      private SeekBar      mArcProgressSeek;
+      private ImageView    mArcChange;
+      private SeekBar      mArcChangeSeek;
+      private ImageView    mArcChangeAnimate;
+      private ImageView    mAddLoading;
+      private ScrollView   mScrollView;
+      private LinearLayout mContainer;
+      private ImageView    mArcChangeV2;
+      private SeekBar      mArcChangeSeekV2;
+      private ImageView    mArcChangeAnimateV2;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -115,6 +128,14 @@ public class MainActivity extends AppCompatActivity {
             super.onCreate( savedInstanceState );
             super.setContentView( R.layout.activity_main );
             initView();
+
+            mScrollView.post( ( ) -> {
+
+                  int measuredHeight = mContainer.getMeasuredHeight();
+                  int height = mScrollView.getMeasuredHeight();
+
+                  mScrollView.scrollTo( 0, measuredHeight - height );
+            } );
 
             int color = getResources().getColor( R.color.orangered );
             testBilibili( color );
@@ -140,32 +161,32 @@ public class MainActivity extends AppCompatActivity {
             testArc240();
             testArcProgress();
             testArcChange();
+            testArcChangeV2();
+            testAddLoading();
       }
 
-      private void testArcChange ( ) {
+      private void testArcChangeV2 ( ) {
 
-            ArcChangeRotateDrawable drawable = new ArcChangeRotateDrawable();
-            test( drawable, mArcChange, mArcChangeSeek, mArcChangeAnimate );
+            ArcChangeRotateDrawableV2 drawableV2 = new ArcChangeRotateDrawableV2();
+            test( drawableV2, mArcChangeV2, mArcChangeSeekV2, mArcChangeAnimateV2 );
       }
 
-      private void testArcProgress ( ) {
+      private void testAddLoading ( ) {
 
-            ArcProgressDrawable drawable = new ArcProgressDrawable();
-            test( drawable, mArcProgress, mArcProgressSeek );
-      }
+            AddLoadingDrawable drawable = new AddLoadingDrawable();
+            mAddLoading.setImageDrawable( drawable );
 
-      private void testArc240 ( ) {
+            mAddLoading.setOnClickListener( v -> {
 
-            Arc240RotateDrawable drawable = new Arc240RotateDrawable();
-            test( drawable, mArc240, mArc240Seek, mArc240Animate, 800, new LinearInterpolator() );
-      }
-
-      private void testStrokeSkip ( ) {
-
-            StrokeSkipDrawable drawable = new StrokeSkipDrawable();
-            test( drawable, mStrokeSkip, mStrokeSkipSeek, mStrokeSkipAnimate, 800,
-                  new LinearInterpolator()
-            );
+                  int currentState = drawable.getCurrentState();
+                  if( currentState == StartLoadDoneDrawable.STATE_START ) {
+                        drawable.setState( StartLoadDoneDrawable.STATE_LOAD );
+                  } else if( currentState == StartLoadDoneDrawable.STATE_LOAD ) {
+                        drawable.setState( StartLoadDoneDrawable.STATE_DONE );
+                  } else if( currentState == StartLoadDoneDrawable.STATE_DONE ) {
+                        drawable.setState( StartLoadDoneDrawable.STATE_START );
+                  }
+            } );
       }
 
       private void test ( ProgressDrawable drawable, ImageView view, SeekBar seekBar ) {
@@ -220,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                         drawable.setDrawProgress( v );
                   }
             } );
-            AnimateWrapperDrawable wrapperDrawable = new AnimateWrapperDrawable( drawable );
+            AnimateProgressDrawable wrapperDrawable = new AnimateProgressDrawable( drawable );
             wrapperDrawable.setCount( count );
             wrapperDrawable.setDuration( duration );
             wrapperDrawable.setInterpolator( interpolator );
@@ -304,6 +325,38 @@ public class MainActivity extends AppCompatActivity {
             mArcChange = findViewById( R.id.arcChange );
             mArcChangeSeek = findViewById( R.id.arcChangeSeek );
             mArcChangeAnimate = findViewById( R.id.arcChangeAnimate );
+            mAddLoading = findViewById( R.id.addLoading );
+            mScrollView = findViewById( R.id.scrollView );
+            mContainer = findViewById( R.id.container );
+            mArcChangeV2 = findViewById( R.id.arcChangeV2 );
+            mArcChangeSeekV2 = findViewById( R.id.arcChangeSeekV2 );
+            mArcChangeAnimateV2 = findViewById( R.id.arcChangeAnimateV2 );
+      }
+
+      private void testArcChange ( ) {
+
+            ArcChangeRotateDrawable drawable = new ArcChangeRotateDrawable();
+            test( drawable, mArcChange, mArcChangeSeek, mArcChangeAnimate );
+      }
+
+      private void testArcProgress ( ) {
+
+            ArcProgressDrawable drawable = new ArcProgressDrawable();
+            test( drawable, mArcProgress, mArcProgressSeek );
+      }
+
+      private void testArc240 ( ) {
+
+            Arc240RotateDrawable drawable = new Arc240RotateDrawable();
+            test( drawable, mArc240, mArc240Seek, mArc240Animate, 800, new LinearInterpolator() );
+      }
+
+      private void testStrokeSkip ( ) {
+
+            StrokeSkipDrawable drawable = new StrokeSkipDrawable();
+            test( drawable, mStrokeSkip, mStrokeSkipSeek, mStrokeSkipAnimate, 800,
+                  new LinearInterpolator()
+            );
       }
 
       private void testBallAlpha ( ) {
@@ -425,7 +478,6 @@ public class MainActivity extends AppCompatActivity {
 
             /* path progress */
             RoundRectPathDrawable pathDrawable = new RoundRectPathDrawable();
-            pathDrawable.setStrokeWidth( 16 );
             pathDrawable.setColor( color );
             test( pathDrawable, mRoundRect, mRoundRectSeek, mRoundRectAnimate, 1, 2000,
                   new LinearInterpolator()
@@ -437,7 +489,6 @@ public class MainActivity extends AppCompatActivity {
             /* circle progress */
             CirclePathDrawable drawable = new CirclePathDrawable();
             drawable.setColor( color );
-            drawable.setStrokeWidth( 16 );
             test( drawable, mCircle, mCircleSeek, mCircleAnimate, 10, 2000,
                   new AccelerateDecelerateInterpolator()
             );
@@ -447,8 +498,6 @@ public class MainActivity extends AppCompatActivity {
 
             /* bilibili progress */
             BiliBiliDrawable biliBiliDrawable = new BiliBiliDrawable();
-            biliBiliDrawable.setRadius( 20 );
-            biliBiliDrawable.setStrokeWidth( 10 );
             biliBiliDrawable
                 .setColor( color );
 

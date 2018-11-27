@@ -1,7 +1,8 @@
-package com.threekilogram.drawable;
+package com.threekilogram.drawable.progress;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -9,18 +10,19 @@ import android.support.annotation.NonNull;
 /**
  * @author Liujin 2018-11-16:13:18
  */
-public class StrokeWaveDrawable extends ProgressDrawable {
+public class StrokePulsePushDrawable extends ProgressDrawable {
 
-      private static final String TAG = StrokeWaveDrawable.class.getSimpleName();
+      private static final String TAG = StrokePulsePushDrawable.class.getSimpleName();
 
       private int mStrokeWidth;
       private int mStrokeHigh;
       private int mStrokeLow;
 
-      public StrokeWaveDrawable ( ) {
+      public StrokePulsePushDrawable ( ) {
 
             mPaint.setStyle( Style.STROKE );
             mPaint.setColor( Color.RED );
+            mPaint.setStrokeCap( Cap.SQUARE );
       }
 
       @Override
@@ -29,7 +31,7 @@ public class StrokeWaveDrawable extends ProgressDrawable {
             super.onBoundsChange( bounds );
             mStrokeWidth = bounds.width() / 11;
             mStrokeHigh = bounds.height() / 5 * 2;
-            mStrokeLow = bounds.height() / 8;
+            mStrokeLow = bounds.height() / 5;
 
             mPaint.setStrokeWidth( mStrokeWidth );
       }
@@ -55,11 +57,15 @@ public class StrokeWaveDrawable extends ProgressDrawable {
 
       private float calculateProgress ( int i, float progress ) {
 
-            progress -= i * 0.1f;
-            if( progress < 0 ) {
-                  progress = -progress;
+            progress *= 26;
+
+            float low = i * 4;
+            float high = 10 + low;
+            if( progress >= low && progress <= high ) {
+                  return ( progress - low ) / 10;
+            } else {
+                  return 0;
             }
-            return progress;
       }
 
       private float calculateY ( int dY, float progress ) {
@@ -67,10 +73,10 @@ public class StrokeWaveDrawable extends ProgressDrawable {
             if( progress <= 0.5f ) {
 
                   progress = progress * 2;
-                  return mStrokeHigh - dY * progress;
+                  return mStrokeLow + dY * progress;
             } else {
                   progress = ( progress - 0.5f ) * 2;
-                  return mStrokeLow + dY * progress;
+                  return mStrokeHigh - dY * progress;
             }
       }
 }

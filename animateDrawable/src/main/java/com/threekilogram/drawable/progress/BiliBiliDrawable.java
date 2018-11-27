@@ -1,4 +1,4 @@
-package com.threekilogram.drawable;
+package com.threekilogram.drawable.progress;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -18,8 +18,7 @@ public class BiliBiliDrawable extends ProgressDrawable {
       private final int STATE5 = 5;
       private final int STATE6 = 6;
 
-      private   int         mRadius      = 8;
-      private   int         mStrokeWidth = 5;
+      private   int         mRadius;
       protected Path        mSrcPath;
       protected PathMeasure mPathMeasure;
       protected Path        mDstPath;
@@ -30,7 +29,6 @@ public class BiliBiliDrawable extends ProgressDrawable {
       public BiliBiliDrawable ( ) {
 
             mPaint.setStyle( Paint.Style.STROKE );
-            mPaint.setStrokeWidth( mStrokeWidth );
 
             mSrcPath = new Path();
             mDstPath = new Path();
@@ -38,34 +36,14 @@ public class BiliBiliDrawable extends ProgressDrawable {
       }
 
       @Override
-      public void setStrokeWidth ( int strokeWidth ) {
-
-            super.setStrokeWidth( strokeWidth );
-            mStrokeWidth = strokeWidth;
-      }
-
-      public int getStrokeWidth ( ) {
-
-            return mStrokeWidth;
-      }
-
-      public void setRadius ( int radius ) {
-
-            mRadius = radius;
-      }
-
-      public int getRadius ( ) {
-
-            return mRadius;
-      }
-
-      @Override
       protected void onBoundsChange ( Rect bounds ) {
 
             super.onBoundsChange( bounds );
 
-            int strokeWidth = mStrokeWidth;
             mSize = Math.min( bounds.width(), bounds.height() );
+            mRadius = mSize / 10;
+            int strokeWidth = mSize / 20;
+            mPaint.setStrokeWidth( strokeWidth );
             int size20Percent = mSize / 5;
             int size80Percent = mSize - size20Percent;
 
