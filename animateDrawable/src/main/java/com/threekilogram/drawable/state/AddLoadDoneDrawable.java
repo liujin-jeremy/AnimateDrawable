@@ -38,7 +38,7 @@ public class AddLoadDoneDrawable extends StartLoadDoneDrawable {
             mDrawable.setBounds( bounds );
 
             mSize = Math.min( bounds.width(), bounds.height() ) * 4 / 5;
-            mPaint.setStrokeWidth( mDrawable.getPaint().getStrokeWidth() );
+            mPaint.setStrokeWidth( mSize >> 4 );
       }
 
       @Override
