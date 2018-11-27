@@ -37,8 +37,9 @@ import com.threekilogram.drawable.progress.StrokePulseDrawable;
 import com.threekilogram.drawable.progress.StrokePulsePushDrawable;
 import com.threekilogram.drawable.progress.StrokeSkipDrawable;
 import com.threekilogram.drawable.progress.StrokeWaveDrawable;
-import com.threekilogram.drawable.state.AddLoadingDrawable;
+import com.threekilogram.drawable.state.AddLoadDoneDrawable;
 import com.threekilogram.drawable.state.StartLoadDoneDrawable;
+import com.threekilogram.drawable.state.TextLoadDoneDrawable;
 
 /**
  * @author wuxio
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mArcChangeV2;
       private SeekBar      mArcChangeSeekV2;
       private ImageView    mArcChangeAnimateV2;
+      private ImageView    mTextLoading;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -163,6 +165,14 @@ public class MainActivity extends AppCompatActivity {
             testArcChange();
             testArcChangeV2();
             testAddLoading();
+            testTextLoading();
+      }
+
+      private void testTextLoading ( ) {
+
+            TextLoadDoneDrawable drawable = new TextLoadDoneDrawable();
+            drawable.setText( "登录", "登录成功" );
+            testStartState( drawable, mTextLoading );
       }
 
       private void testArcChangeV2 ( ) {
@@ -173,10 +183,15 @@ public class MainActivity extends AppCompatActivity {
 
       private void testAddLoading ( ) {
 
-            AddLoadingDrawable drawable = new AddLoadingDrawable();
-            mAddLoading.setImageDrawable( drawable );
+            AddLoadDoneDrawable doneDrawable = new AddLoadDoneDrawable();
+            testStartState( doneDrawable, mAddLoading );
+      }
 
-            mAddLoading.setOnClickListener( v -> {
+      private void testStartState ( StartLoadDoneDrawable drawable, ImageView view ) {
+
+            view.setImageDrawable( drawable );
+
+            view.setOnClickListener( v -> {
 
                   int currentState = drawable.getCurrentState();
                   if( currentState == StartLoadDoneDrawable.STATE_START ) {
@@ -331,6 +346,7 @@ public class MainActivity extends AppCompatActivity {
             mArcChangeV2 = findViewById( R.id.arcChangeV2 );
             mArcChangeSeekV2 = findViewById( R.id.arcChangeSeekV2 );
             mArcChangeAnimateV2 = findViewById( R.id.arcChangeAnimateV2 );
+            mTextLoading = findViewById( R.id.textLoading );
       }
 
       private void testArcChange ( ) {

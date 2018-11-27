@@ -12,16 +12,14 @@ import com.threekilogram.drawable.progress.ProgressDrawable;
 /**
  * @author Liujin 2018-11-26:11:48
  */
-public class AddLoadingDrawable extends StartLoadDoneDrawable {
-
-      private static final String TAG = AddLoadingDrawable.class.getSimpleName();
+public class AddLoadDoneDrawable extends StartLoadDoneDrawable {
 
       private ProgressDrawable         mDrawable;
       private AnimateProgressEvaluator mEvaluator;
 
       private int mSize;
 
-      public AddLoadingDrawable ( ) {
+      public AddLoadDoneDrawable ( ) {
 
             mEvaluator = new AnimateProgressEvaluator();
             mEvaluator.setCount( Integer.MAX_VALUE );

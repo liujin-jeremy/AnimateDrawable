@@ -47,8 +47,8 @@ public class ArcChangeRotateDrawable extends ProgressDrawable {
             int dy = getHeight() / 2;
             canvas.translate( dx, dy );
 
-            float sweep = 240;
-            float changeAngle = 120;
+            float sweep = 256;
+            float changeAngle = 128;
 
             if( progress <= 0.5f ) {
 

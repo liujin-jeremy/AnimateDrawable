@@ -58,8 +58,8 @@ public class ArcChangeRotateDrawableV2 extends ProgressDrawable {
             if( mSweep > 320 ) {
                   mSweep = 320;
                   mFlag = -1;
-            } else if( mSweep < 5 ) {
-                  mSweep = 5;
+            } else if( mSweep < 12 ) {
+                  mSweep = 12;
                   mFlag = 1;
             }
 

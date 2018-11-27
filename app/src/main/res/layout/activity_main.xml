@@ -884,5 +884,20 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <ImageView
+                android:id="@+id/textLoading"
+                android:layout_width="240dp"
+                android:layout_height="60dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
       </LinearLayout>
 </ScrollView>
