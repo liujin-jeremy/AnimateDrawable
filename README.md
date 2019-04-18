@@ -2,7 +2,7 @@
 ## 有动画效果的 Drawable
 
 ```
-implementation 'tech.threekilogram:animateDrawable:2.1.0'
+implementation 'tech.liujin:animateDrawable:1.0.0'
 ```
 
 ## 简介
