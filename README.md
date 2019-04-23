@@ -11,6 +11,32 @@ implementation 'tech.liujin:animateDrawable:1.0.0'
 
 `AnimateWrapperDrawable`用于包装`ProgressDrawable` 为其增加动画效果
 
+## 使用
+
+```
+BiliBiliDrawable biliBiliDrawable = new BiliBiliDrawable();
+biliBiliDrawable.setColor( color );
+
+// 设置绘制进度,0~1
+biliBiliDrawable.setDrawProgress( process );
+```
+
+使用动画
+
+```
+AnimateProgressDrawable wrapperDrawable = new AnimateProgressDrawable( biliBiliDrawable );
+wrapperDrawable.setCount( count ); //设置循环次数
+wrapperDrawable.setDuration( duration ); //设置动画时间
+wrapperDrawable.setInterpolator( interpolator ); 
+
+// 开始动画
+wrapperDrawable.start();
+// 结束动画
+wrapperDrawable.stop();
+// 测试是否正在运行
+wrapperDrawable.isRunning()
+```
+
 ### BiliBiliDrawable
 
 ![](img/pic00.gif)
@@ -125,12 +151,6 @@ implementation 'tech.liujin:animateDrawable:1.0.0'
 
 
 
-### 仿微信底部导航
-
-![](img/pic19.gif)
-
-
-
 ### StrokeSkipDrawable
 
 ![](img/pic20.gif)
@@ -146,4 +166,51 @@ implementation 'tech.liujin:animateDrawable:1.0.0'
 ### ArcChangeRotateDrawable
 
 ![](img/pic23.gif)
+
+
+
+### 对错变化
+
+![](img/pic26.gif)
+
+
+
+### 仿微信底部导航
+
+```
+mPager = findViewById( R.id.pager );
+mTabLayout = findViewById( R.id.tabLayout );
+PagerAdapter adapter = new PagerAdapter( getSupportFragmentManager() );
+mPager.setAdapter( adapter );
+// 辅助关联ViewPager和TabLayout
+TabItemBuilder builder = new ItemBuilder( mTabLayout, mPager );
+builder.setTitles( mTitles );
+// 设置textView文字颜色变化
+builder.setTextColorRes( R.color.textColorNormal, R.color.textColorSelected );
+// 配置每个图标资源
+builder.setDrawable( 0, R.drawable.home_normal, R.drawable.home_selected );
+builder.setDrawable( 1, R.drawable.category_normal, R.drawable.category_selected );
+builder.setDrawable( 2, R.drawable.find_normal, R.drawable.find_selected );
+builder.setDrawable( 3, R.drawable.mine_normal, R.drawable.mine_selected );
+// 创建
+builder.build( 0 );
+```
+
+![](img/pic19.gif)
+
+
+
+### AddLoadDoneDrawable
+
+一个拥有三个状态的Drawable
+
+![](img/pic24.gif)
+
+
+
+### TextLoadDoneDrawable
+
+![](img/pic25.gif)
+
+
 

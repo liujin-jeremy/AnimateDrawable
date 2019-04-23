@@ -42,17 +42,21 @@ public class WeChatBottomActivity extends AppCompatActivity {
       private void initView ( ) {
 
             mPager = findViewById( R.id.pager );
+            mTabLayout = findViewById( R.id.tabLayout );
             PagerAdapter adapter = new PagerAdapter( getSupportFragmentManager() );
             mPager.setAdapter( adapter );
-            mTabLayout = findViewById( R.id.tabLayout );
 
+            // 辅助关联ViewPager和TabLayout
             TabItemBuilder builder = new ItemBuilder( mTabLayout, mPager );
-            builder.setTextColorRes( R.color.textColorNormal, R.color.textColorSelected );
             builder.setTitles( mTitles );
+            // 设置textView文字颜色变化
+            builder.setTextColorRes( R.color.textColorNormal, R.color.textColorSelected );
+            // 配置每个图标资源
             builder.setDrawable( 0, R.drawable.home_normal, R.drawable.home_selected );
             builder.setDrawable( 1, R.drawable.category_normal, R.drawable.category_selected );
             builder.setDrawable( 2, R.drawable.find_normal, R.drawable.find_selected );
             builder.setDrawable( 3, R.drawable.mine_normal, R.drawable.mine_selected );
+            // 创建
             builder.build( 0 );
       }
 

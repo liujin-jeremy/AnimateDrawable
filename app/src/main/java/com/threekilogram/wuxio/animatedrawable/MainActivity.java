@@ -536,8 +536,7 @@ public class MainActivity extends AppCompatActivity {
 
             /* bilibili progress */
             BiliBiliDrawable biliBiliDrawable = new BiliBiliDrawable();
-            biliBiliDrawable
-                .setColor( color );
+            biliBiliDrawable.setColor( color );
 
             test(
                 biliBiliDrawable,
