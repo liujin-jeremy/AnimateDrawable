@@ -10,8 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import com.threekilogram.drawable.widget.ProgressAlphaDrawable;
-import com.threekilogram.drawable.widget.TabItemBuilder;
+import tech.liujin.drawable.widget.ProgressAlphaDrawable;
+import tech.liujin.drawable.widget.TabItemBuilder;
 
 /**
  * @author wuxio
