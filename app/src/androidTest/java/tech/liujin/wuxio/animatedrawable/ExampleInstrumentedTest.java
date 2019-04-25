@@ -1,4 +1,4 @@
-package com.threekilogram.wuxio.animatedrawable;
+package tech.liujin.wuxio.animatedrawable;
 
 import static org.junit.Assert.assertEquals;
 

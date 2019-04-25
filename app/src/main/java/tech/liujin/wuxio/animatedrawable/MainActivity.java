@@ -1,4 +1,4 @@
-package com.threekilogram.wuxio.animatedrawable;
+package tech.liujin.wuxio.animatedrawable;
 
 import android.animation.TimeInterpolator;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import com.threekilogram.wuxio.animatedrawable.R;
 import tech.liujin.drawable.progress.AnimateProgressDrawable;
 import tech.liujin.drawable.progress.Arc240RotateDrawable;
 import tech.liujin.drawable.progress.ArcChangeRotateDrawable;

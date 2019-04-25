@@ -1,4 +1,4 @@
-package com.threekilogram.animatedrawable;
+package tech.liujin.animatedrawable;
 
 import static org.junit.Assert.assertEquals;
 

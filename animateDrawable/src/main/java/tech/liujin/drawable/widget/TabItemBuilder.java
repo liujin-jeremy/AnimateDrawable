@@ -16,7 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import com.threekilogram.drawable.R;
+import tech.liujin.drawable.R;
 
 /**
  * 用于创建TabLayout和ViewPager联动

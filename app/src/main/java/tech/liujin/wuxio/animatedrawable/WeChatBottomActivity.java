@@ -1,4 +1,4 @@
-package com.threekilogram.wuxio.animatedrawable;
+package tech.liujin.wuxio.animatedrawable;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import com.threekilogram.wuxio.animatedrawable.R;
 import tech.liujin.drawable.widget.ProgressAlphaDrawable;
 import tech.liujin.drawable.widget.TabItemBuilder;
 

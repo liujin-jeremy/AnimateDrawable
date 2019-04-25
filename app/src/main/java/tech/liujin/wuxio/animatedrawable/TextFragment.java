@@ -1,4 +1,4 @@
-package com.threekilogram.wuxio.animatedrawable;
+package tech.liujin.wuxio.animatedrawable;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.threekilogram.wuxio.animatedrawable.R;
 
 /**
  * @author wuxio 2018-05-25:8:09

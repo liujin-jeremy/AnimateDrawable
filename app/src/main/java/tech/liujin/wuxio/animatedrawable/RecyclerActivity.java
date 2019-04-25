@@ -1,4 +1,4 @@
-package com.threekilogram.wuxio.animatedrawable;
+package tech.liujin.wuxio.animatedrawable;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import com.threekilogram.wuxio.animatedrawable.R;
 
 public class RecyclerActivity extends AppCompatActivity {
 
