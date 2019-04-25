@@ -2,7 +2,7 @@
 ## 有动画效果的 Drawable
 
 ```
-implementation 'tech.liujin:animateDrawable:1.0.0'
+implementation 'tech.liujin:animateDrawable:1.0.3'
 ```
 
 ## 简介
