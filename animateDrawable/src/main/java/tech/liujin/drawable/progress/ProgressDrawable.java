@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
@@ -25,7 +26,7 @@ public abstract class ProgressDrawable extends Drawable {
        */
       protected float mProgress;
 
-      public ProgressDrawable ( ) {
+      protected ProgressDrawable ( ) {
 
             mPaint = new Paint( Paint.ANTI_ALIAS_FLAG );
             mPaint.setStrokeJoin( Paint.Join.ROUND );
@@ -82,6 +83,12 @@ public abstract class ProgressDrawable extends Drawable {
        */
       protected abstract void draw ( @NonNull Canvas canvas, float progress );
 
+      @Override
+      protected void onBoundsChange ( Rect bounds ) {
+
+            super.onBoundsChange( bounds );
+      }
+
       /**
        * 绘制区域宽度
        *
@@ -115,6 +122,7 @@ public abstract class ProgressDrawable extends Drawable {
       /**
        * 获取当前进度
        */
+      @FloatRange(from = 0f, to = 1f)
       public float getProgress ( ) {
 
             return mProgress;

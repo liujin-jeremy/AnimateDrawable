@@ -936,9 +936,9 @@
 
                   <Button
                       android:id="@+id/start"
-                      android:layout_gravity="start"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
+                      android:layout_gravity="start"
                       android:text="start"/>
 
                   <Button
@@ -948,6 +948,12 @@
                       android:layout_gravity="end"
                       android:text="stop"/>
             </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
 
       </LinearLayout>
 </ScrollView>

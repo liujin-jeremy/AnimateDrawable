@@ -5,9 +5,9 @@ import android.graphics.Color;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Join;
 import android.graphics.Rect;
-import tech.liujin.drawable.progress.AnimateProgressEvaluator;
-import tech.liujin.drawable.progress.ArcChangeRotateDrawable;
+import tech.liujin.drawable.animate.AnimateProgressEvaluator;
 import tech.liujin.drawable.progress.ProgressDrawable;
+import tech.liujin.drawable.progress.load.ArcChangeRotateDrawable;
 /**
  * 该drawable拥有三个状态,add,load,done
  *

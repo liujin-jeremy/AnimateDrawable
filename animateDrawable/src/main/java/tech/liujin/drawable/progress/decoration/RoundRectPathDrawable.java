@@ -1,4 +1,4 @@
-package tech.liujin.drawable.progress;
+package tech.liujin.drawable.progress.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Style;
@@ -13,6 +13,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import tech.liujin.drawable.progress.ProgressDrawable;
 
 /**
  * 根据时间进度绘制圆角矩形,一般作为倒计时背景

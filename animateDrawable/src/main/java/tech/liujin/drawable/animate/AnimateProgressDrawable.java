@@ -1,10 +1,11 @@
-package tech.liujin.drawable.progress;
+package tech.liujin.drawable.animate;
 
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.support.annotation.NonNull;
+import tech.liujin.drawable.progress.ProgressDrawable;
 
 /**
  * 包装一个{@link ProgressDrawable}使其具有动画效果,他会执行指定次数/指定时长的动画
@@ -71,7 +72,7 @@ public class AnimateProgressDrawable extends ProgressDrawable implements Animata
                   return;
             }
 
-            mDrawable.mProgress = calculateProgress();
+            mDrawable.setProgress( calculateProgress() );
             mDrawable.draw( canvas );
             invalidateSelf();
       }
@@ -119,7 +120,7 @@ public class AnimateProgressDrawable extends ProgressDrawable implements Animata
       @Override
       public void start ( ) {
 
-            mEvaluator.start( mDrawable.mProgress );
+            mEvaluator.start( mDrawable.getProgress() );
             invalidateSelf();
       }
 

@@ -1,4 +1,4 @@
-package tech.liujin.drawable.progress;
+package tech.liujin.drawable.progress.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Style;
@@ -6,6 +6,7 @@ import android.graphics.Path;
 import android.graphics.Path.Direction;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
+import tech.liujin.drawable.progress.ProgressDrawable;
 
 /**
  * 根据进度绘制圆角矩形

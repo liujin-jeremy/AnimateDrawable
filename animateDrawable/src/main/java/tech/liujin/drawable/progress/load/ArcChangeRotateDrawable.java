@@ -1,4 +1,4 @@
-package tech.liujin.drawable.progress;
+package tech.liujin.drawable.progress.load;
 
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import tech.liujin.drawable.progress.ProgressDrawable;
 
 /**
  * @author Liujin 2018-11-23:12:20

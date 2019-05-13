@@ -1,4 +1,4 @@
-package tech.liujin.drawable.progress;
+package tech.liujin.drawable.progress.load;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -7,6 +7,7 @@ import android.graphics.PathMeasure;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
+import tech.liujin.drawable.progress.ProgressDrawable;
 
 /**
  * @author wuxio 2018-05-12:23:15

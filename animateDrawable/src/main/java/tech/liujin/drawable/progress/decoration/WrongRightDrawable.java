@@ -1,10 +1,11 @@
-package tech.liujin.drawable.progress;
+package tech.liujin.drawable.progress.decoration;
 
 import android.animation.ArgbEvaluator;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
+import tech.liujin.drawable.progress.ProgressDrawable;
 
 /**
  * @author Liujin 2018-11-27:11:02

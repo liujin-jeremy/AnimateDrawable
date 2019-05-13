@@ -1,4 +1,4 @@
-package tech.liujin.drawable.progress;
+package tech.liujin.drawable.animate;
 
 import android.animation.TimeInterpolator;
 import android.view.animation.LinearInterpolator;

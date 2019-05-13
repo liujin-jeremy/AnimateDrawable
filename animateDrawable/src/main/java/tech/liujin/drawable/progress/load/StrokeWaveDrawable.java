@@ -1,23 +1,24 @@
-package tech.liujin.drawable.progress;
+package tech.liujin.drawable.progress.load;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
+import tech.liujin.drawable.progress.ProgressDrawable;
 
 /**
  * @author Liujin 2018-11-16:13:18
  */
-public class StrokePulseDrawable extends ProgressDrawable {
+public class StrokeWaveDrawable extends ProgressDrawable {
 
-      private static final String TAG = StrokePulseDrawable.class.getSimpleName();
+      private static final String TAG = StrokeWaveDrawable.class.getSimpleName();
 
       private int mStrokeWidth;
       private int mStrokeHigh;
       private int mStrokeLow;
 
-      public StrokePulseDrawable ( ) {
+      public StrokeWaveDrawable ( ) {
 
             mPaint.setStyle( Style.STROKE );
             mPaint.setColor( Color.RED );
@@ -45,24 +46,17 @@ public class StrokePulseDrawable extends ProgressDrawable {
 
             int dY = mStrokeHigh - mStrokeLow;
 
-            for( int i = 0; i < 3; i++ ) {
+            for( int i = 0; i < 5; i++ ) {
 
                   float x = strokeWidth + half + ( strokeWidth * 2 * i );
                   float y = calculateY( dY, calculateProgress( i, progress ) );
                   canvas.drawLine( x, -y, x, y, mPaint );
-
-                  int j = 4 - i;
-                  if( j != i ) {
-                        x = strokeWidth + half + ( strokeWidth * 2 * j );
-                        y = calculateY( dY, calculateProgress( i, progress ) );
-                        canvas.drawLine( x, -y, x, y, mPaint );
-                  }
             }
       }
 
       private float calculateProgress ( int i, float progress ) {
 
-            progress -= i * 0.5f / 2;
+            progress -= i * 0.1f;
             if( progress < 0 ) {
                   progress = -progress;
             }
@@ -74,10 +68,10 @@ public class StrokePulseDrawable extends ProgressDrawable {
             if( progress <= 0.5f ) {
 
                   progress = progress * 2;
-                  return mStrokeLow + dY * progress;
+                  return mStrokeHigh - dY * progress;
             } else {
                   progress = ( progress - 0.5f ) * 2;
-                  return mStrokeHigh - dY * progress;
+                  return mStrokeLow + dY * progress;
             }
       }
 }
