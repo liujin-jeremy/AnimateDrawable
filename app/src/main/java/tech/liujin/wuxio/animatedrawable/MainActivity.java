@@ -41,6 +41,7 @@ import tech.liujin.drawable.progress.load.StrokePulseDrawable;
 import tech.liujin.drawable.progress.load.StrokePulsePushDrawable;
 import tech.liujin.drawable.progress.load.StrokeSkipDrawable;
 import tech.liujin.drawable.progress.load.StrokeWaveDrawable;
+import tech.liujin.drawable.progress.text.CircleTextProgressDrawable;
 import tech.liujin.drawable.state.AddLoadDoneDrawable;
 import tech.liujin.drawable.state.StartLoadDoneDrawable;
 import tech.liujin.drawable.state.TextLoadDoneDrawable;
@@ -132,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mStartStop;
       private Button       mStart;
       private Button       mStop;
+      private ImageView    mCircleText;
+      private SeekBar      mCircleTextSeek;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -177,6 +180,23 @@ public class MainActivity extends AppCompatActivity {
             testTextLoading();
             testWrongRight();
             testStartStop();
+            testCircleText();
+      }
+
+      private void testCircleText ( ) {
+
+            CircleTextProgressDrawable drawable = new CircleTextProgressDrawable();
+            mCircleText.setImageDrawable( drawable );
+            drawable.setColor( getResources().getColor( R.color.darkorange ) );
+            mCircleTextSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
       }
 
       private void testStartStop ( ) {
@@ -405,6 +425,8 @@ public class MainActivity extends AppCompatActivity {
             mStartStop = (ImageView) findViewById( R.id.startStop );
             mStart = (Button) findViewById( R.id.start );
             mStop = (Button) findViewById( R.id.stop );
+            mCircleText = (ImageView) findViewById( R.id.circleText );
+            mCircleTextSeek = (SeekBar) findViewById( R.id.circleTextSeek );
       }
 
       private void testArcChange ( ) {
