@@ -45,6 +45,10 @@ import tech.liujin.drawable.progress.text.CircleDotProgressDrawable;
 import tech.liujin.drawable.progress.text.CircleInRingProgressDrawable;
 import tech.liujin.drawable.progress.text.CircleMatchRingProgressDrawable;
 import tech.liujin.drawable.progress.text.CircleTextProgressDrawable;
+import tech.liujin.drawable.progress.text.FillCircleProgressDrawable;
+import tech.liujin.drawable.progress.text.FillInRingProgressDrawable;
+import tech.liujin.drawable.progress.text.FillMatchCircleProgressDrawable;
+import tech.liujin.drawable.progress.text.FillOutCircleProgressDrawable;
 import tech.liujin.drawable.progress.text.PieInRingProgressDrawable;
 import tech.liujin.drawable.progress.text.PieMatchCircleProgressDrawable;
 import tech.liujin.drawable.progress.text.PieOutCircleProgressDrawable;
@@ -143,19 +147,27 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mCircleText;
       private SeekBar      mCircleTextSeek;
       private ImageView    mCircleRing;
-      private SeekBar      mCircleRingSeek;
-      private ImageView    mCircleDot;
-      private SeekBar      mCircleDotSeek;
-      private ImageView    mCircleMatch;
-      private SeekBar      mCircleMatchSeek;
-      private ImageView    mPie;
-      private SeekBar      mPieSeek;
-      private ImageView    mPieMatch;
-      private SeekBar      mPieMatchSeek;
-      private ImageView    mPieOut;
-      private SeekBar      mPieOutSeek;
-      private ImageView    mPieRing;
-      private SeekBar      mPieRingSeek;
+      private SeekBar   mCircleRingSeek;
+      private ImageView mCircleDot;
+      private SeekBar   mCircleDotSeek;
+      private ImageView mCircleMatch;
+      private SeekBar   mCircleMatchSeek;
+      private ImageView mPie;
+      private SeekBar   mPieSeek;
+      private ImageView mPieMatch;
+      private SeekBar   mPieMatchSeek;
+      private ImageView mPieOut;
+      private SeekBar   mPieOutSeek;
+      private ImageView mPieRing;
+      private SeekBar   mPieRingSeek;
+      private ImageView mFillCircle;
+      private SeekBar   mFillCircleSeek;
+      private ImageView mFillMatch;
+      private SeekBar   mFillMatchSeek;
+      private ImageView mFillOut;
+      private SeekBar   mFillOutSeek;
+      private ImageView mFillRing;
+      private SeekBar   mFillRingSeek;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -209,6 +221,70 @@ public class MainActivity extends AppCompatActivity {
             testPieMatch();
             testPieOut();
             testPieRing();
+            testFillCircle();
+            testFillMatch();
+            testFillOut();
+            testFillRing();
+      }
+
+      private void testFillRing ( ) {
+
+            FillInRingProgressDrawable drawable = new FillInRingProgressDrawable();
+            mFillRing.setImageDrawable( drawable );
+            mFillRingSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
+      }
+
+      private void testFillOut ( ) {
+
+            FillOutCircleProgressDrawable drawable = new FillOutCircleProgressDrawable();
+            mFillOut.setImageDrawable( drawable );
+            mFillOutSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
+      }
+
+      private void testFillMatch ( ) {
+
+            FillMatchCircleProgressDrawable drawable = new FillMatchCircleProgressDrawable();
+            mFillMatch.setImageDrawable( drawable );
+            mFillMatchSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
+      }
+
+      private void testFillCircle ( ) {
+
+            FillCircleProgressDrawable drawable = new FillCircleProgressDrawable();
+            mFillCircle.setImageDrawable( drawable );
+            mFillCircleSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
       }
 
       private void testPieRing ( ) {
@@ -573,6 +649,14 @@ public class MainActivity extends AppCompatActivity {
             mPieOutSeek = (SeekBar) findViewById( R.id.pieOutSeek );
             mPieRing = (ImageView) findViewById( R.id.pieRing );
             mPieRingSeek = (SeekBar) findViewById( R.id.pieRingSeek );
+            mFillCircle = (ImageView) findViewById( R.id.fillCircle );
+            mFillCircleSeek = (SeekBar) findViewById( R.id.fillCircleSeek );
+            mFillMatch = (ImageView) findViewById( R.id.fillMatch );
+            mFillMatchSeek = (SeekBar) findViewById( R.id.fillMatchSeek );
+            mFillOut = (ImageView) findViewById( R.id.fillOut );
+            mFillOutSeek = (SeekBar) findViewById( R.id.fillOutSeek );
+            mFillRing = (ImageView) findViewById( R.id.fillRing );
+            mFillRingSeek = (SeekBar) findViewById( R.id.fillRingSeek );
       }
 
       private void testArcChange ( ) {

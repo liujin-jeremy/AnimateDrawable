@@ -1123,5 +1123,88 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <ImageView
+                android:id="@+id/fillCircle"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/teal"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/fillCircleSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/fillMatch"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/teal"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/fillMatchSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/fillOut"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/teal"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/fillOutSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/fillRing"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/teal"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/fillRingSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
       </LinearLayout>
 </ScrollView>
