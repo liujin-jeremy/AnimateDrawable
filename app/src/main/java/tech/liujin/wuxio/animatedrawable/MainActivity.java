@@ -15,6 +15,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import com.threekilogram.wuxio.animatedrawable.R;
 import tech.liujin.drawable.animate.AnimateProgressDrawable;
+import tech.liujin.drawable.color.ColorEvaluator;
 import tech.liujin.drawable.progress.ProgressDrawable;
 import tech.liujin.drawable.progress.decoration.RoundRectCornerDrawable;
 import tech.liujin.drawable.progress.decoration.RoundRectPathDrawable;
@@ -147,27 +148,29 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mCircleText;
       private SeekBar      mCircleTextSeek;
       private ImageView    mCircleRing;
-      private SeekBar   mCircleRingSeek;
-      private ImageView mCircleDot;
-      private SeekBar   mCircleDotSeek;
-      private ImageView mCircleMatch;
-      private SeekBar   mCircleMatchSeek;
-      private ImageView mPie;
-      private SeekBar   mPieSeek;
-      private ImageView mPieMatch;
-      private SeekBar   mPieMatchSeek;
-      private ImageView mPieOut;
-      private SeekBar   mPieOutSeek;
-      private ImageView mPieRing;
-      private SeekBar   mPieRingSeek;
-      private ImageView mFillCircle;
-      private SeekBar   mFillCircleSeek;
-      private ImageView mFillMatch;
-      private SeekBar   mFillMatchSeek;
-      private ImageView mFillOut;
-      private SeekBar   mFillOutSeek;
-      private ImageView mFillRing;
-      private SeekBar   mFillRingSeek;
+      private SeekBar      mCircleRingSeek;
+      private ImageView    mCircleDot;
+      private SeekBar      mCircleDotSeek;
+      private ImageView    mCircleMatch;
+      private SeekBar      mCircleMatchSeek;
+      private ImageView    mPie;
+      private SeekBar      mPieSeek;
+      private ImageView    mPieMatch;
+      private SeekBar      mPieMatchSeek;
+      private ImageView    mPieOut;
+      private SeekBar      mPieOutSeek;
+      private ImageView    mPieRing;
+      private SeekBar      mPieRingSeek;
+      private ImageView    mFillCircle;
+      private SeekBar      mFillCircleSeek;
+      private ImageView    mFillMatch;
+      private SeekBar      mFillMatchSeek;
+      private ImageView    mFillOut;
+      private SeekBar      mFillOutSeek;
+      private ImageView    mFillRing;
+      private SeekBar      mFillRingSeek;
+      private ImageView    mColorEvaluator;
+      private SeekBar      mColorEvaluatorSeek;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -225,6 +228,38 @@ public class MainActivity extends AppCompatActivity {
             testFillMatch();
             testFillOut();
             testFillRing();
+            testColorEvaluator();
+      }
+
+      private int getResourceColor ( int id ) {
+
+            return getResources().getColor( id );
+      }
+
+      private void testColorEvaluator ( ) {
+
+            ColorEvaluator evaluator = new ColorEvaluator(
+                getResourceColor( R.color.red ),
+                getResourceColor( R.color.orange ),
+                getResourceColor( R.color.yellow ),
+                getResourceColor( R.color.chartreuse ),
+                getResourceColor( R.color.green ),
+                getResourceColor( R.color.blue ),
+                getResourceColor( R.color.purple )
+            );
+            FillCircleProgressDrawable drawable = new FillCircleProgressDrawable();
+            mColorEvaluator.setImageDrawable( drawable );
+            mColorEvaluatorSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        int color = evaluator.evaluate( v );
+                        drawable.setColor( color );
+                        drawable.setDrawProgress( v );
+                  }
+            } );
       }
 
       private void testFillRing ( ) {
@@ -657,6 +692,8 @@ public class MainActivity extends AppCompatActivity {
             mFillOutSeek = (SeekBar) findViewById( R.id.fillOutSeek );
             mFillRing = (ImageView) findViewById( R.id.fillRing );
             mFillRingSeek = (SeekBar) findViewById( R.id.fillRingSeek );
+            mColorEvaluator = (ImageView) findViewById( R.id.colorEvaluator );
+            mColorEvaluatorSeek = (SeekBar) findViewById( R.id.colorEvaluatorSeek );
       }
 
       private void testArcChange ( ) {
