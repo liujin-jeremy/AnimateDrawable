@@ -2,7 +2,7 @@
 ## 有动画效果的 Drawable
 
 ```
-implementation 'tech.liujin:animateDrawable:1.0.3'
+implementation 'tech.liujin:animateDrawable:1.0.4'
 ```
 
 ## 简介
@@ -213,4 +213,107 @@ builder.build( 0 );
 ![](img/pic25.gif)
 
 
+
+### CircleTextProgressDrawable
+
+![](img/pic27.gif)
+
+
+
+### CircleInRingProgressDrawable
+
+![](img/pic28.gif)
+
+
+
+### CircleDotProgressDrawable
+
+![](img/pic29.gif)
+
+
+
+### CircleMatchRingProgressDrawable
+
+![](img/pic30.gif)
+
+
+
+### PieTextProgressDrawable
+
+![](img/pic31.gif)
+
+
+
+### PieMatchCircleProgressDrawable
+
+![](img/pic32.gif)
+
+
+
+### PieOutCircleProgressDrawable
+
+![](img/pic33.gif)
+
+
+
+### PieInRingProgressDrawable
+
+![](img/pic34.gif)
+
+
+
+### FillCircleProgressDrawable
+
+![](img/pic35.gif)
+
+
+
+### FillMatchCircleProgressDrawable
+
+![](img/pic36.gif)
+
+
+
+### FillOutCircleProgressDrawable
+
+![](img/pic37.gif)
+
+
+
+### FillInRingProgressDrawable
+
+![](img/pic38.gif)
+
+
+
+### ColorEvaluator
+
+根据进度值计算一组颜色的当前值
+
+![](img/pic39.gif)
+
+```
+ColorEvaluator evaluator = new ColorEvaluator(
+    getResourceColor( R.color.red ),
+    getResourceColor( R.color.orange ),
+    getResourceColor( R.color.yellow ),
+    getResourceColor( R.color.chartreuse ),
+    getResourceColor( R.color.green ),
+    getResourceColor( R.color.blue ),
+    getResourceColor( R.color.purple )
+);
+FillCircleProgressDrawable drawable = new FillCircleProgressDrawable();
+mColorEvaluator.setImageDrawable( drawable );
+mColorEvaluatorSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+      @Override
+      public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+            float v = progress * 1f / seekBar.getMax();
+            int color = evaluator.evaluate( v );
+            drawable.setColor( color );
+            drawable.setDrawProgress( v );
+      }
+} );
+```
 

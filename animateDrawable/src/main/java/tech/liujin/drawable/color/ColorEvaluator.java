@@ -26,6 +26,15 @@ public class ColorEvaluator {
             }
       }
 
+      /**
+       * 如果 colors={red,green,blue,yellow},locations={0,0.25,0.5,1},那么进度在0~0.25之间颜色值根据red和green计算,以此类推
+       */
+      public ColorEvaluator ( int[] colors, float[] locations ) {
+
+            mColors = colors;
+            mLocations = locations;
+      }
+
       public int evaluate ( float process ) {
 
             int count = mColors.length;

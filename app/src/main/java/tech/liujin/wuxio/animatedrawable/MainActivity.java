@@ -447,7 +447,7 @@ public class MainActivity extends AppCompatActivity {
             CubeGridDrawable drawable = new CubeGridDrawable();
             AnimateProgressDrawable wrapperDrawable = new AnimateProgressDrawable( drawable );
             wrapperDrawable.setCount( Integer.MAX_VALUE );
-            wrapperDrawable.setDuration( 500 );
+            wrapperDrawable.setDuration( 2000 );
 
             mStartStop.setImageDrawable( wrapperDrawable );
             mStart.setOnClickListener( new OnClickListener() {
