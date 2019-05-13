@@ -9,7 +9,7 @@ import android.view.animation.LinearInterpolator;
 public class AnimateProgressEvaluator {
 
       /**
-       * start time
+       * start time,when is -1 means stopped,user need stop
        */
       private long             mStartTime    = -1;
       /**

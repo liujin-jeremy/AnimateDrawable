@@ -4,8 +4,10 @@ import android.animation.TimeInterpolator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -46,7 +48,7 @@ import tech.liujin.drawable.state.TextLoadDoneDrawable;
 /**
  * @author wuxio
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnClickListener {
 
       private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -127,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mTextLoading;
       private ImageView    mWrongRight;
       private SeekBar      mWrongRightSeek;
+      private ImageView    mStartStop;
+      private Button       mStart;
+      private Button       mStop;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -171,6 +176,33 @@ public class MainActivity extends AppCompatActivity {
             testAddLoading();
             testTextLoading();
             testWrongRight();
+            testStartStop();
+      }
+
+      private void testStartStop ( ) {
+
+            CubeGridDrawable drawable = new CubeGridDrawable();
+            AnimateProgressDrawable wrapperDrawable = new AnimateProgressDrawable( drawable );
+            wrapperDrawable.setCount( Integer.MAX_VALUE );
+            wrapperDrawable.setDuration( 500 );
+
+            mStartStop.setImageDrawable( wrapperDrawable );
+            mStart.setOnClickListener( new OnClickListener() {
+
+                  @Override
+                  public void onClick ( View v ) {
+
+                        wrapperDrawable.start();
+                  }
+            } );
+            mStop.setOnClickListener( new OnClickListener() {
+
+                  @Override
+                  public void onClick ( View v ) {
+
+                        wrapperDrawable.stop();
+                  }
+            } );
       }
 
       private void testWrongRight ( ) {
@@ -370,6 +402,11 @@ public class MainActivity extends AppCompatActivity {
             mTextLoading = findViewById( R.id.textLoading );
             mWrongRight = findViewById( R.id.wrongRight );
             mWrongRightSeek = findViewById( R.id.wrongRightSeek );
+            mStartStop = (ImageView) findViewById( R.id.startStop );
+            mStart = (Button) findViewById( R.id.start );
+            mStart.setOnClickListener( this );
+            mStop = (Button) findViewById( R.id.stop );
+            mStop.setOnClickListener( this );
       }
 
       private void testArcChange ( ) {
@@ -552,6 +589,21 @@ public class MainActivity extends AppCompatActivity {
       public void toWeChat ( View view ) {
 
             WeChatBottomActivity.start( this );
+      }
+
+      @Override
+      public void onClick ( View v ) {
+
+            switch( v.getId() ) {
+                  case R.id.start:
+                        // TODO 19/05/13
+                        break;
+                  case R.id.stop:
+                        // TODO 19/05/13
+                        break;
+                  default:
+                        break;
+            }
       }
 
       private abstract class SimpleOnSeekBarChangeListener implements OnSeekBarChangeListener {

@@ -920,5 +920,34 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+
+            <ImageView
+                android:id="@+id/startStop"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/gainsboro"
+                tools:src="@android:color/darker_gray"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                  <Button
+                      android:id="@+id/start"
+                      android:layout_gravity="start"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="start"/>
+
+                  <Button
+                      android:id="@+id/stop"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="end"
+                      android:text="stop"/>
+            </FrameLayout>
+
       </LinearLayout>
 </ScrollView>
