@@ -28,7 +28,7 @@
       <color name="gold">#ffd700</color><!--金色 -->
       <color name="pink">#ffc0cb</color><!--粉红色 -->
       <color name="lightpink">#ffb6c1</color><!--亮粉红色 -->
-      <color name="orange">#ffa500</color><!--橙色 -->
+      <color name="orange">#80FFA500</color><!--橙色 -->
       <color name="lightsalmon">#ffa07a</color><!--亮肉色 -->
       <color name="darkorange">#ff8c00</color><!--暗桔黄色 -->
       <color name="coral">#ff7f50</color><!--珊瑚色 -->
@@ -130,7 +130,6 @@
       <color name="mediumseagreen">#3cb371</color><!--中海蓝 -->
       <color name="limegreen">#32cd32</color><!--橙绿色 -->
       <color name="darkslategray">#2f4f4f</color><!--暗瓦灰色 -->
-      <color name="darkslategrey">#2f4f4f</color><!--暗瓦灰色 -->
       <color name="seagreen">#2e8b57</color><!--海绿色 -->
       <color name="forestgreen">#228b22</color><!--森林绿 -->
       <color name="lightseagreen">#20b2aa</color><!--亮海蓝色 -->

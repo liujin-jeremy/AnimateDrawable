@@ -3,28 +3,34 @@ package tech.liujin.drawable.progress.text;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Cap;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import java.util.Locale;
 
 /**
- * @author Liujin 2019/5/13:11:48:33
+ * @author Liujin 2019/5/13:13:10:15
  */
-public class CircleTextProgressDrawable extends TextProgressDrawable {
+public class CircleRingProgressDrawable extends TextProgressDrawable {
 
-      private RectF mRectF = new RectF();
+      private RectF mRectF;
       private float mDY;
+      private float mRadius;
+      private float mRingWidth;
+      private float mArcWidth;
+      private int   mRingColor = Color.parseColor( "#174A4A" );
+      private int   mArcColor  = Color.parseColor( "#4DFDFF" );
 
-      public CircleTextProgressDrawable ( ) {
+      public CircleRingProgressDrawable ( ) {
 
+            mRectF = new RectF();
             mPaint.setStyle( Style.STROKE );
-            mPaint.setColor( Color.parseColor( "#4DFDFF" ) );
-            mTextPaint.setColor( Color.parseColor( "#4DFDFF" ) );
+            mPaint.setStrokeCap( Cap.SQUARE );
             mTextPaint.setTextAlign( Align.CENTER );
+            mTextPaint.setColor( mArcColor );
       }
 
       @Override
@@ -36,13 +42,15 @@ public class CircleTextProgressDrawable extends TextProgressDrawable {
             int height = bounds.height();
 
             int size = Math.min( width, height );
-            float strokeWidth = size * 1f / 16;
+            mRingWidth = size * 1f / 8;
+            mArcWidth = size * 1f / 16;
+            mRadius = size * 1f / 2 - mRingWidth / 2 - 2;
             mTextPaint.setTextSize( size * 1f / 6 );
-            mPaint.setStrokeWidth( strokeWidth );
+            mPaint.setStrokeWidth( mArcWidth );
 
             float cx = width * 1f / 2;
             float cy = height * 1f / 2;
-            float radius = size * 1f / 2 - strokeWidth;
+            float radius = mRadius;
             mRectF.set(
                 cx - radius,
                 cy - radius,
@@ -57,26 +65,19 @@ public class CircleTextProgressDrawable extends TextProgressDrawable {
       @Override
       protected void draw ( @NonNull Canvas canvas, float progress ) {
 
-            canvas.drawArc( mRectF, 90, 360 * progress, false, mPaint );
             Rect bounds = getBounds();
             int width = bounds.width();
+            int height = bounds.height();
+
+            mPaint.setColor( mRingColor );
+            mPaint.setStrokeWidth( mRingWidth );
+            canvas.drawCircle( width >> 1, height >> 1, mRadius, mPaint );
+
+            mPaint.setColor( mArcColor );
+            mPaint.setStrokeWidth( mArcWidth );
+            canvas.drawArc( mRectF, 90, 360 * progress, false, mPaint );
+
             int show = (int) ( progress * 100 );
             canvas.drawText( String.format( Locale.getDefault(), "%d%%", show ), width >> 1, mDY, mTextPaint );
-      }
-
-      public void setColor ( @ColorInt int color ) {
-
-            setTextColor( color );
-            setCircleColor( color );
-      }
-
-      public void setCircleColor ( @ColorInt int color ) {
-
-            mPaint.setColor( color );
-      }
-
-      public void setTextColor ( @ColorInt int color ) {
-
-            mTextPaint.setColor( color );
       }
 }

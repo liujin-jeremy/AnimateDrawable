@@ -41,6 +41,7 @@ import tech.liujin.drawable.progress.load.StrokePulseDrawable;
 import tech.liujin.drawable.progress.load.StrokePulsePushDrawable;
 import tech.liujin.drawable.progress.load.StrokeSkipDrawable;
 import tech.liujin.drawable.progress.load.StrokeWaveDrawable;
+import tech.liujin.drawable.progress.text.CircleRingProgressDrawable;
 import tech.liujin.drawable.progress.text.CircleTextProgressDrawable;
 import tech.liujin.drawable.state.AddLoadDoneDrawable;
 import tech.liujin.drawable.state.StartLoadDoneDrawable;
@@ -135,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
       private Button       mStop;
       private ImageView    mCircleText;
       private SeekBar      mCircleTextSeek;
+      private ImageView    mCircleRing;
+      private SeekBar      mCircleRingSeek;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -181,13 +184,28 @@ public class MainActivity extends AppCompatActivity {
             testWrongRight();
             testStartStop();
             testCircleText();
+            testCircleRing();
+      }
+
+      private void testCircleRing ( ) {
+
+            CircleRingProgressDrawable drawable = new CircleRingProgressDrawable();
+            mCircleRing.setImageDrawable( drawable );
+            mCircleRingSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
       }
 
       private void testCircleText ( ) {
 
             CircleTextProgressDrawable drawable = new CircleTextProgressDrawable();
             mCircleText.setImageDrawable( drawable );
-            drawable.setColor( getResources().getColor( R.color.darkorange ) );
             mCircleTextSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
 
                   @Override
@@ -427,6 +445,8 @@ public class MainActivity extends AppCompatActivity {
             mStop = (Button) findViewById( R.id.stop );
             mCircleText = (ImageView) findViewById( R.id.circleText );
             mCircleTextSeek = (SeekBar) findViewById( R.id.circleTextSeek );
+            mCircleRing = (ImageView) findViewById( R.id.circleRing );
+            mCircleRingSeek = (SeekBar) findViewById( R.id.circleRingSeek );
       }
 
       private void testArcChange ( ) {
