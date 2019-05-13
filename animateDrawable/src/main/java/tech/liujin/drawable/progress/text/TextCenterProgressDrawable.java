@@ -3,6 +3,7 @@ package tech.liujin.drawable.progress.text;
 import android.graphics.Canvas;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Rect;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import java.util.Locale;
 
@@ -32,5 +33,10 @@ public abstract class TextCenterProgressDrawable extends TextProgressDrawable {
 
             int show = (int) ( progress * 100 );
             canvas.drawText( String.format( Locale.getDefault(), "%d%%", show ), getBounds().width() >> 1, mDY, mTextPaint );
+      }
+
+      public void setTextColor ( @ColorInt int textColor ) {
+
+            mTextPaint.setColor( textColor );
       }
 }

@@ -85,9 +85,4 @@ public class CircleInRingProgressDrawable extends TextCenterProgressDrawable {
 
             mArcColor = arcColor;
       }
-
-      public void setTextColor ( @ColorInt int color ) {
-
-            mTextPaint.setColor( color );
-      }
 }

@@ -5,22 +5,23 @@ import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 
 /**
- * @author Liujin 2019/5/13:15:16:30
+ * @author Liujin 2019/5/13:15:37:53
  */
-public class PieTextProgressDrawable extends TextCenterProgressDrawable {
+public class PieMatchCircleProgressDrawable extends TextCenterProgressDrawable {
 
       private RectF mRectF;
+      private float mRadius;
+      private int   mCircleColor = Color.parseColor( "#6A1B17" );
+      private int   mPieColor    = Color.RED;
 
-      public PieTextProgressDrawable ( ) {
+      public PieMatchCircleProgressDrawable ( ) {
 
             mRectF = new RectF();
 
             mPaint.setStyle( Style.FILL );
-            mPaint.setColor( Color.RED );
             mTextPaint.setColor( Color.WHITE );
       }
 
@@ -31,18 +32,17 @@ public class PieTextProgressDrawable extends TextCenterProgressDrawable {
 
             int width = bounds.width();
             int height = bounds.height();
-
             int size = Math.min( width, height );
 
             float cx = width * 1f / 2;
             float cy = height * 1f / 2;
-            float radius = size * 1f / 2 - 2;
+            mRadius = size * 1f / 2 - 2;
 
             mRectF.set(
-                cx - radius,
-                cy - radius,
-                cx + radius,
-                cy + radius
+                cx - mRadius,
+                cy - mRadius,
+                cx + mRadius,
+                cy + mRadius
             );
       }
 
@@ -51,14 +51,24 @@ public class PieTextProgressDrawable extends TextCenterProgressDrawable {
 
             Rect bounds = getBounds();
             int width = bounds.width();
+            int height = bounds.height();
 
+            mPaint.setColor( mCircleColor );
+            canvas.drawCircle( width >> 1, height >> 1, mRadius, mPaint );
+
+            mPaint.setColor( mPieColor );
             canvas.drawArc( mRectF, 90, 360 * progress, true, mPaint );
 
             super.draw( canvas, progress );
       }
 
-      public void setColor ( @ColorInt int color ) {
+      public void setCircleColor ( int circleColor ) {
 
-            mPaint.setColor( color );
+            mCircleColor = circleColor;
+      }
+
+      public void setPieColor ( int pieColor ) {
+
+            mPieColor = pieColor;
       }
 }

@@ -19,4 +19,9 @@ public abstract class TextProgressDrawable extends ProgressDrawable {
             mTextPaint = new TextPaint( TextPaint.ANTI_ALIAS_FLAG );
             mTextPaint.setTextAlign( Align.CENTER );
       }
+
+      public TextPaint getTextPaint ( ) {
+
+            return mTextPaint;
+      }
 }

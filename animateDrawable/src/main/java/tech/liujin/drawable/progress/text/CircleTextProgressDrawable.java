@@ -65,9 +65,4 @@ public class CircleTextProgressDrawable extends TextCenterProgressDrawable {
 
             mPaint.setColor( color );
       }
-
-      public void setTextColor ( @ColorInt int color ) {
-
-            mTextPaint.setColor( color );
-      }
 }

@@ -84,9 +84,4 @@ public class CircleDotProgressDrawable extends TextCenterProgressDrawable {
 
             mDotColor = dotColor;
       }
-
-      public void setTextColor ( @ColorInt int color ) {
-
-            mTextPaint.setColor( color );
-      }
 }
