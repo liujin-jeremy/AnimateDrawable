@@ -934,14 +934,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                  <Button
+                  <TextView
                       android:id="@+id/start"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="start"
                       android:text="start"/>
 
-                  <Button
+                  <TextView
                       android:id="@+id/stop"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -987,6 +987,27 @@
 
             <SeekBar
                 android:id="@+id/circleRingSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/circleDot"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/teal"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/circleDotSeek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"/>

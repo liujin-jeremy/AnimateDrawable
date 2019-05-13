@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 import com.threekilogram.wuxio.animatedrawable.R;
 import tech.liujin.drawable.animate.AnimateProgressDrawable;
 import tech.liujin.drawable.progress.ProgressDrawable;
@@ -41,6 +41,7 @@ import tech.liujin.drawable.progress.load.StrokePulseDrawable;
 import tech.liujin.drawable.progress.load.StrokePulsePushDrawable;
 import tech.liujin.drawable.progress.load.StrokeSkipDrawable;
 import tech.liujin.drawable.progress.load.StrokeWaveDrawable;
+import tech.liujin.drawable.progress.text.CircleDotProgressDrawable;
 import tech.liujin.drawable.progress.text.CircleRingProgressDrawable;
 import tech.liujin.drawable.progress.text.CircleTextProgressDrawable;
 import tech.liujin.drawable.state.AddLoadDoneDrawable;
@@ -132,12 +133,14 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mWrongRight;
       private SeekBar      mWrongRightSeek;
       private ImageView    mStartStop;
-      private Button       mStart;
-      private Button       mStop;
+      private TextView     mStart;
+      private TextView     mStop;
       private ImageView    mCircleText;
       private SeekBar      mCircleTextSeek;
       private ImageView    mCircleRing;
       private SeekBar      mCircleRingSeek;
+      private ImageView    mCircleDot;
+      private SeekBar      mCircleDotSeek;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -185,6 +188,22 @@ public class MainActivity extends AppCompatActivity {
             testStartStop();
             testCircleText();
             testCircleRing();
+            testCircleDot();
+      }
+
+      private void testCircleDot ( ) {
+
+            CircleDotProgressDrawable drawable = new CircleDotProgressDrawable();
+            mCircleDot.setImageDrawable( drawable );
+            mCircleDotSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
       }
 
       private void testCircleRing ( ) {
@@ -440,13 +459,15 @@ public class MainActivity extends AppCompatActivity {
             mTextLoading = findViewById( R.id.textLoading );
             mWrongRight = findViewById( R.id.wrongRight );
             mWrongRightSeek = findViewById( R.id.wrongRightSeek );
-            mStartStop = (ImageView) findViewById( R.id.startStop );
-            mStart = (Button) findViewById( R.id.start );
-            mStop = (Button) findViewById( R.id.stop );
-            mCircleText = (ImageView) findViewById( R.id.circleText );
-            mCircleTextSeek = (SeekBar) findViewById( R.id.circleTextSeek );
-            mCircleRing = (ImageView) findViewById( R.id.circleRing );
-            mCircleRingSeek = (SeekBar) findViewById( R.id.circleRingSeek );
+            mStartStop = findViewById( R.id.startStop );
+            mStart = findViewById( R.id.start );
+            mStop = findViewById( R.id.stop );
+            mCircleText = findViewById( R.id.circleText );
+            mCircleTextSeek = findViewById( R.id.circleTextSeek );
+            mCircleRing = findViewById( R.id.circleRing );
+            mCircleRingSeek = findViewById( R.id.circleRingSeek );
+            mCircleDot = findViewById( R.id.circleDot );
+            mCircleDotSeek = findViewById( R.id.circleDotSeek );
       }
 
       private void testArcChange ( ) {
