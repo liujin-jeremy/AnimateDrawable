@@ -1,5 +1,6 @@
 package tech.liujin.drawable.progress.text;
 
+import android.graphics.Paint.Align;
 import android.text.TextPaint;
 import tech.liujin.drawable.progress.ProgressDrawable;
 
@@ -16,5 +17,6 @@ public abstract class TextProgressDrawable extends ProgressDrawable {
       protected TextProgressDrawable ( ) {
 
             mTextPaint = new TextPaint( TextPaint.ANTI_ALIAS_FLAG );
+            mTextPaint.setTextAlign( Align.CENTER );
       }
 }

@@ -4,21 +4,18 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Cap;
-import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import java.util.Locale;
 
 /**
  * @author Liujin 2019/5/13:13:10:15
  */
-public class CircleRingProgressDrawable extends TextProgressDrawable {
+public class CircleInRingProgressDrawable extends TextCenterProgressDrawable {
 
       private RectF mRectF;
-      private float mDY;
       private float mRadius;
       private float mRingWidth;
       private float mArcWidth;
@@ -26,7 +23,7 @@ public class CircleRingProgressDrawable extends TextProgressDrawable {
       private int mRingColor = Color.parseColor( "#174A4A" );
       private int mArcColor  = Color.parseColor( "#4DFDFF" );
 
-      public CircleRingProgressDrawable ( ) {
+      public CircleInRingProgressDrawable ( ) {
 
             mRectF = new RectF();
             mPaint.setStyle( Style.STROKE );
@@ -59,9 +56,6 @@ public class CircleRingProgressDrawable extends TextProgressDrawable {
                 cx + radius,
                 cy + radius
             );
-
-            FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-            mDY = ( getHeight() - fontMetrics.bottom + fontMetrics.top ) / 2 - fontMetrics.top;
       }
 
       @Override
@@ -79,8 +73,7 @@ public class CircleRingProgressDrawable extends TextProgressDrawable {
             mPaint.setStrokeWidth( mArcWidth );
             canvas.drawArc( mRectF, 90, 360 * progress, false, mPaint );
 
-            int show = (int) ( progress * 100 );
-            canvas.drawText( String.format( Locale.getDefault(), "%d%%", show ), width >> 1, mDY, mTextPaint );
+            super.draw( canvas, progress );
       }
 
       public void setRingColor ( @ColorInt int ringColor ) {

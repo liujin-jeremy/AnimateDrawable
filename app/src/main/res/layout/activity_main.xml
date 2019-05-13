@@ -957,8 +957,8 @@
 
             <ImageView
                 android:id="@+id/circleText"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_margin="8dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/teal"
@@ -1008,6 +1008,48 @@
 
             <SeekBar
                 android:id="@+id/circleDotSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/circleMatch"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/teal"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/circleMatchSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/pie"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/teal"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/pieSeek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"/>
