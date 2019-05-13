@@ -48,7 +48,7 @@ import tech.liujin.drawable.state.TextLoadDoneDrawable;
 /**
  * @author wuxio
  */
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
       private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -404,9 +404,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             mWrongRightSeek = findViewById( R.id.wrongRightSeek );
             mStartStop = (ImageView) findViewById( R.id.startStop );
             mStart = (Button) findViewById( R.id.start );
-            mStart.setOnClickListener( this );
             mStop = (Button) findViewById( R.id.stop );
-            mStop.setOnClickListener( this );
       }
 
       private void testArcChange ( ) {
@@ -589,21 +587,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
       public void toWeChat ( View view ) {
 
             WeChatBottomActivity.start( this );
-      }
-
-      @Override
-      public void onClick ( View v ) {
-
-            switch( v.getId() ) {
-                  case R.id.start:
-                        // TODO 19/05/13
-                        break;
-                  case R.id.stop:
-                        // TODO 19/05/13
-                        break;
-                  default:
-                        break;
-            }
       }
 
       private abstract class SimpleOnSeekBarChangeListener implements OnSeekBarChangeListener {
