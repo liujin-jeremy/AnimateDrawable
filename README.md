@@ -2,7 +2,7 @@
 ## 有动画效果的 Drawable
 
 ```
-implementation 'tech.liujin:animateDrawable:1.0.4'
+implementation 'tech.liujin:animateDrawable:1.0.5'
 ```
 
 ## 简介
@@ -310,10 +310,22 @@ mColorEvaluatorSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListene
       public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
             float v = progress * 1f / seekBar.getMax();
+            // 计算颜色
             int color = evaluator.evaluate( v );
+            // 应用该颜色
             drawable.setColor( color );
             drawable.setDrawProgress( v );
       }
 } );
 ```
+
+
+
+### HaloTextProgressDrawable
+
+光晕效果
+
+![](img/pic40.gif)
+
+
 
