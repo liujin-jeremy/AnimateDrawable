@@ -129,7 +129,7 @@
       <color name="turquoise">#40e0d0</color><!--青绿色 -->
       <color name="mediumseagreen">#3cb371</color><!--中海蓝 -->
       <color name="limegreen">#32cd32</color><!--橙绿色 -->
-      <color name="darkslategray">#2f4f4f</color><!--暗瓦灰色 -->
+      <color name="darkslategray">#2F4F4F</color><!--暗瓦灰色 -->
       <color name="seagreen">#2e8b57</color><!--海绿色 -->
       <color name="forestgreen">#228b22</color><!--森林绿 -->
       <color name="lightseagreen">#20b2aa</color><!--亮海蓝色 -->
@@ -150,6 +150,5 @@
       <color name="mediumblue">#0000cd</color><!--中兰色 -->
       <color name="darkblue">#00008b</color><!--暗蓝色 -->
       <color name="navy">#000080</color><!--海军色 -->
-
 
 </resources>

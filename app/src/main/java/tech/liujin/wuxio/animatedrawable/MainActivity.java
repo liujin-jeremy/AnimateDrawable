@@ -50,6 +50,7 @@ import tech.liujin.drawable.progress.text.FillCircleProgressDrawable;
 import tech.liujin.drawable.progress.text.FillInRingProgressDrawable;
 import tech.liujin.drawable.progress.text.FillMatchCircleProgressDrawable;
 import tech.liujin.drawable.progress.text.FillOutCircleProgressDrawable;
+import tech.liujin.drawable.progress.text.HaloTextProgressDrawable;
 import tech.liujin.drawable.progress.text.PieInRingProgressDrawable;
 import tech.liujin.drawable.progress.text.PieMatchCircleProgressDrawable;
 import tech.liujin.drawable.progress.text.PieOutCircleProgressDrawable;
@@ -158,19 +159,21 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mPieMatch;
       private SeekBar      mPieMatchSeek;
       private ImageView    mPieOut;
-      private SeekBar      mPieOutSeek;
-      private ImageView    mPieRing;
-      private SeekBar      mPieRingSeek;
-      private ImageView    mFillCircle;
-      private SeekBar      mFillCircleSeek;
-      private ImageView    mFillMatch;
-      private SeekBar      mFillMatchSeek;
-      private ImageView    mFillOut;
-      private SeekBar      mFillOutSeek;
-      private ImageView    mFillRing;
-      private SeekBar      mFillRingSeek;
-      private ImageView    mColorEvaluator;
-      private SeekBar      mColorEvaluatorSeek;
+      private SeekBar   mPieOutSeek;
+      private ImageView mPieRing;
+      private SeekBar   mPieRingSeek;
+      private ImageView mFillCircle;
+      private SeekBar   mFillCircleSeek;
+      private ImageView mFillMatch;
+      private SeekBar   mFillMatchSeek;
+      private ImageView mFillOut;
+      private SeekBar   mFillOutSeek;
+      private ImageView mFillRing;
+      private SeekBar   mFillRingSeek;
+      private ImageView mColorEvaluator;
+      private SeekBar   mColorEvaluatorSeek;
+      private ImageView mHaloEvaluator;
+      private SeekBar   mHaloEvaluatorSeek;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -229,6 +232,22 @@ public class MainActivity extends AppCompatActivity {
             testFillOut();
             testFillRing();
             testColorEvaluator();
+            testHalo();
+      }
+
+      private void testHalo ( ) {
+
+            HaloTextProgressDrawable drawable = new HaloTextProgressDrawable();
+            mHaloEvaluator.setImageDrawable( drawable );
+            mHaloEvaluatorSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setDrawProgress( v );
+                  }
+            } );
       }
 
       private int getResourceColor ( int id ) {
@@ -694,6 +713,8 @@ public class MainActivity extends AppCompatActivity {
             mFillRingSeek = (SeekBar) findViewById( R.id.fillRingSeek );
             mColorEvaluator = (ImageView) findViewById( R.id.colorEvaluator );
             mColorEvaluatorSeek = (SeekBar) findViewById( R.id.colorEvaluatorSeek );
+            mHaloEvaluator = (ImageView) findViewById( R.id.haloEvaluator );
+            mHaloEvaluatorSeek = (SeekBar) findViewById( R.id.haloEvaluatorSeek );
       }
 
       private void testArcChange ( ) {
