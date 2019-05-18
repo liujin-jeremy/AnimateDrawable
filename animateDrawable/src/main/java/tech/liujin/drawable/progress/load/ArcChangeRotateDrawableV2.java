@@ -43,7 +43,7 @@ public class ArcChangeRotateDrawableV2 extends ProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             int dx = getWidth() / 2;
             int dy = getHeight() / 2;

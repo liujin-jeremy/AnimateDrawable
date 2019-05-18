@@ -30,7 +30,7 @@ public class CubeFlipDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             mMatrix.reset();
             mCamera.save();

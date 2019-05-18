@@ -32,7 +32,7 @@ public class CubeGridDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             int dx = ( getWidth() - mSize ) / 2;
             int dy = ( getHeight() - mSize ) / 2;

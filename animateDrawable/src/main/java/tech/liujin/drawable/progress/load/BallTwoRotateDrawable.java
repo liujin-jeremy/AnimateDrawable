@@ -22,7 +22,7 @@ public class BallTwoRotateDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             canvas.translate( getWidth() / 2, getHeight() / 2 );
             float left = mTotalRadius * calculateProgress( progress );

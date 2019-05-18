@@ -45,7 +45,7 @@ public class FillCircleProgressDrawable extends TextCenterProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             float v = 180 * progress;
             float start = 90 - v;

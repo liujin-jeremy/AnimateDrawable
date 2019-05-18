@@ -58,7 +58,7 @@ public class CirclePathDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             int width = getWidth();
             int height = getHeight();

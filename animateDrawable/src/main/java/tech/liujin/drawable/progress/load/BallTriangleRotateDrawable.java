@@ -33,8 +33,7 @@ public class BallTriangleRotateDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw (
-          @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             int cX = getWidth() >> 1;
             int cY = getHeight() >> 1;

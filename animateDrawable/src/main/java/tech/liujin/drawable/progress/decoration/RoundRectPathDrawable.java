@@ -81,7 +81,7 @@ public class RoundRectPathDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             float start = 0;
             float end = 0;

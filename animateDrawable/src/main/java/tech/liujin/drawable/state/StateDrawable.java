@@ -1,14 +1,14 @@
 package tech.liujin.drawable.state;
 
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import tech.liujin.drawable.DrawableStateConsumer;
+import tech.liujin.drawable.PaintDrawable;
 
 /**
  * @author wuxio 2018-05-25:7:11
  */
-public abstract class StateDrawable extends Drawable implements DrawableStateConsumer {
+public abstract class StateDrawable extends PaintDrawable implements DrawableStateConsumer {
 
       /**
        * 当前状态

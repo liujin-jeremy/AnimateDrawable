@@ -50,7 +50,7 @@ public class FillInRingProgressDrawable extends TextCenterProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             Rect bounds = getBounds();
             int width = bounds.width();

@@ -29,7 +29,7 @@ public abstract class TextCenterProgressDrawable extends TextProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             int show = (int) ( progress * 100 );
             canvas.drawText( String.format( Locale.getDefault(), "%d%%", show ), getBounds().width() >> 1, mDY, mTextPaint );

@@ -44,8 +44,7 @@ public class WrongRightDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw (
-          @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             canvas.translate( getWidth() >> 1, getHeight() >> 1 );
 

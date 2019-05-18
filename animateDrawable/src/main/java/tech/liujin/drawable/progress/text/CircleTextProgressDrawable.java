@@ -49,7 +49,7 @@ public class CircleTextProgressDrawable extends TextCenterProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             canvas.drawArc( mRectF, 90, 360 * progress, false, mPaint );
             super.draw( canvas, progress );

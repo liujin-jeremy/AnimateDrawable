@@ -34,7 +34,7 @@ public class BallRotateDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw (
+      public void draw (
           @NonNull Canvas canvas, float progress ) {
 
             int cX = getWidth() >> 1;

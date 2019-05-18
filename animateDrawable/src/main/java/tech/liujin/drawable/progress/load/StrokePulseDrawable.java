@@ -36,8 +36,7 @@ public class StrokePulseDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw (
-          @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             canvas.translate( 0, getHeight() >> 1 );
 

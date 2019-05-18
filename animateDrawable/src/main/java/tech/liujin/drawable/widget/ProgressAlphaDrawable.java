@@ -27,7 +27,7 @@ public class ProgressAlphaDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             int normalAlpha = (int) ( 255 * ( 1 - progress ) );
             int selectedAlpha = 255 - normalAlpha;

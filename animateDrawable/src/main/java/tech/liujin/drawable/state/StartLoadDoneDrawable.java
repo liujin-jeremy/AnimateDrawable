@@ -23,7 +23,7 @@ public abstract class StartLoadDoneDrawable extends StateDrawable {
       public @interface StateValue { }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, int state ) {
+      public void draw ( @NonNull Canvas canvas, int state ) {
 
             if( state == STATE_START ) {
                   drawStart( canvas );

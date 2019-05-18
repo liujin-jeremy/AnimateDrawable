@@ -25,7 +25,7 @@ public class BallPulseDrawable extends ProgressDrawable {
       }
 
       @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas, float progress ) {
 
             int dX = ( getWidth() ) >> 1;
             int dY = ( getHeight() ) >> 1;
