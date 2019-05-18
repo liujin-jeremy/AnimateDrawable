@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Join;
 import android.graphics.Rect;
-import tech.liujin.drawable.animate.AnimateProgressEvaluator;
+import tech.liujin.drawable.animator.AnimateProgressEvaluator;
 import tech.liujin.drawable.progress.ProgressDrawable;
 import tech.liujin.drawable.progress.load.ArcChangeRotateDrawable;
 /**

@@ -14,7 +14,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import com.threekilogram.wuxio.animatedrawable.R;
-import tech.liujin.drawable.animate.AnimateProgressDrawable;
+import tech.liujin.drawable.animator.AnimateProgressDrawable;
 import tech.liujin.drawable.color.ColorEvaluator;
 import tech.liujin.drawable.progress.ProgressDrawable;
 import tech.liujin.drawable.progress.decoration.RoundRectCornerDrawable;

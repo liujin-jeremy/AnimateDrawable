@@ -1,9 +1,11 @@
-package tech.liujin.drawable.animate;
+package tech.liujin.drawable.animator;
 
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
+import android.graphics.ColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import tech.liujin.drawable.progress.ProgressDrawable;
 
@@ -12,7 +14,7 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  *
  * @author Liujin 2018-10-16:9:36
  */
-public class AnimateProgressDrawable extends ProgressDrawable implements Animatable {
+public class AnimateProgressDrawable extends Drawable implements Animatable {
 
       /**
        * drawable
@@ -43,43 +45,6 @@ public class AnimateProgressDrawable extends ProgressDrawable implements Animata
       public void changeDrawable ( ProgressDrawable drawable ) {
 
             mDrawable = drawable;
-      }
-
-      @Override
-      public int getIntrinsicWidth ( ) {
-
-            return mDrawable.getIntrinsicWidth();
-      }
-
-      @Override
-      public int getIntrinsicHeight ( ) {
-
-            return mDrawable.getIntrinsicHeight();
-      }
-
-      @Override
-      protected void onBoundsChange ( Rect bounds ) {
-
-            super.onBoundsChange( bounds );
-            mDrawable.setBounds( bounds );
-      }
-
-      @Override
-      protected void draw ( @NonNull Canvas canvas, float progress ) {
-
-            if( mEvaluator.isStopped() ) {
-                  mDrawable.draw( canvas );
-                  return;
-            }
-
-            mDrawable.setProgress( calculateProgress() );
-            mDrawable.draw( canvas );
-            invalidateSelf();
-      }
-
-      private float calculateProgress ( ) {
-
-            return mEvaluator.calculateProgress();
       }
 
       /**
@@ -156,5 +121,43 @@ public class AnimateProgressDrawable extends ProgressDrawable implements Animata
       public TimeInterpolator getInterpolator ( ) {
 
             return mEvaluator.getInterpolator();
+      }
+
+      @Override
+      protected void onBoundsChange ( Rect bounds ) {
+
+            super.onBoundsChange( bounds );
+            mDrawable.setBounds( bounds );
+      }
+
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
+
+            if( mEvaluator.isStopped() ) {
+                  mDrawable.draw( canvas );
+                  return;
+            }
+
+            mDrawable.setProgress( mEvaluator.calculateProgress() );
+            mDrawable.draw( canvas );
+            invalidateSelf();
+      }
+
+      @Override
+      public void setAlpha ( int alpha ) {
+
+            mDrawable.setAlpha( alpha );
+      }
+
+      @Override
+      public void setColorFilter ( ColorFilter colorFilter ) {
+
+            mDrawable.setColorFilter( colorFilter );
+      }
+
+      @Override
+      public int getOpacity ( ) {
+
+            return mDrawable.getOpacity();
       }
 }
