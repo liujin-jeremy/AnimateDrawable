@@ -8,18 +8,19 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import tech.liujin.drawable.DrawableStateConsumer;
 
 /**
  * @author wuxio 2018-05-25:7:11
  */
-public abstract class StateDrawable extends Drawable {
+public abstract class StateDrawable extends Drawable implements DrawableStateConsumer {
 
       /**
        * 画笔
        */
       protected Paint mPaint;
       /**
-       * 当前进度
+       * 当前状态
        */
       protected int   mState;
 
@@ -88,7 +89,7 @@ public abstract class StateDrawable extends Drawable {
        * @param canvas : 画布
        * @param state : 状态
        */
-      protected abstract void draw ( @NonNull Canvas canvas, int state );
+      public abstract void draw ( @NonNull Canvas canvas, int state );
 
       /**
        * 绘制区域宽度

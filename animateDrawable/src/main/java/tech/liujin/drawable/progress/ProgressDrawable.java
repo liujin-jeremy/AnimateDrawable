@@ -10,11 +10,12 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import tech.liujin.drawable.DrawableProcessConsumer;
 
 /**
  * @author wuxio 2018-05-25:7:11
  */
-public abstract class ProgressDrawable extends Drawable {
+public abstract class ProgressDrawable extends Drawable implements DrawableProcessConsumer {
 
       /**
        * 画笔
@@ -81,7 +82,7 @@ public abstract class ProgressDrawable extends Drawable {
        * @param canvas :画布
        * @param progress 进度值
        */
-      protected abstract void draw ( @NonNull Canvas canvas, float progress );
+      public abstract void draw ( @NonNull Canvas canvas, float progress );
 
       @Override
       protected void onBoundsChange ( Rect bounds ) {
