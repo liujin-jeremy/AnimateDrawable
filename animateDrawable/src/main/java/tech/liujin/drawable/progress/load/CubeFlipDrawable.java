@@ -30,7 +30,19 @@ public class CubeFlipDrawable extends ProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
+
+            canvas.translate( getWidth() >> 1, getHeight() >> 1 );
+
+            canvas.concat( mMatrix );
+            int i = mSize >> 1;
+            canvas.drawRect( -i, -i, i, i, mPaint );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
 
             mMatrix.reset();
             mCamera.save();
@@ -42,17 +54,14 @@ public class CubeFlipDrawable extends ProgressDrawable {
             mCamera.getMatrix( mMatrix );
             mCamera.restore();
 
-            canvas.translate( getWidth() >> 1, getHeight() >> 1 );
-            canvas.concat( mMatrix );
-
-            int i = mSize >> 1;
-            canvas.drawRect( -i, -i, i, i, mPaint );
+            invalidateSelf();
       }
 
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
             mSize = Math.min( bounds.width(), bounds.height() ) * 7 / 10;
+            super.onBoundsChange( bounds );
+
       }
 }

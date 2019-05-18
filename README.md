@@ -169,34 +169,9 @@ wrapperDrawable.isRunning()
 
 
 
-### 对错变化
+### WrongRightDrawable
 
 ![](img/pic26.gif)
-
-
-
-### 仿微信底部导航
-
-```
-mPager = findViewById( R.id.pager );
-mTabLayout = findViewById( R.id.tabLayout );
-PagerAdapter adapter = new PagerAdapter( getSupportFragmentManager() );
-mPager.setAdapter( adapter );
-// 辅助关联ViewPager和TabLayout
-TabItemBuilder builder = new ItemBuilder( mTabLayout, mPager );
-builder.setTitles( mTitles );
-// 设置textView文字颜色变化
-builder.setTextColorRes( R.color.textColorNormal, R.color.textColorSelected );
-// 配置每个图标资源
-builder.setDrawable( 0, R.drawable.home_normal, R.drawable.home_selected );
-builder.setDrawable( 1, R.drawable.category_normal, R.drawable.category_selected );
-builder.setDrawable( 2, R.drawable.find_normal, R.drawable.find_selected );
-builder.setDrawable( 3, R.drawable.mine_normal, R.drawable.mine_selected );
-// 创建
-builder.build( 0 );
-```
-
-![](img/pic19.gif)
 
 
 
@@ -328,4 +303,29 @@ mColorEvaluatorSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListene
 ![](img/pic40.gif)
 
 
+
+
+
+### 仿微信底部导航
+
+```
+mPager = findViewById( R.id.pager );
+mTabLayout = findViewById( R.id.tabLayout );
+PagerAdapter adapter = new PagerAdapter( getSupportFragmentManager() );
+mPager.setAdapter( adapter );
+// 辅助关联ViewPager和TabLayout
+TabItemBuilder builder = new ItemBuilder( mTabLayout, mPager );
+builder.setTitles( mTitles );
+// 设置textView文字颜色变化
+builder.setTextColorRes( R.color.textColorNormal, R.color.textColorSelected );
+// 配置每个图标资源
+builder.setDrawable( 0, R.drawable.home_normal, R.drawable.home_selected );
+builder.setDrawable( 1, R.drawable.category_normal, R.drawable.category_selected );
+builder.setDrawable( 2, R.drawable.find_normal, R.drawable.find_selected );
+builder.setDrawable( 3, R.drawable.mine_normal, R.drawable.mine_selected );
+// 创建
+builder.build( 0 );
+```
+
+![](E:/_AndroidLib/AnimateDrawableLib/img/pic19.gif)
 

@@ -16,6 +16,8 @@ public class FillInRingProgressDrawable extends TextCenterProgressDrawable {
       private RectF mRectF;
       private float mRadius;
       private float mRingWidth;
+      private float mStart;
+      private float mEnd;
 
       public FillInRingProgressDrawable ( ) {
 
@@ -29,7 +31,6 @@ public class FillInRingProgressDrawable extends TextCenterProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             int width = bounds.width();
             int height = bounds.height();
@@ -47,10 +48,13 @@ public class FillInRingProgressDrawable extends TextCenterProgressDrawable {
                 cx + radius,
                 cy + radius
             );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             Rect bounds = getBounds();
             int width = bounds.width();
@@ -61,12 +65,21 @@ public class FillInRingProgressDrawable extends TextCenterProgressDrawable {
             canvas.drawCircle( width >> 1, height >> 1, mRadius, mPaint );
 
             mPaint.setStyle( Style.FILL );
-            float v = 180 * progress;
-            float start = 90 - v;
-            float end = 90 + v;
-            canvas.drawArc( mRectF, start, end - start, false, mPaint );
+            canvas.drawArc( mRectF, mStart, mEnd - mStart, false, mPaint );
 
-            super.draw( canvas, progress );
+            super.draw( canvas );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            float v = 180 * progress;
+            mStart = 90 - v;
+            mEnd = 90 + v;
+
+            invalidateSelf();
       }
 
       public void setColor ( @ColorInt int color ) {

@@ -12,7 +12,9 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  */
 public class StrokeSkipDrawable extends ProgressDrawable {
 
-      private int mStrokeWidth;
+      private int     mStrokeWidth;
+      private int[]   mStartXs = new int[ 4 ];
+      private float[] mStopYs  = new float[ 4 ];
 
       public StrokeSkipDrawable ( ) {
 
@@ -22,33 +24,45 @@ public class StrokeSkipDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
             mStrokeWidth = bounds.width() / 9;
 
             mPaint.setStrokeWidth( mStrokeWidth );
             mPaint.setStrokeCap( Cap.SQUARE );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw (
-          @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
+
+            canvas.translate( 0, getHeight() );
+
+            canvas.drawLine( mStartXs[ 0 ], 0, mStartXs[ 0 ], mStopYs[ 0 ], mPaint );
+            canvas.drawLine( mStartXs[ 1 ], 0, mStartXs[ 1 ], mStopYs[ 1 ], mPaint );
+            canvas.drawLine( mStartXs[ 2 ], 0, mStartXs[ 2 ], mStopYs[ 2 ], mPaint );
+            canvas.drawLine( mStartXs[ 3 ], 0, mStartXs[ 3 ], mStopYs[ 3 ], mPaint );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
 
             int height = getHeight();
-            canvas.translate( 0, height );
-
             int offset = calculateOffset( progress );
 
-            int startX = mStrokeWidth + mStrokeWidth / 2;
-            canvas.drawLine( startX, 0, startX, -height + offset, mPaint );
+            mStartXs[ 0 ] = mStrokeWidth + mStrokeWidth / 2;
+            mStartXs[ 1 ] = mStrokeWidth + mStrokeWidth / 2 + 2 * mStrokeWidth;
+            mStartXs[ 2 ] = mStrokeWidth + mStrokeWidth / 2 + 2 * mStrokeWidth * 2;
+            mStartXs[ 3 ] = mStrokeWidth + mStrokeWidth / 2 + 2 * mStrokeWidth * 3;
 
-            startX = mStrokeWidth + mStrokeWidth / 2 + 2 * mStrokeWidth;
-            canvas.drawLine( startX, 0, startX, -height / 2 - offset, mPaint );
+            mStopYs[ 0 ] = -height + offset;
+            mStopYs[ 1 ] = -height / 2f - offset;
+            mStopYs[ 2 ] = -height / 4f - offset * 2;
+            mStopYs[ 3 ] = -height * 0.8f + offset * 1.5f;
 
-            startX = mStrokeWidth + mStrokeWidth / 2 + 2 * mStrokeWidth * 2;
-            canvas.drawLine( startX, 0, startX, -height / 4 - offset * 2, mPaint );
-
-            startX = mStrokeWidth + mStrokeWidth / 2 + 2 * mStrokeWidth * 3;
-            canvas.drawLine( startX, 0, startX, -height * 0.8f + offset * 1.5f, mPaint );
+            invalidateSelf();
       }
 
       private int calculateOffset ( float progress ) {

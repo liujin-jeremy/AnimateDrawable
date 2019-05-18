@@ -27,13 +27,20 @@ public class ProgressAlphaDrawable extends ProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void onProcessChange ( float progress ) {
 
-            int normalAlpha = (int) ( 255 * ( 1 - progress ) );
-            int selectedAlpha = 255 - normalAlpha;
+            mProgress = progress;
+            invalidateSelf();
+      }
 
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
+
+            int normalAlpha = (int) ( 255 * ( 1 - mProgress ) );
             mPaint.setAlpha( normalAlpha );
             canvas.drawBitmap( mNormalBitmap, 0, 0, mPaint );
+
+            int selectedAlpha = 255 - normalAlpha;
             mSelectPaint.setAlpha( selectedAlpha );
             canvas.drawBitmap( mSelectedBitmap, 0, 0, mSelectPaint );
       }

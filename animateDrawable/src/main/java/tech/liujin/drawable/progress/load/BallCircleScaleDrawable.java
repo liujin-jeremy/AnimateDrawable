@@ -12,11 +12,14 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  */
 public class BallCircleScaleDrawable extends ProgressDrawable {
 
-      private float mRadius;
-      private int   mSize;
-      private float mMinScale = 0.4f;
-      private float mMinRadius;
-      private float mDRadius;
+      private static final int COUNT = 12;
+
+      private float   mRadius;
+      private float   mMinRadius;
+      private float   mDRadius;
+      private float   mCy;
+      private float[] mRadiusArray = new float[ COUNT ];
+      private int[]   mAlphaArray  = new int[ COUNT ];
 
       public BallCircleScaleDrawable ( ) {
 
@@ -27,28 +30,41 @@ public class BallCircleScaleDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
-            mSize = Math.min( bounds.width(), bounds.height() );
-            mRadius = mSize / 10;
-            mMinRadius = mRadius * mMinScale;
+            int size = Math.min( bounds.width(), bounds.height() );
+            mRadius = size * 1f / 10;
+            float minScale = 0.4f;
+            mMinRadius = mRadius * minScale;
             mDRadius = mRadius - mMinRadius;
+            mCy = -size * 1f / 2 + mRadius;
+
+            super.onBoundsChange( bounds );
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             int width = getWidth();
             int height = getHeight();
             canvas.translate( width >> 1, height >> 1 );
 
-            for( int i = 0; i < 12; i++ ) {
+            for( int i = 0; i < COUNT; i++ ) {
 
                   canvas.rotate( 30 );
-                  float v = calculateProgress( i, progress );
-                  canvas.drawCircle( 0, -mSize / 2 + mRadius,
-                                     calculateRadius( v ), mPaint
-                  );
+                  mPaint.setAlpha( mAlphaArray[ i ] );
+                  canvas.drawCircle( 0, mCy, mRadiusArray[ i ], mPaint );
             }
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            for( int i = 0; i < COUNT; i++ ) {
+                  mRadiusArray[ i ] = calculateRadius( i, calculateProgress( i, progress ) );
+            }
+
+            invalidateSelf();
       }
 
       private float calculateProgress ( int i, float progress ) {
@@ -60,15 +76,15 @@ public class BallCircleScaleDrawable extends ProgressDrawable {
             return progress;
       }
 
-      private float calculateRadius ( float progress ) {
+      private float calculateRadius ( int i, float progress ) {
 
             if( progress <= 0.5f ) {
                   progress *= 2;
-                  mPaint.setAlpha( (int) ( 205 * progress ) );
+                  mAlphaArray[ i ] = (int) ( 205 * progress );
                   return mMinRadius + mDRadius * progress;
             } else {
                   progress = ( progress - 0.5f ) * 2;
-                  mPaint.setAlpha( (int) ( 205 * ( 1 - progress ) ) );
+                  mAlphaArray[ i ] = (int) ( 205 * ( 1 - progress ) );
                   return mRadius - mDRadius * progress;
             }
       }

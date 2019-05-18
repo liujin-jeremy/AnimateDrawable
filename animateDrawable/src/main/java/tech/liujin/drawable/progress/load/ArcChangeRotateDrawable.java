@@ -32,21 +32,30 @@ public class ArcChangeRotateDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
             int size = Math.min( bounds.width(), bounds.height() );
             int width = size >> 4;
             mPaint.setStrokeWidth( width );
             size = size - width * 2;
             int offset = size / 2;
             mRectF.set( -offset, -offset, offset, offset );
+
+            super.onBoundsChange( bounds );
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             int dx = getWidth() / 2;
             int dy = getHeight() / 2;
             canvas.translate( dx, dy );
+
+            canvas.drawArc( mRectF, mStart, mStop - mStart, false, mPaint );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
 
             float sweep = 256;
             float changeAngle = 128;
@@ -72,6 +81,6 @@ public class ArcChangeRotateDrawable extends ProgressDrawable {
                   mStart = mStop - sweep;
             }
 
-            canvas.drawArc( mRectF, mStart, mStop - mStart, false, mPaint );
+            invalidateSelf();
       }
 }

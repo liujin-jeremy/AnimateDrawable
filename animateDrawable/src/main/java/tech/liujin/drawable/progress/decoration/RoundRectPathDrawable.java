@@ -58,8 +58,6 @@ public class RoundRectPathDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
-
             Path src = new Path();
             RectF rectF = new RectF();
 
@@ -78,10 +76,20 @@ public class RoundRectPathDrawable extends ProgressDrawable {
 
             mPathMeasure.setPath( src, true );
             mTotalLength = mPathMeasure.getLength();
+
+            super.onBoundsChange( bounds );
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
+
+            canvas.drawPath( mDst, mPaint );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
 
             float start = 0;
             float end = 0;
@@ -106,7 +114,8 @@ public class RoundRectPathDrawable extends ProgressDrawable {
 
             mDst.reset();
             mPathMeasure.getSegment( start, end, mDst, true );
-            canvas.drawPath( mDst, mPaint );
+
+            invalidateSelf();
       }
 
       public void setMode ( @Mode int mode ) {

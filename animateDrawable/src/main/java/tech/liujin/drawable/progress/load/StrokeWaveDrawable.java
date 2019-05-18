@@ -14,9 +14,11 @@ public class StrokeWaveDrawable extends ProgressDrawable {
 
       private static final String TAG = StrokeWaveDrawable.class.getSimpleName();
 
-      private int mStrokeWidth;
-      private int mStrokeHigh;
-      private int mStrokeLow;
+      private int     mStrokeWidth;
+      private int     mStrokeHigh;
+      private int     mStrokeLow;
+      private float[] mXs = new float[ 5 ];
+      private float[] mYs = new float[ 5 ];
 
       public StrokeWaveDrawable ( ) {
 
@@ -27,30 +29,39 @@ public class StrokeWaveDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
             mStrokeWidth = bounds.width() / 11;
             mStrokeHigh = bounds.height() / 5 * 2;
             mStrokeLow = bounds.height() / 8;
 
             mPaint.setStrokeWidth( mStrokeWidth );
+
+            super.onBoundsChange( bounds );
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             canvas.translate( 0, getHeight() >> 1 );
 
-            int strokeWidth = mStrokeWidth;
-            float half = strokeWidth / 2;
-
-            int dY = mStrokeHigh - mStrokeLow;
-
             for( int i = 0; i < 5; i++ ) {
-
-                  float x = strokeWidth + half + ( strokeWidth * 2 * i );
-                  float y = calculateY( dY, calculateProgress( i, progress ) );
-                  canvas.drawLine( x, -y, x, y, mPaint );
+                  canvas.drawLine( mXs[ i ], -mYs[ i ], mXs[ i ], mYs[ i ], mPaint );
             }
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            int strokeWidth = mStrokeWidth;
+            float half = strokeWidth / 2f;
+            int dY = mStrokeHigh - mStrokeLow;
+            for( int i = 0; i < 5; i++ ) {
+                  mXs[ i ] = strokeWidth + half + ( strokeWidth * 2 * i );
+                  mYs[ i ] = calculateY( dY, calculateProgress( i, progress ) );
+            }
+
+            invalidateSelf();
       }
 
       private float calculateProgress ( int i, float progress ) {

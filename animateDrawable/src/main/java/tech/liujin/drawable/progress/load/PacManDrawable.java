@@ -20,6 +20,8 @@ public class PacManDrawable extends ProgressDrawable {
       private RectF mRectF;
       private float mSize;
       private float mRadius;
+      private float mAngle;
+      private float mCx;
 
       public PacManDrawable ( ) {
 
@@ -32,28 +34,35 @@ public class PacManDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
             int min = Math.min( bounds.width(), bounds.height() );
-            mSize = min * 4 / 5;
-            mRadius = min / 10;
+            mSize = min * 4f / 5;
+            mRadius = min * 1f / 10;
             float v = mSize / 2;
             mRectF.set( -v, -v, v, v );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw (
-          @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
-            int height = getHeight();
-            float dx = mSize / 2;
-            float left = getWidth() - dx;
-            canvas.translate( dx, height >> 1 );
+            canvas.translate( getWidth() >> 1, getHeight() >> 1 );
 
-            float angle = calculateAngle( progress );
-            canvas.drawArc( mRectF, -angle, -360 + angle * 2, true, mPaint );
+            canvas.drawArc( mRectF, -mAngle, -360 + mAngle * 2, true, mPaint );
+            canvas.drawCircle( mCx, 0, mRadius, mPaint );
+      }
 
-            float cx = left + mRadius - ( left + mRadius * 2 ) * progress;
-            canvas.drawCircle( cx, 0, mRadius, mPaint );
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            float left = getWidth() - mSize / 2;
+            mAngle = calculateAngle( progress );
+            mCx = left + mRadius - ( left + mRadius * 2 ) * progress;
+
+            invalidateSelf();
       }
 
       private float calculateAngle ( float progress ) {

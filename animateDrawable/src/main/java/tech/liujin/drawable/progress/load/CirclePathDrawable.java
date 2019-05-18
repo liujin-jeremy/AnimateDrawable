@@ -34,7 +34,6 @@ public class CirclePathDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             mSize = Math.min( bounds.width(), bounds.height() );
 
@@ -55,10 +54,13 @@ public class CirclePathDrawable extends ProgressDrawable {
             mPathMeasure.setPath( mSrcPath, true );
 
             mLength = mPathMeasure.getLength();
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             int width = getWidth();
             int height = getHeight();
@@ -66,30 +68,35 @@ public class CirclePathDrawable extends ProgressDrawable {
             int dY = ( height - mSize ) >> 1;
             canvas.translate( dX, dY );
 
-            float fraction = mProgress;
+            canvas.drawPath( mDstPath, mPaint );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
 
             mDstPath.reset();
             mDstPath.moveTo( mSize >> 1, 0 );
-
             final float middle = 0.5f;
-            if( fraction <= middle ) {
+            if( progress <= middle ) {
 
                   mPathMeasure.getSegment(
                       0,
-                      mLength * fraction * 2,
+                      mLength * progress * 2,
                       mDstPath,
                       true
                   );
             } else {
 
                   mPathMeasure.getSegment(
-                      mLength * ( fraction - 0.5f ) * 2,
+                      mLength * ( progress - 0.5f ) * 2,
                       mLength,
                       mDstPath,
                       true
                   );
             }
 
-            canvas.drawPath( mDstPath, mPaint );
+            invalidateSelf();
       }
 }

@@ -14,6 +14,8 @@ public class BallTriangleRotateDrawable extends ProgressDrawable {
 
       private float mDis;
       private float mRadius;
+      private float mDegree;
+      private float mCy;
 
       public BallTriangleRotateDrawable ( ) {
 
@@ -24,35 +26,45 @@ public class BallTriangleRotateDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             int size = Math.min( bounds.width(), bounds.height() );
 
-            mDis = size / 6;
-            mRadius = size / 7;
+            mDis = size * 1f / 6;
+            mRadius = size * 1f / 7;
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            mDegree = 360 * progress;
+            if( progress <= 0.5f ) {
+                  progress *= 2;
+                  mCy = mDis + mDis * ( 1 - progress );
+            } else {
+                  progress = ( progress - 0.5f ) * 2;
+                  mCy = mDis + mDis * ( progress );
+            }
+
+            invalidateSelf();
+      }
+
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
 
             int cX = getWidth() >> 1;
             int cY = getHeight() >> 1;
             canvas.translate( cX, cY );
-            canvas.rotate( 360 * progress );
 
-            float dis;
-            if( progress <= 0.5f ) {
-                  progress *= 2;
-                  dis = mDis + mDis * ( 1 - progress );
-            } else {
-                  progress = ( progress - 0.5f ) * 2;
-                  dis = mDis + mDis * ( progress );
-            }
-
+            canvas.rotate( mDegree );
             for( int i = 0; i < 3; i++ ) {
                   int save = canvas.save();
                   canvas.rotate( 120 * i );
-                  canvas.drawCircle( 0, -dis, mRadius, mPaint );
+                  canvas.drawCircle( 0, -mCy, mRadius, mPaint );
                   canvas.restoreToCount( save );
             }
       }

@@ -16,6 +16,14 @@ public class WrongRightDrawable extends ProgressDrawable {
       private float[] mStartLineRight;
       private float[] mEndLineLeft;
       private float[] mEndLineRight;
+      private float   mFirstStartX;
+      private float   mFirstStartY;
+      private float   mFirstStopX;
+      private float   mFirstStopY;
+      private float   mSecondStartX;
+      private float   mSecondStartY;
+      private float   mSecondStopX;
+      private float   mSecondStopY;
 
       private int           mStartColor    = Color.BLUE;
       private int           mStopColor     = Color.RED;
@@ -24,7 +32,6 @@ public class WrongRightDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
             int size = Math.min( bounds.width(), bounds.height() ) * 4 / 5;
 
             int offset = size / 2;
@@ -41,32 +48,36 @@ public class WrongRightDrawable extends ProgressDrawable {
             mEndLineRight = new float[]{ startX, startY, right + startX, -right + startY };
 
             mPaint.setStrokeWidth( size >> 3 );
+
+            super.onBoundsChange( bounds );
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void onProcessChange ( float progress ) {
 
-            canvas.translate( getWidth() >> 1, getHeight() >> 1 );
+            mProgress = progress;
 
             int color = (Integer) mArgbEvaluator.evaluate( progress, mStartColor, mStopColor );
             mPaint.setColor( color );
 
-            float startX =
-                mStartLineLeft[ 0 ] + ( mEndLineLeft[ 0 ] - mStartLineLeft[ 0 ] ) * progress;
-            float startY =
-                mStartLineLeft[ 1 ] + ( mEndLineLeft[ 1 ] - mStartLineLeft[ 1 ] ) * progress;
-            float stopX =
-                mStartLineLeft[ 2 ] + ( mEndLineLeft[ 2 ] - mStartLineLeft[ 2 ] ) * progress;
-            float stopY =
-                mStartLineLeft[ 3 ] + ( mEndLineLeft[ 3 ] - mStartLineLeft[ 3 ] ) * progress;
-            canvas.drawLine( startX, startY, stopX, stopY, mPaint );
+            mFirstStartX = mStartLineLeft[ 0 ] + ( mEndLineLeft[ 0 ] - mStartLineLeft[ 0 ] ) * progress;
+            mFirstStartY = mStartLineLeft[ 1 ] + ( mEndLineLeft[ 1 ] - mStartLineLeft[ 1 ] ) * progress;
+            mFirstStopX = mStartLineLeft[ 2 ] + ( mEndLineLeft[ 2 ] - mStartLineLeft[ 2 ] ) * progress;
+            mFirstStopY = mStartLineLeft[ 3 ] + ( mEndLineLeft[ 3 ] - mStartLineLeft[ 3 ] ) * progress;
 
-            startX =
-                mStartLineRight[ 0 ] + ( mEndLineRight[ 0 ] - mStartLineRight[ 0 ] ) * progress;
-            startY =
-                mStartLineRight[ 1 ] + ( mEndLineRight[ 1 ] - mStartLineRight[ 1 ] ) * progress;
-            stopX = mStartLineRight[ 2 ] + ( mEndLineRight[ 2 ] - mStartLineRight[ 2 ] ) * progress;
-            stopY = mStartLineRight[ 3 ] + ( mEndLineRight[ 3 ] - mStartLineRight[ 3 ] ) * progress;
-            canvas.drawLine( startX, startY, stopX, stopY, mPaint );
+            mSecondStartX = mStartLineRight[ 0 ] + ( mEndLineRight[ 0 ] - mStartLineRight[ 0 ] ) * progress;
+            mSecondStartY = mStartLineRight[ 1 ] + ( mEndLineRight[ 1 ] - mStartLineRight[ 1 ] ) * progress;
+            mSecondStopX = mStartLineRight[ 2 ] + ( mEndLineRight[ 2 ] - mStartLineRight[ 2 ] ) * progress;
+            mSecondStopY = mStartLineRight[ 3 ] + ( mEndLineRight[ 3 ] - mStartLineRight[ 3 ] ) * progress;
+
+            invalidateSelf();
+      }
+
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
+
+            canvas.translate( getWidth() >> 1, getHeight() >> 1 );
+            canvas.drawLine( mFirstStartX, mFirstStartY, mFirstStopX, mFirstStopY, mPaint );
+            canvas.drawLine( mSecondStartX, mSecondStartY, mSecondStopX, mSecondStopY, mPaint );
       }
 }

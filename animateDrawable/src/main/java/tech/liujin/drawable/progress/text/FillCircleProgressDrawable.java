@@ -13,6 +13,8 @@ import android.support.annotation.NonNull;
 public class FillCircleProgressDrawable extends TextCenterProgressDrawable {
 
       private RectF mRectF;
+      private float mStart;
+      private float mEnd;
 
       public FillCircleProgressDrawable ( ) {
 
@@ -26,7 +28,6 @@ public class FillCircleProgressDrawable extends TextCenterProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             int width = bounds.width();
             int height = bounds.height();
@@ -42,17 +43,27 @@ public class FillCircleProgressDrawable extends TextCenterProgressDrawable {
                 rx + radius,
                 ry + radius
             );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
-            float v = 180 * progress;
-            float start = 90 - v;
-            float end = 90 + v;
+            canvas.drawArc( mRectF, mStart, mEnd - mStart, false, mPaint );
+            super.draw( canvas );
+      }
 
-            canvas.drawArc( mRectF, start, end - start, false, mPaint );
+      @Override
+      public void onProcessChange ( float progress ) {
 
-            super.draw( canvas, progress );
+            mProgress = progress;
+
+            float v = 180 * mProgress;
+            mStart = 90 - v;
+            mEnd = 90 + v;
+
+            invalidateSelf();
       }
 }

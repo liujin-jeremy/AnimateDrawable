@@ -39,8 +39,6 @@ public class BiliBiliDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
-
             mSize = Math.min( bounds.width(), bounds.height() );
             mRadius = mSize / 10;
             int strokeWidth = mSize / 20;
@@ -50,16 +48,18 @@ public class BiliBiliDrawable extends ProgressDrawable {
 
             /* 一个矩形 */
             mSrcPath.moveTo( size20Percent, 0 );
-            mSrcPath.rLineTo( mSize / 2 - size20Percent, size20Percent );
-            mSrcPath.lineTo( mSize / 2, size20Percent );
+            mSrcPath.rLineTo( mSize / 2f - size20Percent, size20Percent );
+            mSrcPath.lineTo( mSize / 2f, size20Percent );
             mSrcPath.lineTo( strokeWidth, size20Percent );
             mSrcPath.rLineTo( 0, size80Percent - strokeWidth );
             mSrcPath.rLineTo( mSize - strokeWidth * 2, 0 );
             mSrcPath.rLineTo( 0, -size80Percent + strokeWidth );
-            mSrcPath.lineTo( mSize / 2 + 2, size20Percent );
+            mSrcPath.lineTo( mSize / 2f + 2, size20Percent );
             mSrcPath.lineTo( mSize - size20Percent, 0 );
 
             mPathMeasure.setPath( mSrcPath, false );
+
+            super.onBoundsChange( bounds );
       }
 
       protected void calculate ( float fraction ) {
@@ -105,7 +105,7 @@ public class BiliBiliDrawable extends ProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             int width = getWidth();
             int height = getHeight();
@@ -113,47 +113,47 @@ public class BiliBiliDrawable extends ProgressDrawable {
             int dY = ( height - mSize ) >> 1;
             canvas.translate( dX, dY );
 
-            calculate( progress );
-
             int size = mSize;
             int size20Percent = size / 5;
 
+            /* 电视轮廓 */
             if( mCurrentState == STATE2 ) {
-
-                  /* 电视轮廓 */
-
                   drawState2( canvas, size, size20Percent, mStateFraction );
                   return;
             }
 
+            /* 第一个点 */
             if( mCurrentState == STATE4 ) {
-
-                  /* 第一个点 */
-
                   drawState2( canvas, size, size20Percent, 1 );
                   drawState4( canvas, size, mStateFraction );
                   return;
             }
 
+            /* 第二个点 */
             if( mCurrentState == STATE5 ) {
-
-                  /* 第二个点 */
-
                   drawState2( canvas, size, size20Percent, 1 );
                   drawState4( canvas, size, 1 );
                   drawState5( canvas, size, mStateFraction );
                   return;
             }
 
+            /* 第三个点 */
             if( mCurrentState == STATE6 ) {
-
-                  /* 第三个点 */
-
                   drawState2( canvas, size, size20Percent, 1 );
                   drawState4( canvas, size, 1 );
                   drawState5( canvas, size, 1 );
                   drawState6( canvas, size, mStateFraction );
             }
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            calculate( progress );
+
+            invalidateSelf();
       }
 
       private void drawState2 (

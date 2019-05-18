@@ -1,43 +1,42 @@
 package tech.liujin.drawable.progress;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
-import tech.liujin.drawable.DrawableProcessConsumer;
 import tech.liujin.drawable.PaintDrawable;
+import tech.liujin.drawable.ProcessConsumer;
 
 /**
  * @author wuxio 2018-05-25:7:11
  */
-public abstract class ProgressDrawable extends PaintDrawable implements DrawableProcessConsumer {
+public abstract class ProgressDrawable extends PaintDrawable implements ProcessConsumer {
+
+      private final String TAG = getClass().getSimpleName();
 
       /**
        * 当前进度
        */
       protected float mProgress;
-
-      @Override
-      public void draw ( @NonNull Canvas canvas ) {
-
-            draw( canvas, mProgress );
-      }
+      /**
+       * 用于初始化调用{@link #onProcessChange(float)}
+       */
+      protected int   mBoundsChangeCount;
 
       /**
-       * 根据进度值{@link #mProgress}绘制内容
+       * 当进度改变时,准备{@link #draw(Canvas)}所需要的数据,准备完毕后调用{@link #invalidateSelf()},进行绘制,
+       * 该步骤主要进行绘制计算和绘制的分离,提高绘制效率
        *
-       * @param canvas :画布
        * @param progress 进度值
        */
-      public abstract void draw ( @NonNull Canvas canvas, float progress );
+      @Override
+      public abstract void onProcessChange ( float progress );
 
-      /**
-       * 设置进度
-       *
-       * @param progress 进度
-       */
-      public void setProgress ( @FloatRange(from = 0f, to = 1f) float progress ) {
+      public void setProgress ( float progress ) {
 
-            mProgress = progress;
+            if( mProgress != progress ) {
+                  mProgress = progress;
+            }
+            onProcessChange( progress );
       }
 
       /**
@@ -49,17 +48,13 @@ public abstract class ProgressDrawable extends PaintDrawable implements Drawable
             return mProgress;
       }
 
-      /**
-       * 设置进度值,同时重绘
-       *
-       * @param progress 进度
-       */
-      public void setDrawProgress ( @FloatRange(from = 0f, to = 1f) float progress ) {
+      @Override
+      protected void onBoundsChange ( Rect bounds ) {
 
-            if( mProgress == progress ) {
-                  return;
+            super.onBoundsChange( bounds );
+            mBoundsChangeCount++;
+            if( mBoundsChangeCount == 1 ) {
+                  onProcessChange( mProgress );
             }
-            mProgress = progress;
-            invalidateSelf();
       }
 }

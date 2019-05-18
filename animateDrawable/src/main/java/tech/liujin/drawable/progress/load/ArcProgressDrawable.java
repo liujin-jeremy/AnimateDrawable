@@ -25,7 +25,6 @@ public class ArcProgressDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             mSize = Math.min( bounds.width(), bounds.height() );
 
@@ -35,16 +34,27 @@ public class ArcProgressDrawable extends ProgressDrawable {
 
             int offset = (int) ( ( mSize >> 1 ) * 0.9f );
             mRectF.set( -offset, -offset, offset, offset );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
-            canvas.translate( getWidth() / 2, getHeight() / 2 );
+            canvas.translate( getWidth() >> 1, getHeight() >> 1 );
 
             mPaint.setStyle( Style.STROKE );
             canvas.drawCircle( 0, 0, mSize >> 1, mPaint );
+
             mPaint.setStyle( Style.FILL );
-            canvas.drawArc( mRectF, -90, 360 * progress, true, mPaint );
+            canvas.drawArc( mRectF, -90, 360 * mProgress, true, mPaint );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+            invalidateSelf();
       }
 }

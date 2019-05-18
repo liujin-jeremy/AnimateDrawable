@@ -27,7 +27,6 @@ public class PieTextProgressDrawable extends TextCenterProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             int width = bounds.width();
             int height = bounds.height();
@@ -44,17 +43,26 @@ public class PieTextProgressDrawable extends TextCenterProgressDrawable {
                 cx + radius,
                 cy + radius
             );
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             Rect bounds = getBounds();
             int width = bounds.width();
 
-            canvas.drawArc( mRectF, 90, 360 * progress, true, mPaint );
+            canvas.drawArc( mRectF, 90, 360 * mProgress, true, mPaint );
 
-            super.draw( canvas, progress );
+            super.draw( canvas );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+            invalidateSelf();
       }
 
       public void setColor ( @ColorInt int color ) {

@@ -22,7 +22,7 @@ public class HaloTextProgressDrawable extends TextCenterProgressDrawable {
       /**
        * 挖空
        */
-      private PorterDuffXfermode mXfermode    = new PorterDuffXfermode( Mode.DST_OUT );
+      private PorterDuffXfermode mXfermode = new PorterDuffXfermode( Mode.DST_OUT );
       /**
        * 光晕半径
        */
@@ -34,11 +34,11 @@ public class HaloTextProgressDrawable extends TextCenterProgressDrawable {
       /**
        * 动画速度
        */
-      private float              mCellProcess = 0.016f;
+      private float              mRate     = 0.02f;
       /**
        * 动画方向
        */
-      private int                mOri         = 1;
+      private int                mOri      = 1;
 
       /**
        * 主颜色
@@ -71,8 +71,6 @@ public class HaloTextProgressDrawable extends TextCenterProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
-
             int width = bounds.width();
             int height = bounds.height();
             int size = Math.min( width, height );
@@ -87,10 +85,12 @@ public class HaloTextProgressDrawable extends TextCenterProgressDrawable {
                 new float[]{ 0, 0.8f, 0.9f, 1f },
                 TileMode.MIRROR
             );
+
+            super.onBoundsChange( bounds );
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             Rect bounds = getBounds();
             int width = bounds.width();
@@ -99,31 +99,46 @@ public class HaloTextProgressDrawable extends TextCenterProgressDrawable {
             int i = canvas.saveLayer( bounds.left, bounds.top, bounds.right, bounds.bottom, mPaint, Canvas.ALL_SAVE_FLAG );
 
             /* 绘制光晕 */
+            float haloRadius = mRadius * 0.8f + mRadius * 0.2f * mHaloProcess;
             mPaint.setShader( mRadialGradient );
             canvas.drawCircle(
                 width >> 1, height >> 1,
-                mRadius * 0.8f + mRadius * 0.2f * mHaloProcess,
+                haloRadius,
                 mPaint
             );
             mPaint.setShader( null );
+
+            /* 挖空中间 */
+            mPaint.setXfermode( mXfermode );
+            canvas.drawCircle( width >> 1, height >> 1, mRadius * 0.8f, mPaint );
+            mPaint.setXfermode( null );
+
+            /* 解决中间黑洞 */
+            canvas.restoreToCount( i );
+            /* 绘制文字 */
+            super.draw( canvas );
+
             /* 改变光晕进度 */
             if( mHaloProcess > 1f ) {
                   mOri = -1;
             } else if( mHaloProcess < 0f ) {
                   mOri = 1;
             }
-            mHaloProcess += ( mCellProcess * mOri );
+            mHaloProcess += ( mRate * mOri );
 
-            /* 挖空中间 */
-            mPaint.setXfermode( mXfermode );
-            canvas.drawCircle( width >> 1, height >> 1, mRadius * 0.8f, mPaint );
-            mPaint.setXfermode( null );
-            /* 解决中间黑洞 */
-            canvas.restoreToCount( i );
-
-            super.draw( canvas, progress );
-
-            /* 光晕动画 */
+            /* 使光晕动画 */
             invalidateSelf();
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+            invalidateSelf();
+      }
+
+      public void setRate ( float rate ) {
+
+            mRate = rate;
       }
 }

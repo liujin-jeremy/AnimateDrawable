@@ -12,8 +12,11 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  */
 public class BallTwoRotateDrawable extends ProgressDrawable {
 
-      private int mTotalRadius;
-      private int mSpace;
+      private int   mTotalRadius;
+      private int   mSpace;
+      private float mDegrees;
+      private float mLeft;
+      private float mRight;
 
       public BallTwoRotateDrawable ( ) {
 
@@ -22,26 +25,35 @@ public class BallTwoRotateDrawable extends ProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
-
-            canvas.translate( getWidth() / 2, getHeight() / 2 );
-            float left = mTotalRadius * calculateProgress( progress );
-            float right = mTotalRadius - left;
-
-            canvas.rotate( 360 * progress );
-
-            canvas.drawCircle( -mSpace - left, 0, left, mPaint );
-            canvas.drawCircle( mSpace + right, 0, right, mPaint );
-      }
-
-      @Override
       protected void onBoundsChange ( Rect bounds ) {
-
-            super.onBoundsChange( bounds );
 
             int size = Math.min( bounds.width(), bounds.height() );
             mTotalRadius = size / 5;
             mSpace = size / 40;
+
+            super.onBoundsChange( bounds );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            mDegrees = 360 * progress;
+            mLeft = mTotalRadius * calculateProgress( progress );
+            mRight = mTotalRadius - mLeft;
+
+            invalidateSelf();
+      }
+
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
+
+            canvas.translate( getWidth() >> 1, getHeight() >> 1 );
+
+            canvas.rotate( mDegrees );
+            canvas.drawCircle( -mSpace - mLeft, 0, mLeft, mPaint );
+            canvas.drawCircle( mSpace + mRight, 0, mRight, mPaint );
       }
 
       private float calculateProgress ( float progress ) {

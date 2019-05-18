@@ -1,14 +1,12 @@
 package tech.liujin.drawable.state;
 
-import android.graphics.Canvas;
-import android.support.annotation.NonNull;
-import tech.liujin.drawable.DrawableStateConsumer;
 import tech.liujin.drawable.PaintDrawable;
+import tech.liujin.drawable.StateConsumer;
 
 /**
  * @author wuxio 2018-05-25:7:11
  */
-public abstract class StateDrawable extends PaintDrawable implements DrawableStateConsumer {
+public abstract class StateDrawable extends PaintDrawable implements StateConsumer {
 
       /**
        * 当前状态
@@ -20,7 +18,7 @@ public abstract class StateDrawable extends PaintDrawable implements DrawableSta
             if( state != mState ) {
 
                   mState = state;
-                  invalidateSelf();
+                  onStateChange( state );
             }
       }
 
@@ -29,18 +27,12 @@ public abstract class StateDrawable extends PaintDrawable implements DrawableSta
             return mState;
       }
 
-      @Override
-      public void draw ( @NonNull Canvas canvas ) {
-
-            draw( canvas, mState );
-      }
-
       /**
-       * 根据进度值 绘制内容
+       * 当状态改变时,准备新状态下数据,之后重新绘制{@link #invalidateSelf()}
        *
-       * @param canvas : 画布
        * @param state : 状态
        */
-      public abstract void draw ( @NonNull Canvas canvas, int state );
+      @Override
+      public abstract void onStateChange ( int state );
 }
 

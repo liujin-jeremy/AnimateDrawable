@@ -33,7 +33,6 @@ public class CircleDotProgressDrawable extends TextCenterProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             int width = bounds.width();
             int height = bounds.height();
@@ -54,10 +53,13 @@ public class CircleDotProgressDrawable extends TextCenterProgressDrawable {
                 rx + arcRadius,
                 ry + arcRadius
             );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             Rect bounds = getBounds();
             int width = bounds.width();
@@ -70,9 +72,16 @@ public class CircleDotProgressDrawable extends TextCenterProgressDrawable {
             mPaint.setStyle( Style.STROKE );
             mPaint.setStrokeWidth( mArcWidth );
             mPaint.setColor( mArcColor );
-            canvas.drawArc( mRectF, 90, 360 * progress, false, mPaint );
+            canvas.drawArc( mRectF, 90, 360 * mProgress, false, mPaint );
 
-            super.draw( canvas, progress );
+            super.draw( canvas );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+            invalidateSelf();
       }
 
       public void setArcColor ( @ColorInt int arcColor ) {

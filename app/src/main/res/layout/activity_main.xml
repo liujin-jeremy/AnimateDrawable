@@ -11,6 +11,12 @@
           android:layout_height="match_parent"
           android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="bilibili"/>
+
             <ImageView
                 android:id="@+id/bilibili"
                 android:layout_width="100dp"
@@ -44,6 +50,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CirclePathDrawable"/>
 
             <ImageView
                 android:id="@+id/circle"
@@ -80,6 +92,12 @@
                 android:background="@color/colorPrimary"/>
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="RoundRectPathDrawable"/>
+
             <ImageView
                 android:id="@+id/roundRect"
                 android:layout_width="300dp"
@@ -113,6 +131,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="RoundRectCornerDrawable"/>
 
             <ImageView
                 android:id="@+id/corner"
@@ -148,12 +172,11 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:onClick="toWeChat"
-                android:text="@string/text"/>
+                android:text="BallPulseDrawable"/>
 
             <ImageView
                 android:id="@+id/ballPulse"
@@ -191,6 +214,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="BallGridPulseDrawable"/>
+
             <ImageView
                 android:id="@+id/ballGridPulse"
                 android:layout_width="100dp"
@@ -226,6 +255,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CubeFlipDrawable"/>
 
             <ImageView
                 android:id="@+id/ballFlip"
@@ -263,6 +298,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="BallRotateDrawable"/>
+
             <ImageView
                 android:id="@+id/ballRotate"
                 android:layout_width="100dp"
@@ -298,6 +339,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CubeTwoRotateDrawable"/>
 
             <ImageView
                 android:id="@+id/rectRotate"
@@ -335,6 +382,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="BallTriangleRotateDrawable"/>
+
             <ImageView
                 android:id="@+id/ballTriRotate"
                 android:layout_width="100dp"
@@ -370,6 +423,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="StrokeWaveDrawable"/>
 
             <ImageView
                 android:id="@+id/streakWave"
@@ -407,6 +466,11 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="StrokePulseDrawable"/>
 
             <ImageView
                 android:id="@+id/streakPulse"
@@ -444,6 +508,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="BallCircleScaleDrawable"/>
+
             <ImageView
                 android:id="@+id/ballsCircleScale"
                 android:layout_width="100dp"
@@ -479,6 +549,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="PacManDrawable"/>
 
             <ImageView
                 android:id="@+id/pacMan"
@@ -516,6 +592,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="StrokePulsePushDrawable"/>
+
             <ImageView
                 android:id="@+id/pulsePush"
                 android:layout_width="100dp"
@@ -551,6 +633,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="BallTwoRotateDrawable"/>
 
             <ImageView
                 android:id="@+id/ballTwo"
@@ -588,6 +676,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="BallPulsePushDrawable"/>
+
             <ImageView
                 android:id="@+id/ballPush"
                 android:layout_width="100dp"
@@ -623,6 +717,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CubeGridDrawable"/>
 
             <ImageView
                 android:id="@+id/cubeGrid"
@@ -660,6 +760,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="BallCircleAlphaDrawable"/>
+
             <ImageView
                 android:id="@+id/ballAlpha"
                 android:layout_width="100dp"
@@ -696,12 +802,11 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:onClick="toWeChat"
-                android:text="微信底部导航"/>
+                android:text="StrokeSkipDrawable"/>
 
             <ImageView
                 android:id="@+id/strokeSkip"
@@ -739,6 +844,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Arc240RotateDrawable"/>
+
             <ImageView
                 android:id="@+id/arc240"
                 android:layout_width="100dp"
@@ -775,6 +886,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="ArcProgressDrawable"/>
+
             <ImageView
                 android:id="@+id/arcProgress"
                 android:layout_width="100dp"
@@ -790,12 +907,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"/>
 
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="ArcChangeRotateDrawable"/>
 
             <ImageView
                 android:id="@+id/arcChange"
@@ -833,6 +955,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="ArcChangeRotateDrawableV2"/>
+
             <ImageView
                 android:id="@+id/arcChangeV2"
                 android:layout_width="100dp"
@@ -869,6 +997,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="AddLoadDoneDrawable"/>
+
             <ImageView
                 android:id="@+id/addLoading"
                 android:layout_width="160dp"
@@ -899,6 +1033,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="WrongRightDrawable"/>
+
             <ImageView
                 android:id="@+id/wrongRight"
                 android:layout_width="100dp"
@@ -920,6 +1060,11 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="WrongRightDrawable"/>
 
             <ImageView
                 android:id="@+id/startStop"
@@ -955,6 +1100,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CircleTextProgressDrawable"/>
+
             <ImageView
                 android:id="@+id/circleText"
                 android:layout_width="200dp"
@@ -975,6 +1126,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CircleInRingProgressDrawable"/>
 
             <ImageView
                 android:id="@+id/circleRing"
@@ -997,6 +1154,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CircleDotProgressDrawable"/>
+
             <ImageView
                 android:id="@+id/circleDot"
                 android:layout_width="200dp"
@@ -1017,6 +1180,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CircleMatchRingProgressDrawable"/>
 
             <ImageView
                 android:id="@+id/circleMatch"
@@ -1039,6 +1208,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="PieTextProgressDrawable"/>
+
             <ImageView
                 android:id="@+id/pie"
                 android:layout_width="200dp"
@@ -1059,6 +1234,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="PieMatchCircleProgressDrawable"/>
 
             <ImageView
                 android:id="@+id/pieMatch"
@@ -1081,6 +1262,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="PieOutCircleProgressDrawable"/>
+
             <ImageView
                 android:id="@+id/pieOut"
                 android:layout_width="200dp"
@@ -1101,6 +1288,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="PieInRingProgressDrawable"/>
 
             <ImageView
                 android:id="@+id/pieRing"
@@ -1123,6 +1316,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="FillCircleProgressDrawable"/>
+
             <ImageView
                 android:id="@+id/fillCircle"
                 android:layout_width="200dp"
@@ -1143,6 +1342,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="FillMatchCircleProgressDrawable"/>
 
             <ImageView
                 android:id="@+id/fillMatch"
@@ -1165,6 +1370,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="FillOutCircleProgressDrawable"/>
+
             <ImageView
                 android:id="@+id/fillOut"
                 android:layout_width="200dp"
@@ -1185,6 +1396,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="FillInRingProgressDrawable"/>
 
             <ImageView
                 android:id="@+id/fillRing"
@@ -1207,6 +1424,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="ColorEvaluator"/>
+
             <ImageView
                 android:id="@+id/colorEvaluator"
                 android:layout_width="200dp"
@@ -1228,6 +1451,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="HaloTextProgressDrawable"/>
+
             <ImageView
                 android:id="@+id/haloEvaluator"
                 android:layout_width="200dp"
@@ -1248,5 +1477,12 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="toWeChat"
+                android:text="@string/text"/>
       </LinearLayout>
 </ScrollView>

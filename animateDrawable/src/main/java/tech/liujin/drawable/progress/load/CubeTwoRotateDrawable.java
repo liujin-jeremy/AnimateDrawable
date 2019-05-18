@@ -15,6 +15,8 @@ public class CubeTwoRotateDrawable extends ProgressDrawable {
       private float mRadius;
       private int   mSize;
       private int   mSpace;
+      private float mDegrees;
+      private float mScale;
 
       public CubeTwoRotateDrawable ( ) {
 
@@ -25,43 +27,53 @@ public class CubeTwoRotateDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             mSize = Math.min( bounds.width(), bounds.height() );
 
             mSpace = mSize / 9;
-            mRadius = ( mSize - 3 * mSpace ) / 6;
+            mRadius = ( mSize * 1f - 3 * mSpace ) / 6;
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             int cX = getWidth() >> 1;
             int cY = getHeight() >> 1;
             canvas.translate( cX, cY );
-            float degrees = -45 + 360 * progress;
-            canvas.rotate( degrees );
 
-            float s;
-            if( progress <= 0.5f ) {
-                  progress *= 2;
-                  s = 1f - 0.5f * progress;
-            } else {
-                  progress = ( progress - 0.5f ) * 2;
-                  s = 0.5f + 0.5f * progress;
-            }
-            canvas.scale( s, s );
+            canvas.rotate( mDegrees );
+            canvas.scale( mScale, mScale );
 
             int save = canvas.save();
             canvas.translate( -mSpace - mRadius * 2, 0 );
-            canvas.rotate( -degrees * 2 + 45 );
+            canvas.rotate( -mDegrees * 2 + 45 );
             canvas.drawRect( -mRadius, -mRadius, mRadius, mRadius, mPaint );
             canvas.restoreToCount( save );
 
             save = canvas.save();
             canvas.translate( mSpace + mRadius * 2, 0 );
-            canvas.rotate( -degrees * 2 + 45 );
+            canvas.rotate( -mDegrees * 2 + 45 );
             canvas.drawRect( -mRadius, -mRadius, mRadius, mRadius, mPaint );
             canvas.restoreToCount( save );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            mDegrees = -45 + 360 * progress;
+            if( progress <= 0.5f ) {
+                  progress *= 2;
+                  mScale = 1f - 0.5f * progress;
+            } else {
+                  progress = ( progress - 0.5f ) * 2;
+                  mScale = 0.5f + 0.5f * progress;
+            }
+
+            invalidateSelf();
       }
 }

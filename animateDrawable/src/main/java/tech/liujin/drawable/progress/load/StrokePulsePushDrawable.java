@@ -13,11 +13,14 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  */
 public class StrokePulsePushDrawable extends ProgressDrawable {
 
-      private static final String TAG = StrokePulsePushDrawable.class.getSimpleName();
+      private static final int COUNT = 5;
 
       private int mStrokeWidth;
       private int mStrokeHigh;
       private int mStrokeLow;
+
+      private float[] mXs = new float[ COUNT ];
+      private float[] mYs = new float[ COUNT ];
 
       public StrokePulsePushDrawable ( ) {
 
@@ -29,30 +32,41 @@ public class StrokePulsePushDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
             mStrokeWidth = bounds.width() / 11;
             mStrokeHigh = bounds.height() / 5 * 2;
             mStrokeLow = bounds.height() / 5;
 
             mPaint.setStrokeWidth( mStrokeWidth );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             canvas.translate( 0, getHeight() >> 1 );
 
-            int strokeWidth = mStrokeWidth;
-            float half = strokeWidth / 2;
+            for( int i = 0; i < COUNT; i++ ) {
+                  canvas.drawLine( mXs[ i ], -mYs[ i ], mXs[ i ], mYs[ i ], mPaint );
+            }
+      }
 
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            int strokeWidth = mStrokeWidth;
+            float half = strokeWidth * 1f / 2;
             int dY = mStrokeHigh - mStrokeLow;
 
-            for( int i = 0; i < 5; i++ ) {
-
-                  float x = strokeWidth + half + ( strokeWidth * 2 * i );
-                  float y = calculateY( dY, calculateProgress( i, progress ) );
-                  canvas.drawLine( x, -y, x, y, mPaint );
+            for( int i = 0; i < COUNT; i++ ) {
+                  mXs[ i ] = strokeWidth + half + ( strokeWidth * 2 * i );
+                  mYs[ i ] = calculateY( dY, calculateProgress( i, progress ) );
             }
+
+            invalidateSelf();
       }
 
       private float calculateProgress ( int i, float progress ) {

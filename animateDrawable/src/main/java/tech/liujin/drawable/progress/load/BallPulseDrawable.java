@@ -12,10 +12,13 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  */
 public class BallPulseDrawable extends ProgressDrawable {
 
-      private float mRadius;
-      private float mMinScale = 0.1f;
-      private float mMinRadius;
-      private float mDRadius;
+      private static final int COUNT = 3;
+
+      private float   mRadius;
+      private float   mMinScale    = 0.1f;
+      private float   mMinRadius;
+      private float   mDRadius;
+      private float[] mRadiusArray = new float[ 3 ];
 
       public BallPulseDrawable ( ) {
 
@@ -25,7 +28,31 @@ public class BallPulseDrawable extends ProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      protected void onBoundsChange ( Rect bounds ) {
+
+            int size = Math.min( bounds.width(), bounds.height() );
+
+            mRadius = size * 1f / 6;
+            mMinRadius = mRadius * mMinScale;
+            mDRadius = mRadius - mMinRadius;
+
+            super.onBoundsChange( bounds );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            mRadiusArray[ 0 ] = calculateRadius( calculateProgress( progress ) );
+            mRadiusArray[ 1 ] = calculateRadius( calculateProgress( progress - 0.2f ) );
+            mRadiusArray[ 2 ] = calculateRadius( calculateProgress( progress - 0.4f ) );
+
+            invalidateSelf();
+      }
+
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
 
             int dX = ( getWidth() ) >> 1;
             int dY = ( getHeight() ) >> 1;
@@ -34,19 +61,19 @@ public class BallPulseDrawable extends ProgressDrawable {
             canvas.drawCircle(
                 -mRadius * 2,
                 0,
-                calculateRadius( calculateProgress( progress ) ),
+                mRadiusArray[ 0 ],
                 mPaint
             );
             canvas.drawCircle(
                 0,
                 0,
-                calculateRadius( calculateProgress( progress - 0.2f ) ),
+                mRadiusArray[ 1 ],
                 mPaint
             );
             canvas.drawCircle(
                 mRadius * 2,
                 0,
-                calculateRadius( calculateProgress( progress - 0.4f ) ),
+                mRadiusArray[ 2 ],
                 mPaint
             );
       }
@@ -69,17 +96,6 @@ public class BallPulseDrawable extends ProgressDrawable {
       private float calculateRadius ( float progress ) {
 
             return mMinRadius + mDRadius * ( progress );
-      }
-
-      @Override
-      protected void onBoundsChange ( Rect bounds ) {
-
-            super.onBoundsChange( bounds );
-            int size = Math.min( bounds.width(), bounds.height() );
-
-            mRadius = size / 6;
-            mMinRadius = mRadius * mMinScale;
-            mDRadius = mRadius - mMinRadius;
       }
 
       public void setMinScale ( float minScale ) {

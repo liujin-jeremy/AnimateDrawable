@@ -28,7 +28,6 @@ public class PieMatchCircleProgressDrawable extends TextCenterProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             int width = bounds.width();
             int height = bounds.height();
@@ -44,10 +43,13 @@ public class PieMatchCircleProgressDrawable extends TextCenterProgressDrawable {
                 cx + mRadius,
                 cy + mRadius
             );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             Rect bounds = getBounds();
             int width = bounds.width();
@@ -57,9 +59,16 @@ public class PieMatchCircleProgressDrawable extends TextCenterProgressDrawable {
             canvas.drawCircle( width >> 1, height >> 1, mRadius, mPaint );
 
             mPaint.setColor( mPieColor );
-            canvas.drawArc( mRectF, 90, 360 * progress, true, mPaint );
+            canvas.drawArc( mRectF, 90, 360 * mProgress, true, mPaint );
 
-            super.draw( canvas, progress );
+            super.draw( canvas );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+            invalidateSelf();
       }
 
       public void setCircleColor ( int circleColor ) {

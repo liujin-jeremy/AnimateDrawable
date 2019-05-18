@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import tech.liujin.drawable.animator.AnimateProgressEvaluator;
 import tech.liujin.drawable.progress.ProgressDrawable;
 import tech.liujin.drawable.progress.load.ArcChangeRotateDrawable;
+
 /**
  * 该drawable拥有三个状态,add,load,done
  *

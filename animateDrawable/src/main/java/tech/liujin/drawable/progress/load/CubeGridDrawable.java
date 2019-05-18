@@ -12,9 +12,14 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  */
 public class CubeGridDrawable extends ProgressDrawable {
 
-      private int mSize;
-      private float mHalfRectSize;
-      private float mRectSize;
+      private static final int COUNT = 3;
+
+      private int     mSize;
+      private float   mHalfRectSize;
+      private float   mRectSize;
+      private float[] mCxArray     = new float[ COUNT * COUNT ];
+      private float[] mCyArray     = new float[ COUNT * COUNT ];
+      private float[] mRadiusArray = new float[ COUNT * COUNT ];
 
       public CubeGridDrawable ( ) {
 
@@ -25,32 +30,56 @@ public class CubeGridDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
             mSize = Math.min( bounds.width(), bounds.height() );
-            mRectSize = mSize / 3;
+            mRectSize = mSize * 1f / 3;
             mHalfRectSize = mRectSize / 2;
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             int dx = ( getWidth() - mSize ) / 2;
             int dy = ( getHeight() - mSize ) / 2;
-
             canvas.translate( dx, dy );
 
-            for( int i = 0; i < 3; i++ ) {
-
-                  float cy = mHalfRectSize + mRectSize * i;
-                  for( int j = 0; j < 3; j++ ) {
-                        float cx = mHalfRectSize + mRectSize * j;
-                        float radius = calculateRadius( calculateProgress( i * 3 + j, progress ) );
-                        canvas.drawRect( cx - radius, cy - radius, cx + radius,
-                                         cy + radius,
-                                         mPaint
+            for( int i = 0; i < COUNT; i++ ) {
+                  for( int j = 0; j < COUNT; j++ ) {
+                        int k = i * COUNT + j;
+                        canvas.drawRect(
+                            mCxArray[ k ] - mRadiusArray[ k ],
+                            mCyArray[ k ] - mRadiusArray[ k ],
+                            mCxArray[ k ] + mRadiusArray[ k ],
+                            mCyArray[ k ] + mRadiusArray[ k ],
+                            mPaint
                         );
                   }
             }
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            for( int i = 0; i < COUNT; i++ ) {
+
+                  float cy = mHalfRectSize + mRectSize * i;
+                  for( int j = 0; j < COUNT; j++ ) {
+
+                        float cx = mHalfRectSize + mRectSize * j;
+                        float radius = calculateRadius( calculateProgress( i * 3 + j, progress ) );
+
+                        int k = i * COUNT + j;
+                        mCxArray[ k ] = cx;
+                        mCyArray[ k ] = cy;
+                        mRadiusArray[ k ] = radius;
+                  }
+            }
+
+            invalidateSelf();
       }
 
       private float calculateProgress ( int i, float progress ) {

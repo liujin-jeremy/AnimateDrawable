@@ -12,11 +12,16 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  */
 public class StrokePulseDrawable extends ProgressDrawable {
 
-      private static final String TAG = StrokePulseDrawable.class.getSimpleName();
+      private static final int COUNT = 3;
 
       private int mStrokeWidth;
       private int mStrokeHigh;
       private int mStrokeLow;
+
+      private float[] mX1s = new float[ COUNT ];
+      private float[] mY1s = new float[ COUNT ];
+      private float[] mX2s = new float[ COUNT ];
+      private float[] mY2s = new float[ COUNT ];
 
       public StrokePulseDrawable ( ) {
 
@@ -27,37 +32,52 @@ public class StrokePulseDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
             mStrokeWidth = bounds.width() / 11;
             mStrokeHigh = bounds.height() / 5 * 2;
             mStrokeLow = bounds.height() / 8;
 
             mPaint.setStrokeWidth( mStrokeWidth );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             canvas.translate( 0, getHeight() >> 1 );
 
-            int strokeWidth = mStrokeWidth;
-            float half = strokeWidth / 2;
+            for( int i = 0; i < COUNT; i++ ) {
+                  canvas.drawLine( mX1s[ i ], -mY1s[ i ], mX1s[ i ], mY1s[ i ], mPaint );
+                  int j = 4 - i;
+                  if( j != i ) {
+                        canvas.drawLine( mX2s[ i ], -mY2s[ i ], mX2s[ i ], mY2s[ i ], mPaint );
+                  }
+            }
+      }
 
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            int strokeWidth = mStrokeWidth;
+            float half = strokeWidth * 1f / 2;
             int dY = mStrokeHigh - mStrokeLow;
 
-            for( int i = 0; i < 3; i++ ) {
+            for( int i = 0; i < COUNT; i++ ) {
 
-                  float x = strokeWidth + half + ( strokeWidth * 2 * i );
-                  float y = calculateY( dY, calculateProgress( i, progress ) );
-                  canvas.drawLine( x, -y, x, y, mPaint );
+                  mX1s[ i ] = strokeWidth + half + ( strokeWidth * 2 * i );
+                  mY1s[ i ] = calculateY( dY, calculateProgress( i, progress ) );
 
                   int j = 4 - i;
                   if( j != i ) {
-                        x = strokeWidth + half + ( strokeWidth * 2 * j );
-                        y = calculateY( dY, calculateProgress( i, progress ) );
-                        canvas.drawLine( x, -y, x, y, mPaint );
+                        mX2s[ i ] = strokeWidth + half + ( strokeWidth * 2 * j );
+                        mY2s[ i ] = calculateY( dY, calculateProgress( i, progress ) );
                   }
             }
+
+            invalidateSelf();
       }
 
       private float calculateProgress ( int i, float progress ) {

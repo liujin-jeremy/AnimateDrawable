@@ -27,7 +27,6 @@ public class CircleTextProgressDrawable extends TextCenterProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             int width = bounds.width();
             int height = bounds.height();
@@ -46,13 +45,23 @@ public class CircleTextProgressDrawable extends TextCenterProgressDrawable {
                 cx + radius,
                 cy + radius
             );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
-            canvas.drawArc( mRectF, 90, 360 * progress, false, mPaint );
-            super.draw( canvas, progress );
+            canvas.drawArc( mRectF, 90, 360 * mProgress, false, mPaint );
+            super.draw( canvas );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+            invalidateSelf();
       }
 
       public void setColor ( @ColorInt int color ) {

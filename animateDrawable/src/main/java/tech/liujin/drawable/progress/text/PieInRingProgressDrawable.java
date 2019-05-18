@@ -16,6 +16,7 @@ public class PieInRingProgressDrawable extends TextCenterProgressDrawable {
       private RectF mRectF;
       private float mRadius;
       private float mRingWidth;
+      private float mSweepAngles;
 
       public PieInRingProgressDrawable ( ) {
 
@@ -29,7 +30,6 @@ public class PieInRingProgressDrawable extends TextCenterProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             int width = bounds.width();
             int height = bounds.height();
@@ -47,10 +47,13 @@ public class PieInRingProgressDrawable extends TextCenterProgressDrawable {
                 cx + radius,
                 cy + radius
             );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             Rect bounds = getBounds();
             int width = bounds.width();
@@ -61,9 +64,19 @@ public class PieInRingProgressDrawable extends TextCenterProgressDrawable {
             canvas.drawCircle( width >> 1, height >> 1, mRadius, mPaint );
 
             mPaint.setStyle( Style.FILL );
-            canvas.drawArc( mRectF, 90, 360 * progress, true, mPaint );
+            canvas.drawArc( mRectF, 90, mSweepAngles, true, mPaint );
 
-            super.draw( canvas, progress );
+            super.draw( canvas );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            mSweepAngles = 360 * progress;
+
+            invalidateSelf();
       }
 
       public void setColor ( @ColorInt int color ) {

@@ -30,7 +30,9 @@ public class RoundRectCornerDrawable extends ProgressDrawable {
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
 
             int width = getWidth();
             int height = getHeight();
@@ -43,6 +45,12 @@ public class RoundRectCornerDrawable extends ProgressDrawable {
 
             mPath.reset();
             mPath.addRoundRect( mRectF, radius, Direction.CW );
+
+            invalidateSelf();
+      }
+
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
 
             canvas.drawPath( mPath, mPaint );
       }

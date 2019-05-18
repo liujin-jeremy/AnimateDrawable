@@ -146,19 +146,19 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mStartStop;
       private TextView     mStart;
       private TextView     mStop;
-      private ImageView    mCircleText;
-      private SeekBar      mCircleTextSeek;
-      private ImageView    mCircleRing;
-      private SeekBar      mCircleRingSeek;
-      private ImageView    mCircleDot;
-      private SeekBar      mCircleDotSeek;
-      private ImageView    mCircleMatch;
-      private SeekBar      mCircleMatchSeek;
-      private ImageView    mPie;
-      private SeekBar      mPieSeek;
-      private ImageView    mPieMatch;
-      private SeekBar      mPieMatchSeek;
-      private ImageView    mPieOut;
+      private ImageView mCircleText;
+      private SeekBar   mCircleTextSeek;
+      private ImageView mCircleRing;
+      private SeekBar   mCircleRingSeek;
+      private ImageView mCircleDot;
+      private SeekBar   mCircleDotSeek;
+      private ImageView mCircleMatch;
+      private SeekBar   mCircleMatchSeek;
+      private ImageView mPie;
+      private SeekBar   mPieSeek;
+      private ImageView mPieMatch;
+      private SeekBar   mPieMatchSeek;
+      private ImageView mPieOut;
       private SeekBar   mPieOutSeek;
       private ImageView mPieRing;
       private SeekBar   mPieRingSeek;
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                         float v = progress * 1f / seekBar.getMax();
                         int color = evaluator.evaluate( v );
                         drawable.setColor( color );
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -366,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -396,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -411,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -426,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -441,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -456,7 +456,7 @@ public class MainActivity extends AppCompatActivity {
                   public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -498,7 +498,7 @@ public class MainActivity extends AppCompatActivity {
                       SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -549,7 +549,7 @@ public class MainActivity extends AppCompatActivity {
                       SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
       }
@@ -588,7 +588,7 @@ public class MainActivity extends AppCompatActivity {
                       SeekBar seekBar, int progress, boolean fromUser ) {
 
                         float v = progress * 1f / seekBar.getMax();
-                        drawable.setDrawProgress( v );
+                        drawable.setProgress( v );
                   }
             } );
             AnimateProgressDrawable wrapperDrawable = new AnimateProgressDrawable( drawable );

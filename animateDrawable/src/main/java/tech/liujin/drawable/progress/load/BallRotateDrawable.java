@@ -13,8 +13,9 @@ import tech.liujin.drawable.progress.ProgressDrawable;
 public class BallRotateDrawable extends ProgressDrawable {
 
       private float mRadius;
-      private int   mSize;
       private int   mSpace;
+      private float mScale;
+      private float mDegrees;
 
       public BallRotateDrawable ( ) {
 
@@ -25,32 +26,41 @@ public class BallRotateDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
+            int size = Math.min( bounds.width(), bounds.height() );
+
+            mSpace = size / 9;
+            mRadius = ( size * 1f - 3 * mSpace ) / 6;
+
             super.onBoundsChange( bounds );
 
-            mSize = Math.min( bounds.width(), bounds.height() );
-
-            mSpace = mSize / 9;
-            mRadius = ( mSize - 3 * mSpace ) / 6;
       }
 
       @Override
-      public void draw (
-          @NonNull Canvas canvas, float progress ) {
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+
+            mDegrees = 360 * mProgress;
+            if( progress <= 0.5f ) {
+                  progress *= 2;
+                  mScale = 1f - 0.5f * progress;
+            } else {
+                  progress = ( progress - 0.5f ) * 2;
+                  mScale = 0.5f + 0.5f * progress;
+            }
+
+            invalidateSelf();
+      }
+
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
 
             int cX = getWidth() >> 1;
             int cY = getHeight() >> 1;
             canvas.translate( cX, cY );
-            canvas.rotate( 360 * progress );
 
-            float s;
-            if( progress <= 0.5f ) {
-                  progress *= 2;
-                  s = 1f - 0.5f * progress;
-            } else {
-                  progress = ( progress - 0.5f ) * 2;
-                  s = 0.5f + 0.5f * progress;
-            }
-            canvas.scale( s, s );
+            canvas.rotate( mDegrees );
+            canvas.scale( mScale, mScale );
 
             canvas.drawCircle( 0, 0, mRadius, mPaint );
             canvas.drawCircle( -mSpace - mRadius * 2, 0, mRadius, mPaint );

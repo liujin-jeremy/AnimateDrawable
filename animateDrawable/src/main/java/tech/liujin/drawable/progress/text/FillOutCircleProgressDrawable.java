@@ -17,6 +17,8 @@ public class FillOutCircleProgressDrawable extends TextCenterProgressDrawable {
       private float mRadius;
       private int   mCircleColor = Color.parseColor( "#6A1B17" );
       private int   mFillColor   = Color.RED;
+      private float mStart;
+      private float mEnd;
 
       public FillOutCircleProgressDrawable ( ) {
 
@@ -29,7 +31,6 @@ public class FillOutCircleProgressDrawable extends TextCenterProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
 
             int width = bounds.width();
             int height = bounds.height();
@@ -46,10 +47,13 @@ public class FillOutCircleProgressDrawable extends TextCenterProgressDrawable {
                 cx + radius,
                 cy + radius
             );
+
+            super.onBoundsChange( bounds );
+
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void draw ( @NonNull Canvas canvas ) {
 
             Rect bounds = getBounds();
             int width = bounds.width();
@@ -58,13 +62,20 @@ public class FillOutCircleProgressDrawable extends TextCenterProgressDrawable {
             mPaint.setColor( mCircleColor );
             canvas.drawCircle( width >> 1, height >> 1, mRadius, mPaint );
 
-            float v = 180 * progress;
-            float start = 90 - v;
-            float end = 90 + v;
             mPaint.setColor( mFillColor );
-            canvas.drawArc( mRectF, start, end - start, false, mPaint );
+            canvas.drawArc( mRectF, mStart, mEnd - mStart, false, mPaint );
 
-            super.draw( canvas, progress );
+            super.draw( canvas );
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+            float v = 180 * progress;
+            mStart = 90 - v;
+            mEnd = 90 + v;
+            invalidateSelf();
       }
 
       public void setCircleColor ( @ColorInt int circleColor ) {

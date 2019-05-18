@@ -12,8 +12,11 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  */
 public class BallCircleAlphaDrawable extends ProgressDrawable {
 
+      private static final int COUNT = 12;
+
       private float mRadius;
-      private int   mSize;
+      private float mCy;
+      private int[] mAlphas = new int[ 12 ];
 
       public BallCircleAlphaDrawable ( ) {
 
@@ -24,26 +27,12 @@ public class BallCircleAlphaDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
+            int size = Math.min( bounds.width(), bounds.height() );
+            mRadius = size * 1f / 14;
+            mCy = ( -size * 1f / 2 ) + mRadius;
+
             super.onBoundsChange( bounds );
-            mSize = Math.min( bounds.width(), bounds.height() );
-            mRadius = mSize / 14;
-      }
 
-      @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
-
-            int width = getWidth();
-            int height = getHeight();
-            canvas.translate( width >> 1, height >> 1 );
-
-            for( int i = 0; i < 12; i++ ) {
-
-                  mPaint.setAlpha( calculateAlpha( calculateProgress( i, progress ) ) );
-                  canvas.drawCircle( 0, -mSize / 2 + mRadius,
-                                     mRadius, mPaint
-                  );
-                  canvas.rotate( 30 );
-            }
       }
 
       private float calculateProgress ( int i, float progress ) {
@@ -70,6 +59,31 @@ public class BallCircleAlphaDrawable extends ProgressDrawable {
                   return (int) ( ( 1 - ( progress - 12 ) / 10 ) * 255 );
             } else {
                   return 0;
+            }
+      }
+
+      @Override
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+            for( int i = 0; i < COUNT; i++ ) {
+                  mAlphas[ i ] = calculateAlpha( calculateProgress( i, progress ) );
+            }
+            invalidateSelf();
+      }
+
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
+
+            int width = getWidth();
+            int height = getHeight();
+            canvas.translate( width >> 1, height >> 1 );
+
+            for( int i = 0; i < COUNT; i++ ) {
+
+                  mPaint.setAlpha( mAlphas[ i ] );
+                  canvas.drawCircle( 0, mCy, mRadius, mPaint );
+                  canvas.rotate( 30 );
             }
       }
 }

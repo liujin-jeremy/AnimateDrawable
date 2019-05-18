@@ -12,7 +12,8 @@ import tech.liujin.drawable.progress.ProgressDrawable;
  */
 public class BallPulsePushDrawable extends ProgressDrawable {
 
-      private float mRadius;
+      private float   mRadius;
+      private float[] mRadiusArray = new float[ 3 ];
 
       public BallPulsePushDrawable ( ) {
 
@@ -23,23 +24,32 @@ public class BallPulsePushDrawable extends ProgressDrawable {
       @Override
       protected void onBoundsChange ( Rect bounds ) {
 
-            super.onBoundsChange( bounds );
-
             int size = Math.min( bounds.width(), bounds.height() );
-            mRadius = size / 8;
+            mRadius = size * 1f / 8;
+
+            super.onBoundsChange( bounds );
       }
 
       @Override
-      public void draw ( @NonNull Canvas canvas, float progress ) {
+      public void onProcessChange ( float progress ) {
 
-            canvas.translate( getWidth() / 2, getHeight() / 2 );
+            mProgress = progress;
 
-            float radius = calculateRadius( calculateProgress( 0, progress ) );
-            canvas.drawCircle( -2.5f * mRadius, 0, radius, mPaint );
-            radius = calculateRadius( calculateProgress( 1, progress ) );
-            canvas.drawCircle( 0, 0, radius, mPaint );
-            radius = calculateRadius( calculateProgress( 2, progress ) );
-            canvas.drawCircle( 2.5f * mRadius, 0, radius, mPaint );
+            mRadiusArray[ 0 ] = calculateRadius( calculateProgress( 0, progress ) );
+            mRadiusArray[ 1 ] = calculateRadius( calculateProgress( 1, progress ) );
+            mRadiusArray[ 2 ] = calculateRadius( calculateProgress( 2, progress ) );
+
+            invalidateSelf();
+      }
+
+      @Override
+      public void draw ( @NonNull Canvas canvas ) {
+
+            canvas.translate( getWidth() >> 1, getHeight() >> 1 );
+
+            canvas.drawCircle( -2.5f * mRadius, 0, mRadiusArray[ 0 ], mPaint );
+            canvas.drawCircle( 0, 0, mRadiusArray[ 1 ], mPaint );
+            canvas.drawCircle( 2.5f * mRadius, 0, mRadiusArray[ 2 ], mPaint );
       }
 
       protected float calculateProgress ( int i, float progress ) {
