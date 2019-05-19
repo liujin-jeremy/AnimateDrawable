@@ -42,6 +42,7 @@ import tech.liujin.drawable.progress.load.StrokePulseDrawable;
 import tech.liujin.drawable.progress.load.StrokePulsePushDrawable;
 import tech.liujin.drawable.progress.load.StrokeSkipDrawable;
 import tech.liujin.drawable.progress.load.StrokeWaveDrawable;
+import tech.liujin.drawable.progress.state.ClockTimerDrawable;
 import tech.liujin.drawable.progress.text.CircleDotProgressDrawable;
 import tech.liujin.drawable.progress.text.CircleInRingProgressDrawable;
 import tech.liujin.drawable.progress.text.CircleMatchRingProgressDrawable;
@@ -146,34 +147,36 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mStartStop;
       private TextView     mStart;
       private TextView     mStop;
-      private ImageView mCircleText;
-      private SeekBar   mCircleTextSeek;
-      private ImageView mCircleRing;
-      private SeekBar   mCircleRingSeek;
-      private ImageView mCircleDot;
-      private SeekBar   mCircleDotSeek;
-      private ImageView mCircleMatch;
-      private SeekBar   mCircleMatchSeek;
-      private ImageView mPie;
-      private SeekBar   mPieSeek;
-      private ImageView mPieMatch;
-      private SeekBar   mPieMatchSeek;
-      private ImageView mPieOut;
-      private SeekBar   mPieOutSeek;
-      private ImageView mPieRing;
-      private SeekBar   mPieRingSeek;
-      private ImageView mFillCircle;
-      private SeekBar   mFillCircleSeek;
-      private ImageView mFillMatch;
-      private SeekBar   mFillMatchSeek;
-      private ImageView mFillOut;
-      private SeekBar   mFillOutSeek;
-      private ImageView mFillRing;
-      private SeekBar   mFillRingSeek;
-      private ImageView mColorEvaluator;
-      private SeekBar   mColorEvaluatorSeek;
-      private ImageView mHaloEvaluator;
-      private SeekBar   mHaloEvaluatorSeek;
+      private ImageView    mCircleText;
+      private SeekBar      mCircleTextSeek;
+      private ImageView    mCircleRing;
+      private SeekBar      mCircleRingSeek;
+      private ImageView    mCircleDot;
+      private SeekBar      mCircleDotSeek;
+      private ImageView    mCircleMatch;
+      private SeekBar      mCircleMatchSeek;
+      private ImageView    mPie;
+      private SeekBar      mPieSeek;
+      private ImageView    mPieMatch;
+      private SeekBar      mPieMatchSeek;
+      private ImageView    mPieOut;
+      private SeekBar      mPieOutSeek;
+      private ImageView    mPieRing;
+      private SeekBar      mPieRingSeek;
+      private ImageView    mFillCircle;
+      private SeekBar      mFillCircleSeek;
+      private ImageView    mFillMatch;
+      private SeekBar      mFillMatchSeek;
+      private ImageView    mFillOut;
+      private SeekBar      mFillOutSeek;
+      private ImageView    mFillRing;
+      private SeekBar      mFillRingSeek;
+      private ImageView    mColorEvaluator;
+      private SeekBar      mColorEvaluatorSeek;
+      private ImageView    mHaloEvaluator;
+      private SeekBar      mHaloEvaluatorSeek;
+      private ImageView    mClockTimer;
+      private SeekBar      mClockTimerSeek;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -233,6 +236,22 @@ public class MainActivity extends AppCompatActivity {
             testFillRing();
             testColorEvaluator();
             testHalo();
+            testClockTimer();
+      }
+
+      private void testClockTimer ( ) {
+
+            ClockTimerDrawable drawable = new ClockTimerDrawable();
+            mClockTimer.setImageDrawable( drawable );
+            mClockTimerSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setProgress( v );
+                  }
+            } );
       }
 
       private void testHalo ( ) {
@@ -693,28 +712,30 @@ public class MainActivity extends AppCompatActivity {
             mCircleRingSeek = findViewById( R.id.circleRingSeek );
             mCircleDot = findViewById( R.id.circleDot );
             mCircleDotSeek = findViewById( R.id.circleDotSeek );
-            mCircleMatch = (ImageView) findViewById( R.id.circleMatch );
-            mCircleMatchSeek = (SeekBar) findViewById( R.id.circleMatchSeek );
-            mPie = (ImageView) findViewById( R.id.pie );
-            mPieSeek = (SeekBar) findViewById( R.id.pieSeek );
-            mPieMatch = (ImageView) findViewById( R.id.pieMatch );
-            mPieMatchSeek = (SeekBar) findViewById( R.id.pieMatchSeek );
-            mPieOut = (ImageView) findViewById( R.id.pieOut );
-            mPieOutSeek = (SeekBar) findViewById( R.id.pieOutSeek );
-            mPieRing = (ImageView) findViewById( R.id.pieRing );
-            mPieRingSeek = (SeekBar) findViewById( R.id.pieRingSeek );
-            mFillCircle = (ImageView) findViewById( R.id.fillCircle );
-            mFillCircleSeek = (SeekBar) findViewById( R.id.fillCircleSeek );
-            mFillMatch = (ImageView) findViewById( R.id.fillMatch );
-            mFillMatchSeek = (SeekBar) findViewById( R.id.fillMatchSeek );
-            mFillOut = (ImageView) findViewById( R.id.fillOut );
-            mFillOutSeek = (SeekBar) findViewById( R.id.fillOutSeek );
-            mFillRing = (ImageView) findViewById( R.id.fillRing );
-            mFillRingSeek = (SeekBar) findViewById( R.id.fillRingSeek );
-            mColorEvaluator = (ImageView) findViewById( R.id.colorEvaluator );
-            mColorEvaluatorSeek = (SeekBar) findViewById( R.id.colorEvaluatorSeek );
-            mHaloEvaluator = (ImageView) findViewById( R.id.haloEvaluator );
-            mHaloEvaluatorSeek = (SeekBar) findViewById( R.id.haloEvaluatorSeek );
+            mCircleMatch = findViewById( R.id.circleMatch );
+            mCircleMatchSeek = findViewById( R.id.circleMatchSeek );
+            mPie = findViewById( R.id.pie );
+            mPieSeek = findViewById( R.id.pieSeek );
+            mPieMatch = findViewById( R.id.pieMatch );
+            mPieMatchSeek = findViewById( R.id.pieMatchSeek );
+            mPieOut = findViewById( R.id.pieOut );
+            mPieOutSeek = findViewById( R.id.pieOutSeek );
+            mPieRing = findViewById( R.id.pieRing );
+            mPieRingSeek = findViewById( R.id.pieRingSeek );
+            mFillCircle = findViewById( R.id.fillCircle );
+            mFillCircleSeek = findViewById( R.id.fillCircleSeek );
+            mFillMatch = findViewById( R.id.fillMatch );
+            mFillMatchSeek = findViewById( R.id.fillMatchSeek );
+            mFillOut = findViewById( R.id.fillOut );
+            mFillOutSeek = findViewById( R.id.fillOutSeek );
+            mFillRing = findViewById( R.id.fillRing );
+            mFillRingSeek = findViewById( R.id.fillRingSeek );
+            mColorEvaluator = findViewById( R.id.colorEvaluator );
+            mColorEvaluatorSeek = findViewById( R.id.colorEvaluatorSeek );
+            mHaloEvaluator = findViewById( R.id.haloEvaluator );
+            mHaloEvaluatorSeek = findViewById( R.id.haloEvaluatorSeek );
+            mClockTimer = (ImageView) findViewById( R.id.ClockTimer );
+            mClockTimerSeek = (SeekBar) findViewById( R.id.ClockTimerSeek );
       }
 
       private void testArcChange ( ) {

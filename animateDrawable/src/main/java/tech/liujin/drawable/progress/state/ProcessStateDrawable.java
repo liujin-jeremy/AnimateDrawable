@@ -1,16 +1,20 @@
-package tech.liujin.drawable.progress;
+package tech.liujin.drawable.progress.state;
 
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.FloatRange;
 import tech.liujin.drawable.PaintDrawable;
 import tech.liujin.drawable.ProcessConsumer;
+import tech.liujin.drawable.StateConsumer;
 
 /**
- * @author wuxio 2018-05-25:7:11
+ * @author Liujin 2019/5/19:18:05:17
  */
-public abstract class ProgressDrawable extends PaintDrawable implements ProcessConsumer {
+public abstract class ProcessStateDrawable extends PaintDrawable implements ProcessConsumer, StateConsumer {
 
+      /**
+       * 当前状态
+       */
+      protected int   mState;
       /**
        * 当前进度
        */
@@ -21,13 +25,24 @@ public abstract class ProgressDrawable extends PaintDrawable implements ProcessC
       protected int   mBoundsChangeCount;
 
       /**
-       * 当进度改变时,准备{@link #draw(Canvas)}所需要的数据,准备完毕后调用{@link #invalidateSelf()},进行绘制,
-       * 该步骤主要进行绘制计算和绘制的分离,提高绘制效率
-       *
-       * @param progress 进度值
+       * @param state 改变状态
        */
-      @Override
-      public abstract void onProcessChange ( float progress );
+      public void setState ( int state ) {
+
+            if( state != mState ) {
+
+                  mState = state;
+                  onStateChange( state );
+            }
+      }
+
+      /**
+       * @return 获取当前状态
+       */
+      public int getCurrentState ( ) {
+
+            return mState;
+      }
 
       /**
        * @param progress 改变进度值,会触发{@link #onProcessChange(float)}
