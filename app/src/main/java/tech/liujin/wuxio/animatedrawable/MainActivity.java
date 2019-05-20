@@ -165,18 +165,19 @@ public class MainActivity extends AppCompatActivity {
       private SeekBar      mPieRingSeek;
       private ImageView    mFillCircle;
       private SeekBar      mFillCircleSeek;
-      private ImageView    mFillMatch;
-      private SeekBar      mFillMatchSeek;
-      private ImageView    mFillOut;
-      private SeekBar      mFillOutSeek;
-      private ImageView    mFillRing;
-      private SeekBar      mFillRingSeek;
-      private ImageView    mColorEvaluator;
-      private SeekBar      mColorEvaluatorSeek;
-      private ImageView    mHaloEvaluator;
-      private SeekBar      mHaloEvaluatorSeek;
-      private ImageView    mClockTimer;
-      private SeekBar      mClockTimerSeek;
+      private ImageView mFillMatch;
+      private SeekBar   mFillMatchSeek;
+      private ImageView mFillOut;
+      private SeekBar   mFillOutSeek;
+      private ImageView mFillRing;
+      private SeekBar   mFillRingSeek;
+      private ImageView mColorEvaluator;
+      private SeekBar   mColorEvaluatorSeek;
+      private ImageView mHaloEvaluator;
+      private SeekBar   mHaloEvaluatorSeek;
+      private ImageView mClockTimer;
+      private SeekBar   mClockTimerSeek;
+      private TextView  mClockClick;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -252,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
                         drawable.setProgress( v );
                   }
             } );
+            mClockClick.setOnClickListener( v -> drawable.click() );
       }
 
       private void testHalo ( ) {
@@ -736,6 +738,7 @@ public class MainActivity extends AppCompatActivity {
             mHaloEvaluatorSeek = findViewById( R.id.haloEvaluatorSeek );
             mClockTimer = (ImageView) findViewById( R.id.ClockTimer );
             mClockTimerSeek = (SeekBar) findViewById( R.id.ClockTimerSeek );
+            mClockClick = findViewById( R.id.clockClick );
       }
 
       private void testArcChange ( ) {

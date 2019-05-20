@@ -90,6 +90,14 @@ public class ClockTimerDrawable extends ProgressDrawable {
             invalidateSelf();
       }
 
+      public void click ( ) {
+
+            if( mAnimateProgressEvaluator.isStopped() ) {
+                  mAnimateProgressEvaluator.start( 0 );
+                  invalidateSelf();
+            }
+      }
+
       private float calculateHatY ( ) {
 
             float progress = mAnimateProgressEvaluator.calculateProgress() * 4;
