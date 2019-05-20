@@ -27,7 +27,11 @@ public abstract class ProgressDrawable extends PaintDrawable implements ProcessC
        * @param progress 进度值
        */
       @Override
-      public abstract void onProcessChange ( float progress );
+      public void onProcessChange ( float progress ) {
+
+            mProgress = progress;
+            invalidateSelf();
+      }
 
       /**
        * @param progress 改变进度值,会触发{@link #onProcessChange(float)}

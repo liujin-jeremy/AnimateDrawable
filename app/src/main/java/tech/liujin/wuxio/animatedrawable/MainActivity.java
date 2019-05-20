@@ -55,7 +55,8 @@ import tech.liujin.drawable.progress.text.PieInRingProgressDrawable;
 import tech.liujin.drawable.progress.text.PieMatchCircleProgressDrawable;
 import tech.liujin.drawable.progress.text.PieOutCircleProgressDrawable;
 import tech.liujin.drawable.progress.text.PieTextProgressDrawable;
-import tech.liujin.drawable.progress.timer.ClockTimerDrawable;
+import tech.liujin.drawable.progress.timer.ClockDrawable;
+import tech.liujin.drawable.progress.timer.HourglassDrawable;
 import tech.liujin.drawable.state.AddLoadDoneDrawable;
 import tech.liujin.drawable.state.StartLoadDoneDrawable;
 import tech.liujin.drawable.state.TextLoadDoneDrawable;
@@ -67,11 +68,11 @@ public class MainActivity extends AppCompatActivity {
 
       private static final String TAG = MainActivity.class.getSimpleName();
 
-      private ImageView    mBilibili;
-      private SeekBar      mBilibiliSeek;
-      private ImageView    mBilibiliAnimate;
-      private ImageView    mCircle;
-      private SeekBar      mCircleSeek;
+      private ImageView mBilibili;
+      private SeekBar   mBilibiliSeek;
+      private ImageView mBilibiliAnimate;
+      private ImageView mCircle;
+      private SeekBar   mCircleSeek;
       private ImageView    mCircleAnimate;
       private ImageView    mRoundRect;
       private SeekBar      mRoundRectSeek;
@@ -152,19 +153,19 @@ public class MainActivity extends AppCompatActivity {
       private ImageView    mCircleRing;
       private SeekBar      mCircleRingSeek;
       private ImageView    mCircleDot;
-      private SeekBar      mCircleDotSeek;
-      private ImageView    mCircleMatch;
-      private SeekBar      mCircleMatchSeek;
-      private ImageView    mPie;
-      private SeekBar      mPieSeek;
-      private ImageView    mPieMatch;
-      private SeekBar      mPieMatchSeek;
-      private ImageView    mPieOut;
-      private SeekBar      mPieOutSeek;
-      private ImageView    mPieRing;
-      private SeekBar      mPieRingSeek;
-      private ImageView    mFillCircle;
-      private SeekBar      mFillCircleSeek;
+      private SeekBar   mCircleDotSeek;
+      private ImageView mCircleMatch;
+      private SeekBar   mCircleMatchSeek;
+      private ImageView mPie;
+      private SeekBar   mPieSeek;
+      private ImageView mPieMatch;
+      private SeekBar   mPieMatchSeek;
+      private ImageView mPieOut;
+      private SeekBar   mPieOutSeek;
+      private ImageView mPieRing;
+      private SeekBar   mPieRingSeek;
+      private ImageView mFillCircle;
+      private SeekBar   mFillCircleSeek;
       private ImageView mFillMatch;
       private SeekBar   mFillMatchSeek;
       private ImageView mFillOut;
@@ -178,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mClockTimer;
       private SeekBar   mClockTimerSeek;
       private TextView  mClockClick;
+      private ImageView mHourglass;
+      private SeekBar   mHourglassSeek;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -238,11 +241,27 @@ public class MainActivity extends AppCompatActivity {
             testColorEvaluator();
             testHalo();
             testClockTimer();
+            testHourglass();
+      }
+
+      private void testHourglass ( ) {
+
+            HourglassDrawable drawable = new HourglassDrawable();
+            mHourglass.setImageDrawable( drawable );
+            mHourglassSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
+
+                  @Override
+                  public void onProgressChanged ( SeekBar seekBar, int progress, boolean fromUser ) {
+
+                        float v = progress * 1f / seekBar.getMax();
+                        drawable.setProgress( v );
+                  }
+            } );
       }
 
       private void testClockTimer ( ) {
 
-            ClockTimerDrawable drawable = new ClockTimerDrawable();
+            ClockDrawable drawable = new ClockDrawable();
             mClockTimer.setImageDrawable( drawable );
             mClockTimerSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListener() {
 
@@ -736,9 +755,11 @@ public class MainActivity extends AppCompatActivity {
             mColorEvaluatorSeek = findViewById( R.id.colorEvaluatorSeek );
             mHaloEvaluator = findViewById( R.id.haloEvaluator );
             mHaloEvaluatorSeek = findViewById( R.id.haloEvaluatorSeek );
-            mClockTimer = (ImageView) findViewById( R.id.ClockTimer );
-            mClockTimerSeek = (SeekBar) findViewById( R.id.ClockTimerSeek );
+            mClockTimer = findViewById( R.id.ClockTimer );
+            mClockTimerSeek = findViewById( R.id.ClockTimerSeek );
             mClockClick = findViewById( R.id.clockClick );
+            mHourglass = (ImageView) findViewById( R.id.Hourglass );
+            mHourglassSeek = (SeekBar) findViewById( R.id.hourglassSeek );
       }
 
       private void testArcChange ( ) {

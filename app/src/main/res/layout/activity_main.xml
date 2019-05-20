@@ -1512,6 +1512,27 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"/>
 
+            <ImageView
+                android:id="@+id/Hourglass"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/teal"
+                tools:src="@android:color/darker_gray"/>
+
+            <SeekBar
+                android:id="@+id/hourglassSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"/>
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

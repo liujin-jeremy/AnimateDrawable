@@ -12,7 +12,7 @@ import tech.liujin.drawable.progress.ProgressDrawable;
 /**
  * @author Liujin 2019/5/19:18:00:57
  */
-public class ClockTimerDrawable extends ProgressDrawable {
+public class ClockDrawable extends ProgressDrawable {
 
       private float                    mRadius;
       private int                      mHatOffsetWidth;
@@ -20,7 +20,7 @@ public class ClockTimerDrawable extends ProgressDrawable {
       private RectF                    mInnerCircle = new RectF();
       private AnimateProgressEvaluator mAnimateProgressEvaluator;
 
-      public ClockTimerDrawable ( ) {
+      public ClockDrawable ( ) {
 
             mPaint.setColor( Color.parseColor( "#FFA500" ) );
             mAnimateProgressEvaluator = new AnimateProgressEvaluator();
@@ -32,7 +32,6 @@ public class ClockTimerDrawable extends ProgressDrawable {
 
             int width = bounds.width();
             int height = bounds.height();
-
             int size = Math.min( width, height );
 
             mStrokeWidth = size >> 4;
