@@ -1,4 +1,4 @@
-package tech.liujin.drawable.progress.state;
+package tech.liujin.drawable.progress.timer;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -24,7 +24,7 @@ public class ClockTimerDrawable extends ProgressDrawable {
 
             mPaint.setColor( Color.parseColor( "#FFA500" ) );
             mAnimateProgressEvaluator = new AnimateProgressEvaluator();
-            mAnimateProgressEvaluator.setDuration( 500 );
+            mAnimateProgressEvaluator.setDuration( 400 );
       }
 
       @Override
