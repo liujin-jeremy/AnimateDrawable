@@ -73,18 +73,18 @@ public class MainActivity extends AppCompatActivity {
       private ImageView mBilibiliAnimate;
       private ImageView mCircle;
       private SeekBar   mCircleSeek;
-      private ImageView    mCircleAnimate;
-      private ImageView    mRoundRect;
-      private SeekBar      mRoundRectSeek;
-      private ImageView    mRoundRectAnimate;
-      private ImageView    mCorner;
-      private SeekBar      mCornerSeek;
-      private ImageView    mCornerAnimate;
-      private ImageView    mBallPulse;
-      private SeekBar      mBallPulseSeek;
-      private ImageView    mBallPulseAnimate;
-      private ImageView    mBallGridPulse;
-      private SeekBar      mBallGridPulseSeek;
+      private ImageView mCircleAnimate;
+      private ImageView mRoundRect;
+      private SeekBar   mRoundRectSeek;
+      private ImageView mRoundRectAnimate;
+      private ImageView mCorner;
+      private SeekBar   mCornerSeek;
+      private ImageView mCornerAnimate;
+      private ImageView mBallPulse;
+      private SeekBar   mBallPulseSeek;
+      private ImageView mBallPulseAnimate;
+      private ImageView mBallGridPulse;
+      private SeekBar   mBallGridPulseSeek;
       private ImageView    mBallGridPulseAnimate;
       private ImageView    mBallFlip;
       private SeekBar      mBallFlipSeek;
@@ -140,19 +140,19 @@ public class MainActivity extends AppCompatActivity {
       private ScrollView   mScrollView;
       private LinearLayout mContainer;
       private ImageView    mArcChangeV2;
-      private SeekBar      mArcChangeSeekV2;
-      private ImageView    mArcChangeAnimateV2;
-      private ImageView    mTextLoading;
-      private ImageView    mWrongRight;
-      private SeekBar      mWrongRightSeek;
-      private ImageView    mStartStop;
-      private TextView     mStart;
-      private TextView     mStop;
-      private ImageView    mCircleText;
-      private SeekBar      mCircleTextSeek;
-      private ImageView    mCircleRing;
-      private SeekBar      mCircleRingSeek;
-      private ImageView    mCircleDot;
+      private SeekBar   mArcChangeSeekV2;
+      private ImageView mArcChangeAnimateV2;
+      private ImageView mTextLoading;
+      private ImageView mWrongRight;
+      private SeekBar   mWrongRightSeek;
+      private ImageView mStartStop;
+      private TextView  mStart;
+      private TextView  mStop;
+      private ImageView mCircleText;
+      private SeekBar   mCircleTextSeek;
+      private ImageView mCircleRing;
+      private SeekBar   mCircleRingSeek;
+      private ImageView mCircleDot;
       private SeekBar   mCircleDotSeek;
       private ImageView mCircleMatch;
       private SeekBar   mCircleMatchSeek;
@@ -181,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
       private TextView  mClockClick;
       private ImageView mHourglass;
       private SeekBar   mHourglassSeek;
+      private TextView  mHourglassShake;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -255,6 +256,14 @@ public class MainActivity extends AppCompatActivity {
 
                         float v = progress * 1f / seekBar.getMax();
                         drawable.setProgress( v );
+                  }
+            } );
+            mHourglassShake.setOnClickListener( new OnClickListener() {
+
+                  @Override
+                  public void onClick ( View v ) {
+
+                        drawable.shake();
                   }
             } );
       }
@@ -760,6 +769,7 @@ public class MainActivity extends AppCompatActivity {
             mClockClick = findViewById( R.id.clockClick );
             mHourglass = (ImageView) findViewById( R.id.Hourglass );
             mHourglassSeek = (SeekBar) findViewById( R.id.hourglassSeek );
+            mHourglassShake = (TextView) findViewById( R.id.hourglassShake );
       }
 
       private void testArcChange ( ) {

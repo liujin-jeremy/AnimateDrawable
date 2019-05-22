@@ -6,6 +6,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
+import tech.liujin.drawable.animator.AnimateProgressEvaluator;
 import tech.liujin.drawable.progress.ProgressDrawable;
 
 /**
@@ -24,6 +25,15 @@ public class HourglassDrawable extends ProgressDrawable {
       private float mR;
       private float mHalfSize;
       private float mLineSize;
+      private int   mHourglassColor       = Color.GRAY;
+      private int   mSandColor            = Color.parseColor( "#FFA500" );
+
+      private AnimateProgressEvaluator mAnimateProgressEvaluator = new AnimateProgressEvaluator();
+
+      public HourglassDrawable ( ) {
+
+            mAnimateProgressEvaluator.setDuration( 400 );
+      }
 
       @Override
       protected void onBoundsChange ( Rect bounds ) {
@@ -99,24 +109,38 @@ public class HourglassDrawable extends ProgressDrawable {
       @Override
       public void onProcessChange ( float progress ) {
 
+            if( mProgress == 0 || mProgress == 1 ) {
+                  if( mAnimateProgressEvaluator.isStopped() ) {
+                        mAnimateProgressEvaluator.start( 0 );
+                  }
+            }
             mProgress = progress;
             invalidateSelf();
+      }
+
+      public void shake ( ) {
+
+            if( mAnimateProgressEvaluator.isStopped() ) {
+                  mAnimateProgressEvaluator.start( 0 );
+                  invalidateSelf();
+            }
       }
 
       @Override
       public void draw ( @NonNull Canvas canvas ) {
 
             canvas.translate( getWidth() >> 1, getHeight() >> 1 );
+            canvas.rotate( calculateRotate() );
             canvas.clipRect( mClipRect );
 
-            mPaint.setColor( Color.GRAY );
+            mPaint.setColor( mHourglassColor );
             mPaint.setStyle( Style.STROKE );
             canvas.drawLine( -mLineSize, -mHalfSize, mLineSize, -mHalfSize, mPaint );
             canvas.drawRoundRect( mTopRoundRect, mR, mR, mPaint );
             canvas.drawLine( -mLineSize, mHalfSize, mLineSize, mHalfSize, mPaint );
             canvas.drawRoundRect( mBottomRoundRect, mR, mR, mPaint );
 
-            mPaint.setColor( Color.RED );
+            mPaint.setColor( mSandColor );
             mPaint.setStyle( Style.FILL );
 
             int save = canvas.save();
@@ -130,5 +154,26 @@ public class HourglassDrawable extends ProgressDrawable {
             mClipTempRect.bottom = mClipTempRect.top + mClipBottomRect.height() * ( mProgress );
             canvas.clipRect( mClipTempRect );
             canvas.drawRoundRect( mBottomInnerRoundRect, mR, mR, mPaint );
+
+            if( mAnimateProgressEvaluator.isRunning() ) {
+                  invalidateSelf();
+            }
+      }
+
+      private float calculateRotate ( ) {
+
+            float progress = mAnimateProgressEvaluator.calculateProgress() * 4;
+            if( progress < 1 ) {
+                  return -15 * progress;
+            }
+            if( progress < 2 ) {
+                  return -15 + 15 * ( progress - 1 );
+            }
+
+            if( progress < 3 ) {
+                  return 15 * ( progress - 2 );
+            }
+
+            return ( 1 - ( progress - 3 ) ) * 15;
       }
 }
