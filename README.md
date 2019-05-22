@@ -2,7 +2,7 @@
 ## 有动画效果的 Drawable
 
 ```
-implementation 'tech.liujin:animateDrawable:1.0.6'
+implementation 'tech.liujin:animateDrawable:1.0.7'
 ```
 
 ## 简介
@@ -303,6 +303,20 @@ mColorEvaluatorSeek.setOnSeekBarChangeListener( new SimpleOnSeekBarChangeListene
 ![](img/pic40.gif)
 
 
+
+### ClockDrawable
+
+时钟样式的倒计时
+
+![](img/pic41.gif)
+
+
+
+### HourglassDrawable
+
+沙漏样式的倒计时
+
+![](img/pic42.gif)
 
 
 
